@@ -6,8 +6,36 @@
     <description>Recent content on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Wed, 04 Nov 2015 05:21:39 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 16 Dec 2015 00:41:36 +0900</lastBuildDate>
     <atom:link href="http://urandom-ctf.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>C89情報 - 予告編</title>
+      <link>http://urandom-ctf.github.io/post/c89-pre/</link>
+      <pubDate>Wed, 16 Dec 2015 00:41:36 +0900</pubDate>
+      
+      <guid>http://urandom-ctf.github.io/post/c89-pre/</guid>
+      <description>&lt;p&gt;maythです。無事に（？）本が出来つつあります（出来たとは言っていない）。世間ではスターのウォーズのなんかの公開が間近に迫っていますが、我々に迫っているのは締め切りとクソコードです。&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;urandom vol.1&amp;rdquo;は記事3本でお送りします。記事の著者から内容について簡単なひとことを要求したところ1名ドロップしました。とりあえずこんな内容になります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一歩差がつくIDAコーデ&lt;/strong&gt; (by op)
+
+&lt;ul&gt;
+&lt;li&gt;IDAとPythonがｱｧｧｧｧ〜〜&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;デコンパイラを殺すIL&lt;/strong&gt; (by mayth)
+
+&lt;ul&gt;
+&lt;li&gt;.NETアプリのデコンパイルを失敗させるべく、我々調査隊はILの奥地へと飛んだ。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;秘密計算入門&lt;/strong&gt; (by yyu)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;当日誰が売り子やるのかもさっぱり定まっていませんが、&lt;strong&gt;3日目の東ホ-05b&lt;/strong&gt;でお待ちしております。それでは。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>C89情報</title>
