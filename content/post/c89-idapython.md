@@ -12,6 +12,7 @@ author = "op"
 IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、それらを解決する比較的簡単なIDA Pythonスクリプトの例とその解説を書いています。
 
 こんなん。
+
 [![Easy Recipes for IDA Python](/images/c89_idapython_p13-14.png)](/images/c89_idapython_p13-14.png)
 
 **C89 3日目(15/12/31) 東ホ-05b** 500円です。
