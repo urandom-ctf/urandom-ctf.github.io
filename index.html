@@ -7,7 +7,7 @@
 
     <meta name="description" content="">
 
-    <meta name="generator" content="Hugo 0.16-DEV" />
+    <meta name="generator" content="Hugo 0.14" />
     <meta name="twitter:card" content="summary">
     
     <meta name="twitter:title" content="urandom &middot; urandom">
@@ -60,35 +60,42 @@
             
             <div class="posts">
                 
-                <h1 class="content-subhead">25 Dec 2015, 17:16</h1>
+                <h1 class="content-subhead">29 Dec 2015, 16:01</h1>
                 <section class="post">
                     <header class="post-header">
 
-                        <a href="http://urandom-ctf.github.io/post/c89-idapython/" class="post-title">C89本にIDA Pythonの記事を書いた</a>
+                        <a href="http://urandom-ctf.github.io/post/c89-decompiler/" class="post-title">[C89] デコンパイラを殺すIL</a>
 
                         <p class="post-meta">
                             
-                                By <strong class="post-author">op</strong>
+                                By <strong class="post-author">mayth</strong>
                             
                             
                         </p>
                     </header>
 
                     <div class="post-description">
-                        <p><a href="http://urandom-ctf.github.io/post/c89-pre/">先の記事</a>で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。</p>
+                        <p>いよいよ明日がコミケ初日ですよ！</p>
 
-<p>その同人誌にIDA Pythonの記事を書きました。タイトルは「Easy Recipes for IDA Python」。本全体で三章構成になっている内の一章です。
-内容は、タイトルの通り<strong>IDA Pythonのための簡単レシピ</strong>的なものになっています。
-IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、それらを解決する比較的簡単なIDA Pythonスクリプトの例とその解説を書いています。</p>
+<p>むっちゃドキドキしてきた…。</p>
 
-<p>こんなん。</p>
+<p>コミケ戦士の皆さん、今日くらいは自慰は休んで明日に備えますよね？</p>
 
-<p><a href="/images/c89_idapython_p13-14.png"><img src="/images/c89_idapython_p13-14.png" alt="Easy Recipes for IDA Python" /></a></p>
+<p>というわけでこんにちは、maythです。opが記事説明上げてたので、コミケ初日の今日に至って私もなんか書いておこうかと思います。</p>
 
-<p><strong>C89 3日目(15/12/31) 東ホ-05b</strong> 500円です。
-2016年2月以降に電子書籍化する予定（詳細未定）ですが、物理本の購入者には電子書籍版を無料で提供します。</p>
+<p>今回は <strong>デコンパイラを殺すIL</strong> という記事を書いています。殺すといってもSEGVさせるとかではなく、デコンパイルを失敗させるというお話です。</p>
 
-<p><a href="/images/c89_cover_sm.png"><img src="/images/c89_cover_thumb.png" alt="urandom vol.1 表紙" /></a></p>
+<p>元々は『<a href="http://cedec.cesa.or.jp/2015/session/ENG/10405.html">SECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジ</a>』の発表で触れた内容です（発表資料は<a href="http://2015.seccon.jp/cedec-challenge-2015.html">SECCON 2015の当該記事</a>にあります）。当日は時間が限られており、チート対策としてのデコンパイル妨害については簡単なサンプルを示すだけにとどめました。その辺りを突っ込んで書いています。</p>
+
+<p>デコンパイル妨害の指南書というよりかは、調査報告といった感じになっています。実際、本記事の流れはtkbctf2のSkill Analyzerを作るにあたって調査した分に、横浜大会で資料を作る際に再調査した分を付け加えつつ、当時の私の思考と実験をトレースしたような構成としました。</p>
+
+<p>.NET周りのエンジニアの方にチラッと読んでもらいたい感じの記事です。最近はUnityでMonoを使う機会も増えているかと思います。</p>
+
+<p>3日目（31日 木曜日）、スペースは <strong>東ホ-05b &ldquo;urandom&rdquo;</strong> 、頒布価格は500円です。</p>
+
+<p>それでは、当日スペースにてお待ちしております。</p>
+
+<p>note: なお、記事に関するツッコミ等は適宜ブログ記事上げてもらうなり、<a href="https://twitter.com/maytheplic">@maytheplic</a>までTwitterでリプを飛ばすなりしていただければ。</p>
 
                     </div>
                 </section>
