@@ -1,6 +1,6 @@
 +++
-date = "2015-12-25T17:16:13+09:00"
-draft = true
+date = "2015-12-29T20:23:43+09:00"
+draft = false
 title = "C89本にIDA Pythonの記事を書いた"
 author = "op"
 +++
