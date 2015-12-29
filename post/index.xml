@@ -6,8 +6,31 @@
     <description>Recent content in Posts on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 29 Dec 2015 16:01:01 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 29 Dec 2015 20:23:43 +0900</lastBuildDate>
     <atom:link href="http://urandom-ctf.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>C89本にIDA Pythonの記事を書いた</title>
+      <link>http://urandom-ctf.github.io/post/c89-idapython/</link>
+      <pubDate>Tue, 29 Dec 2015 20:23:43 +0900</pubDate>
+      
+      <guid>http://urandom-ctf.github.io/post/c89-idapython/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://urandom-ctf.github.io/post/c89-pre/&#34;&gt;先の記事&lt;/a&gt;で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。&lt;/p&gt;
+
+&lt;p&gt;その同人誌にIDA Pythonの記事を書きました。タイトルは「Easy Recipes for IDA Python」。本全体で三章構成になっている内の一章です。
+内容は、タイトルの通り&lt;strong&gt;IDA Pythonのための簡単レシピ&lt;/strong&gt;的なものになっています。
+IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、それらを解決する比較的簡単なIDA Pythonスクリプトの例とその解説を書いています。&lt;/p&gt;
+
+&lt;p&gt;こんなん。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://urandom-ctf.github.io/images/c89_idapython_p13-14.png&#34;&gt;&lt;img src=&#34;http://urandom-ctf.github.io/images/c89_idapython_p13-14.png&#34; alt=&#34;Easy Recipes for IDA Python&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;C89 3日目(15/12/31) 東ホ-05b&lt;/strong&gt; 500円です。
+2016年2月以降に電子書籍化する予定（詳細未定）ですが、物理本の購入者には電子書籍版を無料で提供します。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://urandom-ctf.github.io/images/c89_cover_sm.png&#34;&gt;&lt;img src=&#34;http://urandom-ctf.github.io/images/c89_cover_thumb.png&#34; alt=&#34;urandom vol.1 表紙&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>[C89] デコンパイラを殺すIL</title>
