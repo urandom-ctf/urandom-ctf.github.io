@@ -6,8 +6,197 @@
     <description>Recent content on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sun, 21 Feb 2016 17:42:38 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 15 Mar 2016 01:42:29 +0900</lastBuildDate>
     <atom:link href="http://urandom-ctf.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Sunshine CTF 2016 Write-up</title>
+      <link>http://urandom-ctf.github.io/post/sunshine-ctf-2016/</link>
+      <pubDate>Tue, 15 Mar 2016 01:42:29 +0900</pubDate>
+      
+      <guid>http://urandom-ctf.github.io/post/sunshine-ctf-2016/</guid>
+      <description>
+
+&lt;p&gt;2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された&lt;a href=&#34;http://ctf.bsidesorlando.org/&#34;&gt;Sunshine CTF 2016&lt;/a&gt;のwrite-upです。&lt;/p&gt;
+
+&lt;p&gt;なお、今回は以下のメンバー編成で参加しました。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;mayth （土曜日を寝て潰す担当）&lt;/li&gt;
+&lt;li&gt;op （たまに現れていくらかの助言と違法語句を残して去って行く担当）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ESTはクソ。&lt;/p&gt;
+
+&lt;h1 id=&#34;forensics-50-butterfly-effect:bed21f86bf16109846cd1153f80bb694&#34;&gt;Forensics 50: Butterfly Effect&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;butterfly.png&lt;/code&gt;が与えられる。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www1.chapman.edu/~nabav100/ImgStegano/&#34;&gt;ImgStegano&lt;/a&gt;にファイルを読み込ませて&amp;rdquo;Image &amp;gt; Enhanced LSB&amp;rdquo;とするとフラグが現れた。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;sun{RE4DY_THE_4CID_M4GNET!}&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;exploitation-50-alligatorsim95:bed21f86bf16109846cd1153f80bb694&#34;&gt;Exploitation 50: alligatorsim95&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Don&amp;rsquo;t try to automate adding X eggs at a time&lt;/p&gt;
+
+&lt;p&gt;legends circulate in florida of an alligator that had laid millions of eggs. use this simulator to try to achieve the same greatness&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;※プログラムは与えられない。&lt;/p&gt;
+
+&lt;p&gt;指定されたIPアドレス/ポートにncで接続すると、アリゲーターのAAと共に文章が流れてくる。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;-&amp;gt; u r... AN ALLIGATOR!!
+.. simulating alligator lifecycle ..
+.. simulating alligator throwing physics..
+-&amp;gt; you got 1337 eggz in ur nest, how many you gonna lay alligator??
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;echo&lt;/code&gt;とかで入力を機械的に流し込もうとしたとき (&amp;ldquo;Don&amp;rsquo;t try to automate adding X eggs at a time&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;0や数字として解釈出来ない数を与えたとき&lt;/li&gt;
+&lt;li&gt;一定時間が経過したとき&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;この条件下で卵の数を大きくする問題。&lt;/p&gt;
+
+&lt;p&gt;色々入力を試すと、0はダメだが負数を受け付けること、また、負数であれば絶対値がいくら大きくてもよいことがわかった。
+これを利用すると整数オーバーフローを引き起こすことができる。そうすると卵の数は非常に大きな値となり、フラグを得ることができる。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;-&amp;gt; u r... AN ALLIGATOR!!
+.. simulating alligator lifecycle ..
+.. simulating alligator throwing physics..
+-&amp;gt; you got 1337 eggz in ur nest, how many you gonna lay alligator?? -2147483647
+~~ producing eggz ~~
+.. simulating alligator lifecycle ..
+.. simulating alligator throwing physics..
+-&amp;gt; you got -2147482310 eggz in ur nest, how many you gonna lay alligator?? -10
+~~ producing eggz ~~
+.. simulating alligator lifecycle ..
+.. simulating alligator throwing physics..
+-&amp;gt; you got -2147482320 eggz in ur nest, how many you gonna lay alligator?? -40000
+~~ producing eggz ~~
+-&amp;gt; dang 2147444976 is a lotta eggs
+-&amp;gt; as a god among gators here is ur crown:
+sun{int_0verflow_i5_a_g0od_st4rt}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;sun{int_0verflow_i5_a_g0od_st4rt}&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;exploitation-55-dance:bed21f86bf16109846cd1153f80bb694&#34;&gt;Exploitation 55: Dance&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Some prefer the stanky leg, others prefer the dab, but what dance moves do you have?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;IPアドレスとポート番号が指定される。当初プログラムは与えられなかったが、後にフラグ部分を潰したバイナリが配布された。&lt;/p&gt;
+
+&lt;p&gt;サーバーに接続すると以下のような文字が流れてくる。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
+give us ur sick dance moves like so:
+whip,naenae,whip,whip,naenae&amp;lt;ENTER&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;whip&lt;/code&gt;か&lt;code&gt;naenae&lt;/code&gt;をカンマ区切りで並べて送信すると&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;do the naenae
+(\)
+  \(:O)
+   /||\_
+_/¯    ¯\_
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;こんな感じで対応したアクションと愉快なAAが流れてくる。&lt;/p&gt;
+
+&lt;p&gt;当初何をさせたいのかさっぱりわからなかったが、バイナリが配布されたのでそれを読んだ。&lt;/p&gt;
+
+&lt;p&gt;その結果、こちらからの入力を受け取るバッファについて、&lt;code&gt;memset&lt;/code&gt;で80bytesを&lt;code&gt;NULL&lt;/code&gt;で初期化しているにも関わらず、&lt;code&gt;fgets&lt;/code&gt;で最大89bytesまで読み込むようになっていることがわかった。また、0で初期化された特定の変数の値が書き換わっているときにフラグが表示されるようになっていることがわかった。&lt;/p&gt;
+
+&lt;p&gt;入力の読み込みはだいたい次のようなロジックになっている。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;while (strlen(buf) &amp;gt; 0) {
+  if (*buf == &#39;n&#39;) {
+    buf += 7;
+    donaenae();
+  } else if (*buf == &#39;w&#39;) {
+    buf += 5;
+    dowhip();
+  }
+}
+check_flag();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;先頭しか見てないっぽいので適当に80文字の&amp;rdquo;n&amp;rdquo;を送り付けたところ、フラグが得られた。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;% ruby -e &#39;puts &amp;quot;n&amp;quot; * 0x50&#39; | nc ****
+welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
+give us ur sick dance moves like so:
+whip,naenae,whip,whip,naenae&amp;lt;ENTER&amp;gt;
+do the naenae
+(\)
+  \(:O)
+   /||\_
+_/¯    ¯\_
+(snip)
+do the naenae
+(\)
+  \(:O)
+   /||\_
+_/¯    ¯\_
+girl u can dance w the best of em. the pw to our vip lounge is: sun{d4nc3_0n_th3_s7ack}
+
+cool dance! come again!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;sun{d4nc3_0n_th3_s7ack}&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;misc-50-find-floridaman:bed21f86bf16109846cd1153f80bb694&#34;&gt;Misc 50: Find Floridaman&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;In other news&amp;hellip; Floridaman did what with an alligator?&lt;/p&gt;
+
+&lt;p&gt;Remember, this has the normal flag format.&lt;/p&gt;
+
+&lt;p&gt;Hint: You need only look at comments from Florida-based news websites.&lt;/p&gt;
+
+&lt;p&gt;Hint: Gator went threw a window!&lt;/p&gt;
+
+&lt;p&gt;Hint: &amp;ldquo;Flori-duh&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;NOTE: Flag was posted before the 12th&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;フロリダマンを探すマン。&lt;/p&gt;
+
+&lt;p&gt;問題オープン当初は最初の2文だけだったのが、誰も解かないからか次々にヒントが追加されて結局ヒントが3つになった。&lt;/p&gt;
+
+&lt;p&gt;ヒントが3つになってから、そのヒントを元に&amp;rdquo;Flori-duh Alligator&amp;rdquo;で探してみると、次の記事が見つかった。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.mypalmbeachpost.com/news/news/crime-law/wendys-alligator-thrower-is-only-fulfilling-his-fl/nqNfr/&#34;&gt;Wendy’s alligator-thrower is only fulfilling his Flori-duh destiny&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;この記事のReader Commentsにフラグがある。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Summerc137 3 days ago
+May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s_th1s_even_real_l1fe?}&lt;/p&gt;
+
+&lt;p&gt;sun{1s_th1s_even_real_l1fe?}&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;ちなみにこの事件、なんでも1mちょっとあるアリゲーターをWendy&amp;rsquo;sのドライブスルーの窓から投げ込んだのだそうな。さすがアメリカ。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>urandom vol.1 電子書籍版リリース</title>
