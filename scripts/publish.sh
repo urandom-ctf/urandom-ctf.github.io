@@ -13,7 +13,12 @@ get_hash() {
 publish() {
     commit_hash=$(get_hash)
     summary=$(get_summary)
+    if (cd $ROOT_DIR/public && git diff --quiet); then
+        echo "there are no changes to publish"
+        return
+    fi
     (cd $ROOT_DIR/public && \
+        git diff --quiet && \
         git add . && \
         git commit -m "publish ${commit_hash}: \"${summary}\"" && \
         git push
