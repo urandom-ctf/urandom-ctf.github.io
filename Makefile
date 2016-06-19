@@ -10,4 +10,4 @@ build:
 	hugo -t $(THEME)
 
 publish: build
-	./scripts/publish.sh
+	/bin/bash ./scripts/publish.sh
