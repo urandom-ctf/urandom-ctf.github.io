@@ -22,7 +22,6 @@ publish() {
 
     echo "publish"
     (cd $ROOT_DIR/public && \
-        git pull origin master && \
         git add -A && \
         git commit -m "publish ${commit_hash}: \"${summary}\"" && \
         git push
