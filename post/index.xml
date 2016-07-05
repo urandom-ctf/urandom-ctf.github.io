@@ -6,8 +6,27 @@
     <description>Recent content in Posts on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 15 Mar 2016 01:42:29 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 05 Jul 2016 01:51:19 +0900</lastBuildDate>
     <atom:link href="http://urandom-ctf.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>C90参加のお知らせ</title>
+      <link>http://urandom-ctf.github.io/post/c90-announce/</link>
+      <pubDate>Tue, 05 Jul 2016 01:51:19 +0900</pubDate>
+      
+      <guid>http://urandom-ctf.github.io/post/c90-announce/</guid>
+      <description>&lt;p&gt;C90（2016年夏コミ）当選してました。スペースは &lt;strong&gt;3日目 東ム-43b&lt;/strong&gt; です。C89に引き続き、&amp;rdquo;urandom vol.2&amp;rdquo;を出します。内容は引き続いてないです。&lt;/p&gt;
+
+&lt;p&gt;urandom vol.2は今のところこんな感じの本を予定しています（いずれも仮題）。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;バイナリの調べ方 (by op)&lt;/li&gt;
+&lt;li&gt;.NET難読化ツール事始め (by fetastein)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;むしろこれしか決まってませんが鋭意執筆中です。サンプル等々出せそうなタイミングで都度記事を上げますので、いい感じにチェックしてください。それでは。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Sunshine CTF 2016 Write-up</title>
