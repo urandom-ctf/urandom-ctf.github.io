@@ -4,7 +4,6 @@ draft = false
 title = "C90新刊告知・サンプル公開"
 author = "yyu"
 categories = ["Publication"]
-fractions = false
 +++
 
 [![C90 Sample](/images/c90_cover_thumb.png)](/pdfs/c90_sample.pdf)
