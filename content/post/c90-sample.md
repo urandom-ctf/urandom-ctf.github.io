@@ -4,9 +4,10 @@ draft = false
 title = "C90新刊告知・サンプル公開"
 author = "yyu"
 categories = ["Publication"]
+fractions = false
 +++
 
-![C90 Sample](/images/c90_cover_thumb.png)
+[![C90 Sample](/images/c90_cover_thumb.png)](/pdfs/c90_sample.pdf)
 
 CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。
 スペースは**3日目 東4ホール ム-43b**です。
