@@ -10,7 +10,7 @@ categories = ["Publication"]
 
 CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。
 スペースは**3日目 東4ホール ム-43b**です。
-記事は以下のの2本で、42P 300円で頒布します。
+記事は以下の2本で、42P 300円で頒布します。
 
 * バイナリの調べ方 (by op)
 * Mental Game! (by yyu)
