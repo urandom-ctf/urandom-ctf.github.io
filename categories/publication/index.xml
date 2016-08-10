@@ -6,8 +6,32 @@
     <description>Recent content in Publication on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Wed, 20 Jul 2016 00:57:00 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 11 Aug 2016 00:47:15 +0900</lastBuildDate>
     <atom:link href="http://urandom-ctf.github.io/categories/publication/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>C90新刊告知・サンプル公開</title>
+      <link>http://urandom-ctf.github.io/post/c90-sample/</link>
+      <pubDate>Thu, 11 Aug 2016 00:47:15 +0900</pubDate>
+      
+      <guid>http://urandom-ctf.github.io/post/c90-sample/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://urandom-ctf.github.io/pdfs/c90_sample.pdf&#34;&gt;&lt;img src=&#34;http://urandom-ctf.github.io/images/c90_cover_thumb.png&#34; alt=&#34;C90 Sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。
+スペースは&lt;strong&gt;3日目 東4ホール ム-43b&lt;/strong&gt;です。
+記事は以下の2本で、42P 300円で頒布します。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;バイナリの調べ方 (by op)&lt;/li&gt;
+&lt;li&gt;Mental Game! (by yyu)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;それぞれの記事から2Pずつ抜粋した&lt;a href=&#34;http://urandom-ctf.github.io/pdfs/c90_sample.pdf&#34;&gt;サンプル&lt;/a&gt;を公開します。&lt;/p&gt;
+
+&lt;p&gt;また、この新刊のおまけとして&lt;strong&gt;DEF CON CTF 2016 Final参戦記&lt;/strong&gt;をコピ本で頒布予定です。
+8/5-7にアメリカ ラスベガスで開催されたDEF CON CTF 2016 Finalについて、opがCTFチームbinjaのメンバーとして参加した経験を記したもので、現在執筆中です(こちらはurandomとは関係ありません)。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>C90参加のお知らせ</title>
