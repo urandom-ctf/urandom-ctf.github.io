@@ -1,3 +1,6 @@
 baseurl = "http://urandom-ctf.github.io"
 languageCode = "ja-jp"
 title = "urandom"
+
+[blackfriday]
+    fractions = false
