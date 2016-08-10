@@ -15,6 +15,7 @@ CTFサークルurandomは、コミックマーケット90で新刊「urandom vol
 * バイナリの調べ方 (by op)
 * Mental Game! (by yyu)
 
+表紙デザインはpolamjagです。
 それぞれの記事から2Pずつ抜粋した[サンプル](/pdfs/c90_sample.pdf)を公開します。
 
 また、この新刊のおまけとして**DEF CON CTF 2016 Final参戦記**をコピ本で頒布予定です。
