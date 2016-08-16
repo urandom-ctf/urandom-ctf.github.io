@@ -8,7 +8,7 @@ title = "Trend Micro CTF 2016 Online qualifier"
 
 urandomは4問解答し600点、92位でした。
 
-# Analysis - Offensive 2016
+# Analysis - Offensive 200
 
 > Category: Analysis - offensive
 >
