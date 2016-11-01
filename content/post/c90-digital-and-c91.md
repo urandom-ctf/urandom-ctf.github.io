@@ -2,6 +2,7 @@
 title = "urandom vol.2電子版公開のお知らせとC91告知"
 date = "2016-11-02T22:55:00+09:00"
 author = "mayth"
+categories = ["Publication"]
 +++
 
 # urandom vol.2電子版
