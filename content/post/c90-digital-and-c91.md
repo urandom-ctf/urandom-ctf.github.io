@@ -1,7 +1,6 @@
 +++
 title = "urandom vol.2電子版公開のお知らせとC91告知"
-draft = true
-date = "2016-11-01T01:03:04+09:00"
+date = "2016-11-02T22:55:00+09:00"
 author = "mayth"
 +++
 
