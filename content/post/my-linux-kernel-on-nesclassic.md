@@ -9,9 +9,12 @@ date = "2016-11-14T20:01:17+09:00"
 
 ファミコンミニ自体の権利表記画面や[任天堂Webサイト](https://www.nintendo.co.jp/support/oss/)で配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動できたので、手順を書きます。
 
+<blockquote class="twitter-tweet tw-align-center" data-lang="ja"><p lang="ja" dir="ltr">ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) <a href="https://t.co/00EZZgMx7A">pic.twitter.com/00EZZgMx7A</a></p>&mdash; op (@6f70) <a href="https://twitter.com/6f70/status/797939754528444416">2016年11月13日</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 # 注意
 
-この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。
+**この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。**
 
 # 事前準備
 
@@ -46,7 +49,7 @@ date = "2016-11-14T20:01:17+09:00"
 
     3. シリアルコンソールで `fastboot_test` コマンドを実行して、FELモードに入ります。
 
-        fastbootと言いつつFELモードに入ります。このFELモードでは最初からDRAMが有効化されています。
+        fastbootと言いつつFELモードに入ります。このFELモードでは最初からDRAMが有効化されています。ただし、シリアルコンソールが壊れるようです。
 
     4. ホストで以下のコマンドを実行して、手順2で読みだしたイメージをホストへ転送します。
 
@@ -93,46 +96,35 @@ date = "2016-11-14T20:01:17+09:00"
 
         対話的に聞かれるconfigの確認は全部そのままでもとりあえず動きました。
 
-3. 起動イメージの作成
+3. U-boot, 起動イメージの作成
 
-    1. 以下のコマンドで起動イメージを展開します。
+    1. u-boot.bin中の `bootcmd=sunxi_flash phy_read 43800000 30 20;boota 43800000` を `bootcmd=boota 43800000` に置換します(オフセットがずれないようにNULLパディング)。
+
+    2. 以下のコマンドで起動イメージを展開します。
 
         ```
         abootimg -x boot.img
         ```
 
-    2. zImageを手順2で作成したものに差し替え、以下のコマンドで起動イメージを再作成します。
+    3. zImageを手順2で作成したものに差し替え、以下のコマンドで起動イメージを再作成します。
 
         ```
         abootimg --create myboot.img -f bootimg.cfg -k zImage -r initrd.img
         ```
 
         このままではinitrd.imgを展開できないので、起動しても `/init` を実行できずにPanicします。
-        起動後にシェル等を操作したい場合は、カーネルパラメーターやinitrd.imgを適宜編集して下さい。
+        起動後にシェル等を操作したい場合は、カーネルパラメーターとinitrd.imgを適宜編集したり作りなおして下さい。
 
 4. Linuxの起動
 
     1. 手順1.1, 1.3でFELモードに入ります。
 
-    2. ホストで以下のコマンドを実行して、Linuxをファミコンミニのメモリに書き込みます。
+    2. ホストで以下のコマンドを実行すると、Linuxが起動します。
 
         ```
         ./sunxi-fel write 0x43800000 myboot.img
-        ```
-
-    3. ホストで以下のコマンドを実行して、オリジナルのU-bootを実行します。この時、手順1と同様にsキーを押し続けて下さい。
-
-        ```
         ./sunxi-fel write 0x47000000 u-boot.bin
-        ./sunxi-fel fill  0x470000e0 1 0x10
         ./sunxi-fel exe   0x47000000
-
-        ```
-
-    4. シリアルコンソールで以下のコマンドを実行すると、Linuxが起動します。
-
-        ```
-        boota 43800000
         ```
 
 # おわりに
