@@ -3,6 +3,7 @@ title = "ファミコンミニで自前のLinuxカーネルを動かす手順"
 draft = true
 date = "2016-11-14T20:01:17+09:00"
 author = "op"
+categories = ["Misc"]
 
 +++
 
