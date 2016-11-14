@@ -6,8 +6,156 @@
     <description>Recent content on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Wed, 02 Nov 2016 22:55:00 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 15 Nov 2016 00:39:08 +0900</lastBuildDate>
     <atom:link href="http://urandom-ctf.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ファミコンミニで自前のLinuxカーネルを動かす手順</title>
+      <link>http://urandom-ctf.github.io/post/my-linux-kernel-on-nesclassic/</link>
+      <pubDate>Tue, 15 Nov 2016 00:39:08 +0900</pubDate>
+      
+      <guid>http://urandom-ctf.github.io/post/my-linux-kernel-on-nesclassic/</guid>
+      <description>
+
+&lt;h1 id=&#34;はじめに&#34;&gt;はじめに&lt;/h1&gt;
+
+&lt;p&gt;ファミコンミニ自体の権利表記画面や&lt;a href=&#34;https://www.nintendo.co.jp/support/oss/&#34;&gt;任天堂Webサイト&lt;/a&gt;で配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet tw-align-center&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) &lt;a href=&#34;https://t.co/00EZZgMx7A&#34;&gt;pic.twitter.com/00EZZgMx7A&lt;/a&gt;&lt;/p&gt;&amp;mdash; op (@6f70) &lt;a href=&#34;https://twitter.com/6f70/status/797939754528444416&#34;&gt;2016年11月13日&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;注意&#34;&gt;注意&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;事前準備&#34;&gt;事前準備&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;sunxi-fel (&lt;a href=&#34;http://linux-sunxi.org/Sunxi-tools&#34;&gt;sunxi-tools&lt;/a&gt;)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;abootimg&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ARMのコンパイル環境&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Ubuntu 12.04 + gcc-arm-linux-gnueabi でテストしています。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ファミコンミニのシリアルコンソール&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;参考: &lt;a href=&#34;https://www.ns-koubou.com/blog/2016/11/11/nes_classic/&#34;&gt;ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;参考: &lt;a href=&#34;http://linux-sunxi.org/Nintendo_NES_Classic_Edition&#34;&gt;Nintendo NES Classic Edition - linux-sunxi.org&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ファミコンミニとホストPCのUSB接続&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;手順&#34;&gt;手順&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;U-boot, 起動イメージの取得&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;シリアルコンソールで &lt;code&gt;s&lt;/code&gt; キーを押しながらファミコンミニを起動して、U-bootのシェルに入ります。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sunxi_flash phy_read 58000000 0 80
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;読み出し先アドレス0x58000000とセクタ数0x80は、適当な使ってなさそうな所と長さなので、必然性はありません。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;シリアルコンソールで &lt;code&gt;fastboot_test&lt;/code&gt; コマンドを実行して、FELモードに入ります。&lt;/p&gt;
+
+&lt;p&gt;fastbootと言いつつFELモードに入ります。このFELモードでは最初からDRAMが有効化されています。ただし、シリアルコンソールが壊れるようです。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ホストで以下のコマンドを実行して、手順1.2で読みだしたイメージをホストへ転送します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sunxi-fel read 0x58000000 0x1000000 0000-0080.bin
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;U-bootのマジック &lt;code&gt;uboot&lt;/code&gt; でイメージ中を検索するとU-bootが見つかります。オフセット0x14にサイズが格納されているので、それを元に切り出します。切り出したファイルをu-boot.binとします。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;起動イメージのマジック &lt;code&gt;ANDROID!&lt;/code&gt; でイメージ中を検索すると起動イメージが見つかるので、適当に切り出します。切り出したファイルをboot.imgとします。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Linuxのビルド&lt;/p&gt;
+
+&lt;p&gt;配布されているソースコード中の linux-9ed0e6c8612113834e9af9d16a3e90b573c488ca をビルドします。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;drivers/video/sunxi/hdmi_ep952/EP952api.h&lt;/code&gt; のコメントアウトされている &lt;code&gt;WARN&lt;/code&gt; マクロを有効にします。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;以下のコマンドを実行してconfigします。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export ARCH=arm
+export CROSS_COMPILE=arm-linux-gnueabi-
+
+make sun8iw5p1smp_defconfig
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;.configに以下の変更を加えます。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CONFIG_INITRAMFS_SOURCE=&amp;quot;&amp;quot;
+CONFIG_CMA=y
+CONFIG_FB_SUNXI=y
+CONFIG_CMDLINE_FORCE=n
+CONFIG_USB_SUPPORT=n
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;USBを切っているのは単にサイズ削減の為です。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;以下のコマンドを実行してビルドします。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;make zImage
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;対話的に聞かれるconfigの確認は全部そのままでもとりあえず動きました。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;U-boot, 起動イメージの作成&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;u-boot.bin中の &lt;code&gt;bootcmd=sunxi_flash phy_read 43800000 30 20;boota 43800000&lt;/code&gt; を &lt;code&gt;bootcmd=boota 43800000&lt;/code&gt; に置換します(オフセットがずれないようにNULLパディング)。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;以下のコマンドで起動イメージを展開します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;abootimg -x boot.img
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;zImageを手順2で作成したものに差し替え、以下のコマンドで起動イメージを再作成します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;abootimg --create myboot.img -f bootimg.cfg -k zImage -r initrd.img
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;このままではinitrd.imgを展開できないので、起動しても &lt;code&gt;/init&lt;/code&gt; を実行できずにPanicします。
+起動後にシェル等を操作したい場合は、カーネルパラメーターとinitrd.imgを適宜編集したり作りなおして下さい。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Linuxの起動&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;手順1.1, 1.3でFELモードに入ります。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ホストで以下のコマンドを実行すると、Linuxが起動します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sunxi-fel write 0x43800000 myboot.img
+sunxi-fel write 0x47000000 u-boot.bin
+sunxi-fel exe   0x47000000
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;おわりに&#34;&gt;おわりに&lt;/h1&gt;
+
+&lt;p&gt;ざっと手順を書き出しました。ファミコンミニは拡張性が低いのが難点ですが、計算能力はそれなりにあるので色々な事ができそうです。
+Linuxカーネルはとりあえず動くものをビルドしたので、より適切なビルド方法は他にあるかと思いますし、起動手順ももっと簡素な物がありそうです。&lt;/p&gt;
+
+&lt;p&gt;作業を始めた当初は &lt;code&gt;fastboot_test&lt;/code&gt; コマンドでDRAM有効化済みのFELモードに入れる事に気付いておらず、 &lt;code&gt;efex&lt;/code&gt; コマンドでDRAM無効なFELモードに入って、頑張って自前でDRAMを有効化して作業していました。
+その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 &lt;a href=&#34;http://urandom-ctf.github.io/post/c90-digital-and-c91/&#34;&gt;urandom vol.3&lt;/a&gt; に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>urandom vol.2電子版公開のお知らせとC91告知</title>
