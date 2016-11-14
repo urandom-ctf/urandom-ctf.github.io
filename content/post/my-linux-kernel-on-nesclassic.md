@@ -8,7 +8,7 @@ author = "op"
 
 # はじめに
 
-ファミコンミニ自体の権利表記画面や[任天堂Webサイト](https://www.nintendo.co.jp/support/oss/)で配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動できたので、手順を書きます。
+ファミコンミニ自体の権利表記画面や[任天堂Webサイト](https://www.nintendo.co.jp/support/oss/)で配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。
 
 <blockquote class="twitter-tweet tw-align-center" data-lang="ja"><p lang="ja" dir="ltr">ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) <a href="https://t.co/00EZZgMx7A">pic.twitter.com/00EZZgMx7A</a></p>&mdash; op (@6f70) <a href="https://twitter.com/6f70/status/797939754528444416">2016年11月13日</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -123,9 +123,9 @@ author = "op"
     2. ホストで以下のコマンドを実行すると、Linuxが起動します。
 
         ```
-        ./sunxi-fel write 0x43800000 myboot.img
-        ./sunxi-fel write 0x47000000 u-boot.bin
-        ./sunxi-fel exe   0x47000000
+        sunxi-fel write 0x43800000 myboot.img
+        sunxi-fel write 0x47000000 u-boot.bin
+        sunxi-fel exe   0x47000000
         ```
 
 # おわりに
