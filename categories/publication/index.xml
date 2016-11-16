@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>urandom</title>
-    <link>//urandom-ctf.github.io/categories/publication/index.xml</link>
+    <link>//blog.urandom.team/categories/publication/index.xml</link>
     <description>Recent content on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <atom:link href="//urandom-ctf.github.io/categories/publication/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//blog.urandom.team/categories/publication/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>urandom vol.2電子版公開のお知らせとC91告知</title>
-      <link>//urandom-ctf.github.io/post/c90-digital-and-c91/</link>
+      <link>//blog.urandom.team/post/c90-digital-and-c91/</link>
       <pubDate>Wed, 02 Nov 2016 22:55:00 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c90-digital-and-c91/</guid>
+      <guid>//blog.urandom.team/post/c90-digital-and-c91/</guid>
       <description>
 
 &lt;h1 id=&#34;urandom-vol-2電子版&#34;&gt;urandom vol.2電子版&lt;/h1&gt;
@@ -46,11 +46,11 @@
     
     <item>
       <title>C90新刊告知・サンプル公開</title>
-      <link>//urandom-ctf.github.io/post/c90-sample/</link>
+      <link>//blog.urandom.team/post/c90-sample/</link>
       <pubDate>Thu, 11 Aug 2016 00:47:15 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c90-sample/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//urandom-ctf.github.io/pdfs/c90_sample.pdf&#34;&gt;&lt;img src=&#34;//urandom-ctf.github.io/images/c90_cover_thumb.png&#34; alt=&#34;C90 Sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+      <guid>//blog.urandom.team/post/c90-sample/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c90_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c90_cover_thumb.png&#34; alt=&#34;C90 Sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。
 スペースは&lt;strong&gt;3日目 東4ホール ム-43b&lt;/strong&gt;です。
@@ -62,7 +62,7 @@
 &lt;/ul&gt;
 
 &lt;p&gt;表紙デザインはpolamjagです。
-それぞれの記事から2Pずつ抜粋した&lt;a href=&#34;//urandom-ctf.github.io/pdfs/c90_sample.pdf&#34;&gt;サンプル&lt;/a&gt;を公開します。&lt;/p&gt;
+それぞれの記事から2Pずつ抜粋した&lt;a href=&#34;//blog.urandom.team/pdfs/c90_sample.pdf&#34;&gt;サンプル&lt;/a&gt;を公開します。&lt;/p&gt;
 
 &lt;p&gt;また、この新刊のおまけとして&lt;strong&gt;DEF CON CTF 2016 Final参戦記&lt;/strong&gt;をコピ本で頒布予定です。
 8/5-7にアメリカ ラスベガスで開催されたDEF CON CTF 2016 Finalについて、opがCTFチームbinjaのメンバーとして参加した経験を記したもので、現在執筆中です(こちらはurandomとは関係ありません)。&lt;/p&gt;
@@ -71,10 +71,10 @@
     
     <item>
       <title>C90参加のお知らせ</title>
-      <link>//urandom-ctf.github.io/post/c90-announce/</link>
+      <link>//blog.urandom.team/post/c90-announce/</link>
       <pubDate>Wed, 20 Jul 2016 00:57:00 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c90-announce/</guid>
+      <guid>//blog.urandom.team/post/c90-announce/</guid>
       <description>&lt;p&gt;C90（2016年夏コミ）当選してました。スペースは &lt;strong&gt;3日目 東ム-43b&lt;/strong&gt; です。C89に引き続き、&amp;rdquo;urandom vol.2&amp;rdquo;を出します。内容は引き続いてないです。&lt;/p&gt;
 
 &lt;p&gt;urandom vol.2はこんな感じの内容になります。&lt;/p&gt;

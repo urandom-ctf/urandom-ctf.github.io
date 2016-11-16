@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>urandom</title>
-    <link>//urandom-ctf.github.io/categories/write-ups/index.xml</link>
+    <link>//blog.urandom.team/categories/write-ups/index.xml</link>
     <description>Recent content on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <atom:link href="//urandom-ctf.github.io/categories/write-ups/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//blog.urandom.team/categories/write-ups/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Trend Micro CTF 2016 Online qualifier</title>
-      <link>//urandom-ctf.github.io/post/tmctf2016-qual/</link>
+      <link>//blog.urandom.team/post/tmctf2016-qual/</link>
       <pubDate>Wed, 17 Aug 2016 00:17:26 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/tmctf2016-qual/</guid>
+      <guid>//blog.urandom.team/post/tmctf2016-qual/</guid>
       <description>
 
 &lt;p&gt;日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた&lt;a href=&#34;http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/&#34;&gt;Trend Micro CTF 2016&lt;/a&gt;のwrite-upです。&lt;/p&gt;
@@ -224,10 +224,10 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
     
     <item>
       <title>Sunshine CTF 2016 Write-up</title>
-      <link>//urandom-ctf.github.io/post/sunshine-ctf-2016/</link>
+      <link>//blog.urandom.team/post/sunshine-ctf-2016/</link>
       <pubDate>Tue, 15 Mar 2016 01:42:29 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/sunshine-ctf-2016/</guid>
+      <guid>//blog.urandom.team/post/sunshine-ctf-2016/</guid>
       <description>
 
 &lt;p&gt;2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された&lt;a href=&#34;http://ctf.bsidesorlando.org/&#34;&gt;Sunshine CTF 2016&lt;/a&gt;のwrite-upです。&lt;/p&gt;

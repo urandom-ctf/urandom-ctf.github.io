@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>urandom</title>
-    <link>//urandom-ctf.github.io/categories/misc/index.xml</link>
+    <link>//blog.urandom.team/categories/misc/index.xml</link>
     <description>Recent content on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <atom:link href="//urandom-ctf.github.io/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//blog.urandom.team/categories/misc/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>ファミコンミニで自前のLinuxカーネルを動かす手順</title>
-      <link>//urandom-ctf.github.io/post/my-linux-kernel-on-nesclassic/</link>
+      <link>//blog.urandom.team/post/my-linux-kernel-on-nesclassic/</link>
       <pubDate>Mon, 14 Nov 2016 20:01:17 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/my-linux-kernel-on-nesclassic/</guid>
+      <guid>//blog.urandom.team/post/my-linux-kernel-on-nesclassic/</guid>
       <description>
 
 &lt;h1 id=&#34;はじめに&#34;&gt;はじめに&lt;/h1&gt;
@@ -152,7 +152,7 @@ sunxi-fel exe   0x47000000
 Linuxカーネルはとりあえず動くものをビルドしたので、より適切なビルド方法は他にあるかと思いますし、起動手順ももっと簡素な物がありそうです。&lt;/p&gt;
 
 &lt;p&gt;作業を始めた当初は &lt;code&gt;fastboot_test&lt;/code&gt; コマンドでDRAM有効化済みのFELモードに入れる事に気付いておらず、 &lt;code&gt;efex&lt;/code&gt; コマンドでDRAM無効なFELモードに入って、頑張って自前でDRAMを有効化して作業していました。
-その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 &lt;a href=&#34;//urandom-ctf.github.io/post/c90-digital-and-c91/&#34;&gt;urandom vol.3&lt;/a&gt; に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。&lt;/p&gt;
+その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 &lt;a href=&#34;//blog.urandom.team/post/c90-digital-and-c91/&#34;&gt;urandom vol.3&lt;/a&gt; に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。&lt;/p&gt;
 </description>
     </item>
     

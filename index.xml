@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>urandom</title>
-    <link>//urandom-ctf.github.io/index.xml</link>
+    <link>//blog.urandom.team/index.xml</link>
     <description>Recent content on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <lastBuildDate>Mon, 14 Nov 2016 20:01:17 +0900</lastBuildDate>
-    <atom:link href="//urandom-ctf.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//blog.urandom.team/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>ファミコンミニで自前のLinuxカーネルを動かす手順</title>
-      <link>//urandom-ctf.github.io/post/my-linux-kernel-on-nesclassic/</link>
+      <link>//blog.urandom.team/post/my-linux-kernel-on-nesclassic/</link>
       <pubDate>Mon, 14 Nov 2016 20:01:17 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/my-linux-kernel-on-nesclassic/</guid>
+      <guid>//blog.urandom.team/post/my-linux-kernel-on-nesclassic/</guid>
       <description>
 
 &lt;h1 id=&#34;はじめに&#34;&gt;はじめに&lt;/h1&gt;
@@ -153,16 +153,16 @@ sunxi-fel exe   0x47000000
 Linuxカーネルはとりあえず動くものをビルドしたので、より適切なビルド方法は他にあるかと思いますし、起動手順ももっと簡素な物がありそうです。&lt;/p&gt;
 
 &lt;p&gt;作業を始めた当初は &lt;code&gt;fastboot_test&lt;/code&gt; コマンドでDRAM有効化済みのFELモードに入れる事に気付いておらず、 &lt;code&gt;efex&lt;/code&gt; コマンドでDRAM無効なFELモードに入って、頑張って自前でDRAMを有効化して作業していました。
-その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 &lt;a href=&#34;//urandom-ctf.github.io/post/c90-digital-and-c91/&#34;&gt;urandom vol.3&lt;/a&gt; に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。&lt;/p&gt;
+その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 &lt;a href=&#34;//blog.urandom.team/post/c90-digital-and-c91/&#34;&gt;urandom vol.3&lt;/a&gt; に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>urandom vol.2電子版公開のお知らせとC91告知</title>
-      <link>//urandom-ctf.github.io/post/c90-digital-and-c91/</link>
+      <link>//blog.urandom.team/post/c90-digital-and-c91/</link>
       <pubDate>Wed, 02 Nov 2016 22:55:00 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c90-digital-and-c91/</guid>
+      <guid>//blog.urandom.team/post/c90-digital-and-c91/</guid>
       <description>
 
 &lt;h1 id=&#34;urandom-vol-2電子版&#34;&gt;urandom vol.2電子版&lt;/h1&gt;
@@ -195,10 +195,10 @@ Linuxカーネルはとりあえず動くものをビルドしたので、より
     
     <item>
       <title>Trend Micro CTF 2016 Online qualifier</title>
-      <link>//urandom-ctf.github.io/post/tmctf2016-qual/</link>
+      <link>//blog.urandom.team/post/tmctf2016-qual/</link>
       <pubDate>Wed, 17 Aug 2016 00:17:26 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/tmctf2016-qual/</guid>
+      <guid>//blog.urandom.team/post/tmctf2016-qual/</guid>
       <description>
 
 &lt;p&gt;日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた&lt;a href=&#34;http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/&#34;&gt;Trend Micro CTF 2016&lt;/a&gt;のwrite-upです。&lt;/p&gt;
@@ -409,11 +409,11 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
     
     <item>
       <title>C90新刊告知・サンプル公開</title>
-      <link>//urandom-ctf.github.io/post/c90-sample/</link>
+      <link>//blog.urandom.team/post/c90-sample/</link>
       <pubDate>Thu, 11 Aug 2016 00:47:15 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c90-sample/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//urandom-ctf.github.io/pdfs/c90_sample.pdf&#34;&gt;&lt;img src=&#34;//urandom-ctf.github.io/images/c90_cover_thumb.png&#34; alt=&#34;C90 Sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+      <guid>//blog.urandom.team/post/c90-sample/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c90_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c90_cover_thumb.png&#34; alt=&#34;C90 Sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。
 スペースは&lt;strong&gt;3日目 東4ホール ム-43b&lt;/strong&gt;です。
@@ -425,7 +425,7 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
 &lt;/ul&gt;
 
 &lt;p&gt;表紙デザインはpolamjagです。
-それぞれの記事から2Pずつ抜粋した&lt;a href=&#34;//urandom-ctf.github.io/pdfs/c90_sample.pdf&#34;&gt;サンプル&lt;/a&gt;を公開します。&lt;/p&gt;
+それぞれの記事から2Pずつ抜粋した&lt;a href=&#34;//blog.urandom.team/pdfs/c90_sample.pdf&#34;&gt;サンプル&lt;/a&gt;を公開します。&lt;/p&gt;
 
 &lt;p&gt;また、この新刊のおまけとして&lt;strong&gt;DEF CON CTF 2016 Final参戦記&lt;/strong&gt;をコピ本で頒布予定です。
 8/5-7にアメリカ ラスベガスで開催されたDEF CON CTF 2016 Finalについて、opがCTFチームbinjaのメンバーとして参加した経験を記したもので、現在執筆中です(こちらはurandomとは関係ありません)。&lt;/p&gt;
@@ -434,10 +434,10 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
     
     <item>
       <title>C90参加のお知らせ</title>
-      <link>//urandom-ctf.github.io/post/c90-announce/</link>
+      <link>//blog.urandom.team/post/c90-announce/</link>
       <pubDate>Wed, 20 Jul 2016 00:57:00 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c90-announce/</guid>
+      <guid>//blog.urandom.team/post/c90-announce/</guid>
       <description>&lt;p&gt;C90（2016年夏コミ）当選してました。スペースは &lt;strong&gt;3日目 東ム-43b&lt;/strong&gt; です。C89に引き続き、&amp;rdquo;urandom vol.2&amp;rdquo;を出します。内容は引き続いてないです。&lt;/p&gt;
 
 &lt;p&gt;urandom vol.2はこんな感じの内容になります。&lt;/p&gt;
@@ -464,10 +464,10 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
     
     <item>
       <title>Sunshine CTF 2016 Write-up</title>
-      <link>//urandom-ctf.github.io/post/sunshine-ctf-2016/</link>
+      <link>//blog.urandom.team/post/sunshine-ctf-2016/</link>
       <pubDate>Tue, 15 Mar 2016 01:42:29 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/sunshine-ctf-2016/</guid>
+      <guid>//blog.urandom.team/post/sunshine-ctf-2016/</guid>
       <description>
 
 &lt;p&gt;2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された&lt;a href=&#34;http://ctf.bsidesorlando.org/&#34;&gt;Sunshine CTF 2016&lt;/a&gt;のwrite-upです。&lt;/p&gt;
@@ -653,10 +653,10 @@ May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s
     
     <item>
       <title>urandom vol.1 電子書籍版リリース</title>
-      <link>//urandom-ctf.github.io/post/c89-digital-book/</link>
+      <link>//blog.urandom.team/post/c89-digital-book/</link>
       <pubDate>Sun, 21 Feb 2016 17:42:38 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c89-digital-book/</guid>
+      <guid>//blog.urandom.team/post/c89-digital-book/</guid>
       <description>
 
 &lt;p&gt;大変長らくお待たせしました。urandom vol.1の電子書籍版をリリースしました。電子書籍版は&lt;strong&gt;256円&lt;/strong&gt;での販売です。内容は物理書籍版と同一です。&lt;/p&gt;
@@ -676,11 +676,11 @@ May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s
     
     <item>
       <title>C89本にIDA Pythonの記事を書いた</title>
-      <link>//urandom-ctf.github.io/post/c89-idapython/</link>
+      <link>//blog.urandom.team/post/c89-idapython/</link>
       <pubDate>Tue, 29 Dec 2015 20:23:43 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c89-idapython/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//urandom-ctf.github.io/post/c89-pre/&#34;&gt;先の記事&lt;/a&gt;で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。&lt;/p&gt;
+      <guid>//blog.urandom.team/post/c89-idapython/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/post/c89-pre/&#34;&gt;先の記事&lt;/a&gt;で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。&lt;/p&gt;
 
 &lt;p&gt;その同人誌にIDA Pythonの記事を書きました。タイトルは「Easy Recipes for IDA Python」。本全体で三章構成になっている内の一章です。
 内容は、タイトルの通り&lt;strong&gt;IDA Pythonのための簡単レシピ&lt;/strong&gt;的なものになっています。
@@ -688,21 +688,21 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
 
 &lt;p&gt;こんなん。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;//urandom-ctf.github.io/images/c89_idapython_p13-14.png&#34;&gt;&lt;img src=&#34;//urandom-ctf.github.io/images/c89_idapython_p13-14.png&#34; alt=&#34;Easy Recipes for IDA Python&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/images/c89_idapython_p13-14.png&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c89_idapython_p13-14.png&#34; alt=&#34;Easy Recipes for IDA Python&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;C89 3日目(15/12/31) 東ホ-05b&lt;/strong&gt; 500円です。
 2016年2月以降に電子書籍化する予定（詳細未定）ですが、物理本の購入者には電子書籍版を無料で提供します。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;//urandom-ctf.github.io/images/c89_cover_sm.png&#34;&gt;&lt;img src=&#34;//urandom-ctf.github.io/images/c89_cover_thumb.png&#34; alt=&#34;urandom vol.1 表紙&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/images/c89_cover_sm.png&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c89_cover_thumb.png&#34; alt=&#34;urandom vol.1 表紙&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>[C89] デコンパイラを殺すIL</title>
-      <link>//urandom-ctf.github.io/post/c89-decompiler/</link>
+      <link>//blog.urandom.team/post/c89-decompiler/</link>
       <pubDate>Tue, 29 Dec 2015 16:01:01 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c89-decompiler/</guid>
+      <guid>//blog.urandom.team/post/c89-decompiler/</guid>
       <description>&lt;p&gt;いよいよ明日がコミケ初日ですよ！&lt;/p&gt;
 
 &lt;p&gt;むっちゃドキドキしてきた…。&lt;/p&gt;
@@ -729,10 +729,10 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
     
     <item>
       <title>C89情報 - 予告編</title>
-      <link>//urandom-ctf.github.io/post/c89-pre/</link>
+      <link>//blog.urandom.team/post/c89-pre/</link>
       <pubDate>Wed, 16 Dec 2015 00:41:36 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c89-pre/</guid>
+      <guid>//blog.urandom.team/post/c89-pre/</guid>
       <description>&lt;p&gt;maythです。無事に（？）本が出来つつあります（出来たとは言っていない）。世間ではスターのウォーズのなんかの公開が間近に迫っていますが、我々に迫っているのは締め切りとクソコードです。&lt;/p&gt;
 
 &lt;p&gt;&amp;ldquo;urandom vol.1&amp;rdquo;は記事3本でお送りします。記事の著者から内容について簡単なひとことを要求したところ1名ドロップしました。とりあえずこんな内容になります。&lt;/p&gt;
@@ -764,7 +764,7 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
 &lt;p&gt;改めて参加日とスペースの告知ですが、&lt;strong&gt;3日目（木曜日） 東ホ-05b&lt;/strong&gt; です。
 執筆者でさえ忘れていてWebカタログの地図で自分のサークルを見失いました。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;//urandom-ctf.github.io/images/c89_cover_sm.png&#34;&gt;&lt;img src=&#34;//urandom-ctf.github.io/images/c89_cover_thumb.png&#34; alt=&#34;urandom vol.1 表紙&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/images/c89_cover_sm.png&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c89_cover_thumb.png&#34; alt=&#34;urandom vol.1 表紙&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;なお、&lt;strong&gt;頒布価格は500円を予定しています&lt;/strong&gt;。消費税はありませんので、本当に500円だけ握りしめて来て頂ければと思います。&lt;/p&gt;
 
@@ -780,10 +780,10 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
     
     <item>
       <title>C89情報</title>
-      <link>//urandom-ctf.github.io/post/c89/</link>
+      <link>//blog.urandom.team/post/c89/</link>
       <pubDate>Wed, 04 Nov 2015 05:21:39 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c89/</guid>
+      <guid>//blog.urandom.team/post/c89/</guid>
       <description>&lt;p&gt;C89当選しました。スペースは &lt;strong&gt;3日目 東ホ-05b&lt;/strong&gt; です。&lt;/p&gt;
 
 &lt;p&gt;以前の告知通りの本が出ます。&lt;/p&gt;
@@ -804,11 +804,11 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
     
     <item>
       <title>C89申し込みました</title>
-      <link>//urandom-ctf.github.io/post/c89-appl/</link>
+      <link>//blog.urandom.team/post/c89-appl/</link>
       <pubDate>Sat, 29 Aug 2015 01:16:53 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/post/c89-appl/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//urandom-ctf.github.io/images/c89_cut.png&#34;&gt;&lt;img src=&#34;//urandom-ctf.github.io/images/c89_cut_small.png&#34; alt=&#34;C89 サークルカット&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+      <guid>//blog.urandom.team/post/c89-appl/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/images/c89_cut.png&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c89_cut_small.png&#34; alt=&#34;C89 サークルカット&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;C89に&amp;rdquo;urandom&amp;rdquo;で申し込んでいます。&lt;/p&gt;
 
@@ -827,10 +827,10 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
     
     <item>
       <title>About us</title>
-      <link>//urandom-ctf.github.io/about/</link>
+      <link>//blog.urandom.team/about/</link>
       <pubDate>Fri, 28 Aug 2015 19:40:47 +0900</pubDate>
       
-      <guid>//urandom-ctf.github.io/about/</guid>
+      <guid>//blog.urandom.team/about/</guid>
       <description>&lt;p&gt;&lt;strong&gt;urandom&lt;/strong&gt; は筑波大学の学生（とその卒業生）で構成されたCTFチームです。&lt;/p&gt;
 </description>
     </item>
