@@ -1,4 +1,4 @@
-baseurl = "http://urandom-ctf.github.io"
+baseurl = "//urandom-ctf.github.io"
 languageCode = "ja-jp"
 title = "urandom"
 
