@@ -1,5 +1,5 @@
 +++
-date = "2016-12-10T04:26:22+09:00"
+date = "2016-12-12T23:44:00+09:00"
 title = "C91 新刊のお知らせ"
 draft = true
 author = "mayth"
@@ -28,6 +28,6 @@ Categories = ["Publication"]
 * [urandom vol.1](https://gumroad.com/l/xgnF)
 * [urandom vol.2](https://gumroad.com/l/zjTOY)
 
-コミックマーケット91の一ヶ月後を目処に配信予定です。
+vol.3の電子書籍版はコミックマーケット91の1ヶ月後を目処に配信予定です。
 
 それでは、大晦日に会場でお会いしましょう。
