@@ -1,7 +1,7 @@
 +++
-date = "2016-12-12T23:44:00+09:00"
+date = "2016-12-13T00:30:16+09:00"
 title = "C91 新刊のお知らせ"
-draft = true
+draft = false
 author = "mayth"
 Categories = ["Publication"]
 
