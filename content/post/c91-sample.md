@@ -20,11 +20,14 @@ Categories = ["Publication"]
 今回の記事は以下の3本です。
 
 * ファミコンミニとLinux - op
-* Secure Grouping Protocol Using Mental Poker  - yyu
+* Secure Grouping Protocol Using Mental Poker - yyu
 * urandom出版技術部活動報告 - mayth
 
-なお、今回**既刊の頒布はありません**。vol.1、vol.2は電子書籍をご利用ください。
+なお、今回**既刊の頒布はありません**。vol.1、vol.2は次の電子書籍をご利用ください。
 
-例によって後日電子書籍版をリリースする予定です。
+* [urandom vol.1](https://gumroad.com/l/xgnF)
+* [urandom vol.2](https://gumroad.com/l/zjTOY)
+
+コミックマーケット91の一ヶ月後を目処に配信予定です。
 
 それでは、大晦日に会場でお会いしましょう。
