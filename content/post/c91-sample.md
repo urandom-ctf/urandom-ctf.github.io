@@ -1,5 +1,5 @@
 +++
-date = "2016-12-13T00:30:16+09:00"
+date = "2016-12-13T01:30:16+09:00"
 title = "C91 新刊のお知らせ"
 draft = false
 author = "mayth"
@@ -9,7 +9,7 @@ Categories = ["Publication"]
 
 [![C91 Sample](/images/c91_cover.png)](/pdfs/c91_sample.pdf)
 
-（表紙だよ！　リンク先はサンプルのPDFだよ！）
+表紙だよ！　リンク先はサンプルのPDFだよ！（※サンプルにはカラー写真が含まれていますが、当日頒布する冊子はグレースケールです）
 
 数多の困難を乗り越え、来るC91で頒布する新刊「urandom vol.3」の入稿が完了しました。
 
