@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Post-rsses on urandom</title>
+    <title>Posts on urandom</title>
     <link>//blog.urandom.team/post/index.xml</link>
-    <description>Recent content in Post-rsses on urandom</description>
+    <description>Recent content in Posts on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 13 Dec 2016 01:30:16 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 12 Mar 2017 17:17:50 +0900</lastBuildDate>
     <atom:link href="//blog.urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>urandom vol.3電子版公開のお知らせ</title>
+      <link>//blog.urandom.team/post/c91-digital/</link>
+      <pubDate>Sun, 12 Mar 2017 17:17:50 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c91-digital/</guid>
+      <description>
+
+&lt;h1 id=&#34;urandom-vol-3電子版&#34;&gt;urandom vol.3電子版&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;//blog.urandom.team/images/c91_cover.png&#34; alt=&#34;C91 Sample&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。&lt;/p&gt;
+
+&lt;p&gt;urandom vol.3電子版は &lt;strong&gt;128円&lt;/strong&gt; での販売となります。内容は物理書籍版とほぼ同じです。&lt;/p&gt;
+
+&lt;p&gt;販売ページは&lt;a href=&#34;https://gum.co/uqxsS&#34;&gt;こちら（Gumroad）&lt;/a&gt;です。決済にはクレジットカードかPayPalが使えます。&lt;/p&gt;
+
+&lt;h2 id=&#34;物理書籍版購入者の方へ&#34;&gt;物理書籍版購入者の方へ&lt;/h2&gt;
+
+&lt;p&gt;購入ページに“Offer code”という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。&lt;/li&gt;
+&lt;li&gt;同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>C91 新刊のお知らせ</title>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>urandom</title>
+    <title>Write Ups on urandom</title>
     <link>//blog.urandom.team/categories/write-ups/index.xml</link>
-    <description>Recent content on urandom</description>
+    <description>Recent content in Write Ups on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <atom:link href="//blog.urandom.team/categories/write-ups/index.xml" rel="self" type="application/rss+xml" />
