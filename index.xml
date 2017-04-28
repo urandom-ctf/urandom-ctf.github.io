@@ -6,8 +6,25 @@
     <description>Recent content on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sun, 12 Mar 2017 17:17:50 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 28 Apr 2017 21:15:56 +0900</lastBuildDate>
     <atom:link href="//blog.urandom.team/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>超技術書典参加のお知らせ</title>
+      <link>//blog.urandom.team/post/cho-tech/</link>
+      <pubDate>Fri, 28 Apr 2017 21:15:56 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/cho-tech/</guid>
+      <description>&lt;p&gt;ニコニコ超会議2017に併催の&lt;a href=&#34;https://techbookfest.org/event/cho01&#34;&gt;超技術書典&lt;/a&gt;に当選しました。スペースは &lt;strong&gt;1日目 B-17&lt;/strong&gt; です。
+C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#34;&gt;urandom vol.3&lt;/a&gt;”を頒布します。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://techbookfest.org/event/cho01/circle/5671617594130432&#34;&gt;https://techbookfest.org/event/cho01/circle/5671617594130432&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;頒布価格は300円です。それでは会場でお会いしましょう。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>urandom vol.3電子版公開のお知らせ</title>
@@ -888,16 +905,6 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
 &lt;p&gt;デコンパイラを殺すILは&lt;a href=&#34;http://cedec.cesa.or.jp/2015/session/ENG/10405.html&#34;&gt;SECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジ&lt;/a&gt;の発表で触れられていた内容です。&lt;/p&gt;
 
 &lt;p&gt;落ちたら落ちたでそのとき考えます。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>About us</title>
-      <link>//blog.urandom.team/about/</link>
-      <pubDate>Fri, 28 Aug 2015 19:40:47 +0900</pubDate>
-      
-      <guid>//blog.urandom.team/about/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;urandom&lt;/strong&gt; は筑波大学の学生（とその卒業生）で構成されたCTFチームです。&lt;/p&gt;
 </description>
     </item>
     
