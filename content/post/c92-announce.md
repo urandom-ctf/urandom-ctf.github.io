@@ -1,7 +1,7 @@
 +++
 draft = false
 date = "2017-08-08T02:03:25+09:00"
-title = "c92 announce"
+title = "C92参加と新刊のお知らせ"
 author = "yyu"
 categories = ["Publication"] 
 +++
