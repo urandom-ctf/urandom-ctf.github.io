@@ -6,8 +6,33 @@
     <description>Recent content in Posts on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Fri, 28 Apr 2017 21:15:56 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 08 Aug 2017 02:03:25 +0900</lastBuildDate>
     <atom:link href="//blog.urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>C92参加と新刊のお知らせ</title>
+      <link>//blog.urandom.team/post/c92-announce/</link>
+      <pubDate>Tue, 08 Aug 2017 02:03:25 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c92-announce/</guid>
+      <description>&lt;p&gt;C92（2017年夏コミ）に当選してました。
+スペースは &lt;strong&gt;3日目 東イ-60b&lt;/strong&gt; です。
+新刊“urandom vol.4”と既刊“urandom vol.3”を出します。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c92_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c92_cover_thumb.png&#34; alt=&#34;c92 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;urandom vol.4は次のような内容になります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;mitmproxy入門 (by op)&lt;/li&gt;
+&lt;li&gt;公平なランサムウェアプロトコル (by yyu)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
+
+&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>超技術書典参加のお知らせ</title>
@@ -882,29 +907,6 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
 &lt;p&gt;詳細が決まり次第こちらの記事をアップデートします。Twitterではだいたい私が告知しますが、普段のノイズが多いのでいい感じにウォッチしてください。&lt;/p&gt;
 
 &lt;p&gt;ちょっと気が早いですが当日皆さんにお会いできるのを楽しみにしています。それでは。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>C89申し込みました</title>
-      <link>//blog.urandom.team/post/c89-appl/</link>
-      <pubDate>Sat, 29 Aug 2015 01:16:53 +0900</pubDate>
-      
-      <guid>//blog.urandom.team/post/c89-appl/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/images/c89_cut.png&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c89_cut_small.png&#34; alt=&#34;C89 サークルカット&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;C89に&amp;rdquo;urandom&amp;rdquo;で申し込んでいます。&lt;/p&gt;
-
-&lt;p&gt;『コンピュータセキュリティ総合誌』と称したよろず本、&amp;rdquo;urandom vol.1&amp;rdquo;を頒布予定です。サークルカットにある通り、現時点ではこんな内容です。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;デコンパイラを殺すIL&lt;/li&gt;
-&lt;li&gt;一歩差がつくIDAコーデ&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;デコンパイラを殺すILは&lt;a href=&#34;http://cedec.cesa.or.jp/2015/session/ENG/10405.html&#34;&gt;SECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジ&lt;/a&gt;の発表で触れられていた内容です。&lt;/p&gt;
-
-&lt;p&gt;落ちたら落ちたでそのとき考えます。&lt;/p&gt;
 </description>
     </item>
     

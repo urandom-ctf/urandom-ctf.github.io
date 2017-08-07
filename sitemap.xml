@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>//blog.urandom.team/post/c92-announce/</loc>
+    <lastmod>2017-08-08T02:03:25+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>//blog.urandom.team/post/cho-tech/</loc>
     <lastmod>2017-04-28T21:15:56+09:00</lastmod>
   </url>
@@ -94,13 +99,13 @@
   
   <url>
     <loc>//blog.urandom.team/post/</loc>
-    <lastmod>2017-04-28T21:15:56+09:00</lastmod>
+    <lastmod>2017-08-08T02:03:25+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>//blog.urandom.team/categories/publication/</loc>
-    <lastmod>2017-04-28T21:15:56+09:00</lastmod>
+    <lastmod>2017-08-08T02:03:25+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -112,7 +117,7 @@
   
   <url>
     <loc>//blog.urandom.team/</loc>
-    <lastmod>2017-04-28T21:15:56+09:00</lastmod>
+    <lastmod>2017-08-08T02:03:25+09:00</lastmod>
     <priority>0</priority>
   </url>
   
