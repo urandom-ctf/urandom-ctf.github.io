@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>//blog.urandom.team/</loc>
+    <lastmod>2017-12-25T18:40:33+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>//blog.urandom.team/post/c93-announce/</loc>
+    <lastmod>2017-12-25T18:40:33+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>//blog.urandom.team/post/c92-announce/</loc>
     <lastmod>2017-08-08T02:03:25+09:00</lastmod>
   </url>
@@ -84,41 +94,6 @@
   <url>
     <loc>//blog.urandom.team/about/</loc>
     <lastmod>2015-08-28T19:40:47+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/categories/misc/</loc>
-    <lastmod>2016-11-14T20:01:17+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/</loc>
-    <lastmod>2017-08-08T02:03:25+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/categories/publication/</loc>
-    <lastmod>2017-08-08T02:03:25+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/categories/write-ups/</loc>
-    <lastmod>2016-08-17T00:17:26+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/</loc>
-    <lastmod>2017-08-08T02:03:25+09:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>

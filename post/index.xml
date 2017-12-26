@@ -2,12 +2,48 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on urandom</title>
-    <link>//blog.urandom.team/post/index.xml</link>
+    <link>//blog.urandom.team/post/</link>
     <description>Recent content in Posts on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 08 Aug 2017 02:03:25 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 25 Dec 2017 18:40:33 +0900</lastBuildDate>
     <atom:link href="//blog.urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>C93参加と新刊のお知らせ</title>
+      <link>//blog.urandom.team/post/c93-announce/</link>
+      <pubDate>Mon, 25 Dec 2017 18:40:33 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c93-announce/</guid>
+      <description>&lt;p&gt;C93（2017年冬コミ）に当選してました。
+スペースは &lt;strong&gt;1日目 東キ47a&lt;/strong&gt; です&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:change&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:change&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。
+新刊“urandom vol.5”を出します。&lt;/p&gt;
+
+&lt;p&gt;次の画像をクリックすると本文サンプルが見えます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c93_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c93_cover_thumb.png&#34; alt=&#34;c94 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;urandom vol.5は次のような内容になります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CBCTF2017問題解説 - One of Three Billion (by op)&lt;/li&gt;
+&lt;li&gt;Bitcoinによる公平なCTF (by yyu)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
+
+&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:change&#34;&gt;これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:change&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>C92参加と新刊のお知らせ</title>
@@ -883,30 +919,6 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
 &lt;p&gt;(2015-12-27 追記)&lt;/p&gt;
 
 &lt;p&gt;この同人誌は2016年2月以降に電子書籍化する予定（詳細未定）です。物理本の購入者には電子書籍版を無料で提供します。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>C89情報</title>
-      <link>//blog.urandom.team/post/c89/</link>
-      <pubDate>Wed, 04 Nov 2015 05:21:39 +0900</pubDate>
-      
-      <guid>//blog.urandom.team/post/c89/</guid>
-      <description>&lt;p&gt;C89当選しました。スペースは &lt;strong&gt;3日目 東ホ-05b&lt;/strong&gt; です。&lt;/p&gt;
-
-&lt;p&gt;以前の告知通りの本が出ます。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;一歩差がつくIDAコーデ (by op)&lt;/li&gt;
-&lt;li&gt;デコンパイラを殺すIL (by mayth)&lt;/li&gt;
-&lt;li&gt;他、予定は未定&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;未だ目次が決まらないあたりに危機感を覚えつつ鋭意執筆中です。&lt;/p&gt;
-
-&lt;p&gt;詳細が決まり次第こちらの記事をアップデートします。Twitterではだいたい私が告知しますが、普段のノイズが多いのでいい感じにウォッチしてください。&lt;/p&gt;
-
-&lt;p&gt;ちょっと気が早いですが当日皆さんにお会いできるのを楽しみにしています。それでは。&lt;/p&gt;
 </description>
     </item>
     

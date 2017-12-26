@@ -2,11 +2,48 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Publication on urandom</title>
-    <link>//blog.urandom.team/categories/publication/index.xml</link>
+    <link>//blog.urandom.team/categories/publication/</link>
     <description>Recent content in Publication on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
+    <lastBuildDate>Mon, 25 Dec 2017 18:40:33 +0900</lastBuildDate>
     <atom:link href="//blog.urandom.team/categories/publication/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>C93参加と新刊のお知らせ</title>
+      <link>//blog.urandom.team/post/c93-announce/</link>
+      <pubDate>Mon, 25 Dec 2017 18:40:33 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c93-announce/</guid>
+      <description>&lt;p&gt;C93（2017年冬コミ）に当選してました。
+スペースは &lt;strong&gt;1日目 東キ47a&lt;/strong&gt; です&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:change&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:change&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。
+新刊“urandom vol.5”を出します。&lt;/p&gt;
+
+&lt;p&gt;次の画像をクリックすると本文サンプルが見えます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c93_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c93_cover_thumb.png&#34; alt=&#34;c94 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;urandom vol.5は次のような内容になります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CBCTF2017問題解説 - One of Three Billion (by op)&lt;/li&gt;
+&lt;li&gt;Bitcoinによる公平なCTF (by yyu)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
+
+&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:change&#34;&gt;これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:change&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>C92参加と新刊のお知らせ</title>
