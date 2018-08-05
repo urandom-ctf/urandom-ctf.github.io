@@ -2,12 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Publication on urandom</title>
-    <link>//blog.urandom.team/categories/publication/</link>
+    <link>//blog.urandom.team/categories/publication/index.xml</link>
     <description>Recent content in Publication on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Mon, 25 Dec 2017 18:40:33 +0900</lastBuildDate>
     <atom:link href="//blog.urandom.team/categories/publication/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>C94参加と新刊のお知らせ</title>
+      <link>//blog.urandom.team/post/c94-announce/</link>
+      <pubDate>Sun, 05 Aug 2018 22:13:33 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c94-announce/</guid>
+      <description>&lt;p&gt;C94（2018年夏コミ）に当選してました。
+スペースは &lt;strong&gt;1日目 西1 む39b&lt;/strong&gt; です。
+新刊“urandom vol.6”を出します。&lt;/p&gt;
+
+&lt;p&gt;次の画像をクリックすると本文サンプルが見えます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c94_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c94_cover_thumb.png&#34; alt=&#34;c94 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;urandom vol.6は次の内容になります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;IoT機器のFW解析 -CBCTF2018予選問題 Odin解説- (by op)&lt;/li&gt;
+&lt;li&gt;素因数分解ゲーム (by yyu)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
+
+&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>C93参加と新刊のお知らせ</title>

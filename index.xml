@@ -2,12 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>urandom</title>
-    <link>//blog.urandom.team/</link>
+    <link>//blog.urandom.team/index.xml</link>
     <description>Recent content on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Mon, 25 Dec 2017 18:40:33 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 05 Aug 2018 22:13:33 +0900</lastBuildDate>
     <atom:link href="//blog.urandom.team/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>C94参加と新刊のお知らせ</title>
+      <link>//blog.urandom.team/post/c94-announce/</link>
+      <pubDate>Sun, 05 Aug 2018 22:13:33 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c94-announce/</guid>
+      <description>&lt;p&gt;C94（2018年夏コミ）に当選してました。
+スペースは &lt;strong&gt;1日目 西1 む39b&lt;/strong&gt; です。
+新刊“urandom vol.6”を出します。&lt;/p&gt;
+
+&lt;p&gt;次の画像をクリックすると本文サンプルが見えます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c94_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c94_cover_thumb.png&#34; alt=&#34;c94 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;urandom vol.6は次の内容になります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;IoT機器のFW解析 -CBCTF2018予選問題 Odin解説- (by op)&lt;/li&gt;
+&lt;li&gt;素因数分解ゲーム (by yyu)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
+
+&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>C93参加と新刊のお知らせ</title>
@@ -868,57 +895,6 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
 &lt;p&gt;それでは、当日スペースにてお待ちしております。&lt;/p&gt;
 
 &lt;p&gt;note: なお、記事に関するツッコミ等は適宜ブログ記事上げてもらうなり、&lt;a href=&#34;https://twitter.com/maytheplic&#34;&gt;@maytheplic&lt;/a&gt;までTwitterでリプを飛ばすなりしていただければ。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>C89情報 - 予告編</title>
-      <link>//blog.urandom.team/post/c89-pre/</link>
-      <pubDate>Wed, 16 Dec 2015 00:41:36 +0900</pubDate>
-      
-      <guid>//blog.urandom.team/post/c89-pre/</guid>
-      <description>&lt;p&gt;maythです。無事に（？）本が出来つつあります（出来たとは言っていない）。世間ではスターのウォーズのなんかの公開が間近に迫っていますが、我々に迫っているのは締め切りとクソコードです。&lt;/p&gt;
-
-&lt;p&gt;&amp;ldquo;urandom vol.1&amp;rdquo;は記事3本でお送りします。記事の著者から内容について簡単なひとことを要求したところ1名ドロップしました。とりあえずこんな内容になります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Easy Recipes for IDA Python&lt;/strong&gt; (by op)
-
-&lt;ul&gt;
-&lt;li&gt;IDA Pythonの為の簡単なレシピを解説します。&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;デコンパイラを殺すIL&lt;/strong&gt; (by mayth)
-
-&lt;ul&gt;
-&lt;li&gt;.NETアプリのデコンパイルを失敗させるべく、我々調査隊はILの奥地へと飛んだ。&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;秘密計算入門&lt;/strong&gt; (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;(2015-12-25 追記)&lt;/p&gt;
-
-&lt;p&gt;すっかり告知を忘れていましたが入稿を完了しています。
-こんな感じの表紙です。
-見事に華がないですね。
-当日はスペースに何か目印っぽいものを張っておこうと思ったのですが未だ未完成です。
-とりあえずスペース番号がわかりやすい何かを置いておきます、たぶん。&lt;/p&gt;
-
-&lt;p&gt;改めて参加日とスペースの告知ですが、&lt;strong&gt;3日目（木曜日） 東ホ-05b&lt;/strong&gt; です。
-執筆者でさえ忘れていてWebカタログの地図で自分のサークルを見失いました。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/images/c89_cover_sm.png&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c89_cover_thumb.png&#34; alt=&#34;urandom vol.1 表紙&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;なお、&lt;strong&gt;頒布価格は500円を予定しています&lt;/strong&gt;。消費税はありませんので、本当に500円だけ握りしめて来て頂ければと思います。&lt;/p&gt;
-
-&lt;p&gt;当日誰が売り子やるのかもさっぱり定まっていませんが、スペースでお待ちしております。それでは。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;(2015-12-27 追記)&lt;/p&gt;
-
-&lt;p&gt;この同人誌は2016年2月以降に電子書籍化する予定（詳細未定）です。物理本の購入者には電子書籍版を無料で提供します。&lt;/p&gt;
 </description>
     </item>
     
