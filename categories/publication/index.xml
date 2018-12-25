@@ -2,11 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Publication on urandom</title>
-    <link>//blog.urandom.team/categories/publication/index.xml</link>
+    <link>//blog.urandom.team/categories/publication/</link>
     <description>Recent content in Publication on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <atom:link href="//blog.urandom.team/categories/publication/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 25 Dec 2018 18:03:47 +0900</lastBuildDate>
+    
+	<atom:link href="//blog.urandom.team/categories/publication/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>C95参加と新刊のお知らせ</title>
+      <link>//blog.urandom.team/post/c95-announce/</link>
+      <pubDate>Tue, 25 Dec 2018 18:03:47 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/c95-announce/</guid>
+      <description>C95（2018年冬コミ）に当選してました。 スペースは 2日目 東6 ト44b です。 新刊“urandom vol.7”を出します。
+次の画像をクリックすると本文サンプルが見えます。
+
+urandom vol.7は次の内容になります。
+ SECCON2018 国際大会決勝参戦記 (by urandom) 展開署名: Folding Signatureの進捗 (by yyu)  ページ数は本文30pとなっております。頒布価格は300円の予定です。
+それでは会場でお会いしましょう。</description>
+    </item>
     
     <item>
       <title>C94参加と新刊のお知らせ</title>
@@ -14,25 +31,12 @@
       <pubDate>Sun, 05 Aug 2018 22:13:33 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c94-announce/</guid>
-      <description>&lt;p&gt;C94（2018年夏コミ）に当選してました。
-スペースは &lt;strong&gt;1日目 西1 む39b&lt;/strong&gt; です。
-新刊“urandom vol.6”を出します。&lt;/p&gt;
+      <description>C94（2018年夏コミ）に当選してました。 スペースは 1日目 西1 む39b です。 新刊“urandom vol.6”を出します。
+次の画像をクリックすると本文サンプルが見えます。
 
-&lt;p&gt;次の画像をクリックすると本文サンプルが見えます。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c94_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c94_cover_thumb.png&#34; alt=&#34;c94 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;urandom vol.6は次の内容になります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;IoT機器のFW解析 -CBCTF2018予選問題 Odin解説- (by op)&lt;/li&gt;
-&lt;li&gt;素因数分解ゲーム (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
-
-&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
-</description>
+urandom vol.6は次の内容になります。
+ IoT機器のFW解析 -CBCTF2018予選問題 Odin解説- (by op) 素因数分解ゲーム (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
+それでは会場でお会いしましょう。</description>
     </item>
     
     <item>
@@ -41,34 +45,13 @@
       <pubDate>Mon, 25 Dec 2017 18:40:33 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c93-announce/</guid>
-      <description>&lt;p&gt;C93（2017年冬コミ）に当選してました。
-スペースは &lt;strong&gt;1日目 東キ47a&lt;/strong&gt; です&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:change&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:change&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。
-新刊“urandom vol.5”を出します。&lt;/p&gt;
+      <description>C93（2017年冬コミ）に当選してました。 スペースは 1日目 東キ47a です1。 新刊“urandom vol.5”を出します。
+次の画像をクリックすると本文サンプルが見えます。
 
-&lt;p&gt;次の画像をクリックすると本文サンプルが見えます。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c93_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c93_cover_thumb.png&#34; alt=&#34;c94 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;urandom vol.5は次のような内容になります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;CBCTF2017問題解説 - One of Three Billion (by op)&lt;/li&gt;
-&lt;li&gt;Bitcoinによる公平なCTF (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
-
-&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li id=&#34;fn:change&#34;&gt;これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:change&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-</description>
+urandom vol.5は次のような内容になります。
+ CBCTF2017問題解説 - One of Three Billion (by op) Bitcoinによる公平なCTF (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
+それでは会場でお会いしましょう。
+ これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。 [return]   </description>
     </item>
     
     <item>
@@ -77,23 +60,11 @@
       <pubDate>Tue, 08 Aug 2017 02:03:25 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c92-announce/</guid>
-      <description>&lt;p&gt;C92（2017年夏コミ）に当選してました。
-スペースは &lt;strong&gt;3日目 東イ-60b&lt;/strong&gt; です。
-新刊“urandom vol.4”と既刊“urandom vol.3”を出します。&lt;/p&gt;
+      <description>C92（2017年夏コミ）に当選してました。 スペースは 3日目 東イ-60b です。 新刊“urandom vol.4”と既刊“urandom vol.3”を出します。
 
-&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c92_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c92_cover_thumb.png&#34; alt=&#34;c92 sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;urandom vol.4は次のような内容になります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;mitmproxy入門 (by op)&lt;/li&gt;
-&lt;li&gt;公平なランサムウェアプロトコル (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ページ数は本文34pとなっております。頒布価格は300円の予定です。&lt;/p&gt;
-
-&lt;p&gt;それでは会場でお会いしましょう。&lt;/p&gt;
-</description>
+urandom vol.4は次のような内容になります。
+ mitmproxy入門 (by op) 公平なランサムウェアプロトコル (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
+それでは会場でお会いしましょう。</description>
     </item>
     
     <item>
@@ -102,15 +73,8 @@
       <pubDate>Fri, 28 Apr 2017 21:15:56 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/cho-tech/</guid>
-      <description>&lt;p&gt;ニコニコ超会議2017に併催の&lt;a href=&#34;https://techbookfest.org/event/cho01&#34;&gt;超技術書典&lt;/a&gt;に当選しました。スペースは &lt;strong&gt;1日目 B-17&lt;/strong&gt; です。
-C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#34;&gt;urandom vol.3&lt;/a&gt;”を頒布します。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://techbookfest.org/event/cho01/circle/5671617594130432&#34;&gt;https://techbookfest.org/event/cho01/circle/5671617594130432&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;頒布価格は300円です。それでは会場でお会いしましょう。&lt;/p&gt;
-</description>
+      <description>ニコニコ超会議2017に併催の超技術書典に当選しました。スペースは 1日目 B-17 です。 C91に引き続き、“urandom vol.3”を頒布します。
+ https://techbookfest.org/event/cho01/circle/5671617594130432  頒布価格は300円です。それでは会場でお会いしましょう。</description>
     </item>
     
     <item>
@@ -119,27 +83,11 @@ C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#3
       <pubDate>Sun, 12 Mar 2017 17:17:50 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c91-digital/</guid>
-      <description>
-
-&lt;h1 id=&#34;urandom-vol-3電子版&#34;&gt;urandom vol.3電子版&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&#34;//blog.urandom.team/images/c91_cover.png&#34; alt=&#34;C91 Sample&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。&lt;/p&gt;
-
-&lt;p&gt;urandom vol.3電子版は &lt;strong&gt;128円&lt;/strong&gt; での販売となります。内容は物理書籍版とほぼ同じです。&lt;/p&gt;
-
-&lt;p&gt;販売ページは&lt;a href=&#34;https://gum.co/uqxsS&#34;&gt;こちら（Gumroad）&lt;/a&gt;です。決済にはクレジットカードかPayPalが使えます。&lt;/p&gt;
-
-&lt;h2 id=&#34;物理書籍版購入者の方へ&#34;&gt;物理書籍版購入者の方へ&lt;/h2&gt;
-
-&lt;p&gt;購入ページに“Offer code”という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。&lt;/li&gt;
-&lt;li&gt;同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description> urandom vol.3電子版 C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。
+urandom vol.3電子版は 128円 での販売となります。内容は物理書籍版とほぼ同じです。
+販売ページはこちら（Gumroad）です。決済にはクレジットカードかPayPalが使えます。
+物理書籍版購入者の方へ 購入ページに“Offer code”という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
+ コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。 同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。  </description>
     </item>
     
     <item>
@@ -148,35 +96,14 @@ C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#3
       <pubDate>Tue, 13 Dec 2016 01:30:16 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c91-sample/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c91_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c91_cover.png&#34; alt=&#34;C91 Sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;表紙だよ！　リンク先はサンプルのPDFだよ！（※サンプルにはカラー写真が含まれていますが、当日頒布する冊子はグレースケールです）&lt;/p&gt;
-
-&lt;p&gt;数多の困難を乗り越え、来るC91で頒布する新刊「urandom vol.3」の入稿が完了しました。&lt;/p&gt;
-
-&lt;p&gt;改めて告知しますと、スペースは &lt;strong&gt;土曜日 東R-12b&lt;/strong&gt; です（&lt;a href=&#34;https://webcatalog.circle.ms/Circle/13006119&#34;&gt;Webカタログ&lt;/a&gt;）。3日目だよ、大晦日だよ。&lt;/p&gt;
-
-&lt;p&gt;ページ数は本文64pと読みごたえ抜群の仕様となっております。頒布価格は300円です。&lt;/p&gt;
-
-&lt;p&gt;今回の記事は以下の3本です。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;ファミコンミニとLinux - op&lt;/li&gt;
-&lt;li&gt;Secure Grouping Protocol Using Mental Poker - yyu&lt;/li&gt;
-&lt;li&gt;urandom出版技術部活動報告 - mayth&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;なお、今回&lt;strong&gt;既刊の頒布はありません&lt;/strong&gt;。vol.1、vol.2は次の電子書籍をご利用ください。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://gumroad.com/l/xgnF&#34;&gt;urandom vol.1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gumroad.com/l/zjTOY&#34;&gt;urandom vol.2&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;vol.3の電子書籍版はコミックマーケット91の1ヶ月後を目処に配信予定です。&lt;/p&gt;
-
-&lt;p&gt;それでは、大晦日に会場でお会いしましょう。&lt;/p&gt;
-</description>
+      <description>表紙だよ！　リンク先はサンプルのPDFだよ！（※サンプルにはカラー写真が含まれていますが、当日頒布する冊子はグレースケールです）
+数多の困難を乗り越え、来るC91で頒布する新刊「urandom vol.3」の入稿が完了しました。
+改めて告知しますと、スペースは 土曜日 東R-12b です（Webカタログ）。3日目だよ、大晦日だよ。
+ページ数は本文64pと読みごたえ抜群の仕様となっております。頒布価格は300円です。
+今回の記事は以下の3本です。
+ ファミコンミニとLinux - op Secure Grouping Protocol Using Mental Poker - yyu urandom出版技術部活動報告 - mayth  なお、今回既刊の頒布はありません。vol.1、vol.2は次の電子書籍をご利用ください。
+ urandom vol.1 urandom vol.2  vol.3の電子書籍版はコミックマーケット91の1ヶ月後を目処に配信予定です。
+それでは、大晦日に会場でお会いしましょう。</description>
     </item>
     
     <item>
@@ -185,34 +112,13 @@ C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#3
       <pubDate>Wed, 02 Nov 2016 22:55:00 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c90-digital-and-c91/</guid>
-      <description>
-
-&lt;h1 id=&#34;urandom-vol-2電子版&#34;&gt;urandom vol.2電子版&lt;/h1&gt;
-
-&lt;p&gt;大変長らくお待たせしました。urandom vol.2の電子版を公開しました。&lt;/p&gt;
-
-&lt;p&gt;urandom vol.2電子版は &lt;strong&gt;128円&lt;/strong&gt; での販売となります。内容は物理書籍版とほぼ同じです（どこが違うか探してみよう！　特に景品はないです）。&lt;/p&gt;
-
-&lt;p&gt;販売ページは&lt;a href=&#34;https://gumroad.com/l/zjTOY&#34;&gt;こちら（Gumroad）&lt;/a&gt;です。決済にはクレジットカードかPayPalが使えます。&lt;/p&gt;
-
-&lt;h2 id=&#34;物理書籍版購入者の方へ&#34;&gt;物理書籍版購入者の方へ&lt;/h2&gt;
-
-&lt;p&gt;購入ページに&amp;rdquo;Offer code&amp;rdquo;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。&lt;/li&gt;
-&lt;li&gt;同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;urandom-vol-3&#34;&gt;urandom vol.3&lt;/h1&gt;
-
-&lt;p&gt;続けて冬のお知らせです。無事に冬コミ（C91）に当選しました。スペースは &lt;strong&gt;土曜日 東R-12b&lt;/strong&gt; です（&lt;a href=&#34;https://webcatalog.circle.ms/Circle/13006119&#34;&gt;Webカタログはこちら&lt;/a&gt;）。&lt;/p&gt;
-
-&lt;p&gt;これまでだと「だいたいこういう内容になる予定ですよ」というリストくらいは出せていたのですが、今回は現時点で何も決まっておりません。
-が、コンピュータセキュリティ的な本であるところからは変わりないと思います。内容が決まり次第随時告知しますので、今しばらくお待ちください。&lt;/p&gt;
-
-&lt;p&gt;それでは、今年も大晦日にお会いしましょう。&lt;/p&gt;
-</description>
+      <description>urandom vol.2電子版 大変長らくお待たせしました。urandom vol.2の電子版を公開しました。
+urandom vol.2電子版は 128円 での販売となります。内容は物理書籍版とほぼ同じです（どこが違うか探してみよう！　特に景品はないです）。
+販売ページはこちら（Gumroad）です。決済にはクレジットカードかPayPalが使えます。
+物理書籍版購入者の方へ 購入ページに&amp;rdquo;Offer code&amp;rdquo;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
+ コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。 同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。  urandom vol.3 続けて冬のお知らせです。無事に冬コミ（C91）に当選しました。スペースは 土曜日 東R-12b です（Webカタログはこちら）。
+これまでだと「だいたいこういう内容になる予定ですよ」というリストくらいは出せていたのですが、今回は現時点で何も決まっておりません。 が、コンピュータセキュリティ的な本であるところからは変わりないと思います。内容が決まり次第随時告知しますので、今しばらくお待ちください。
+それでは、今年も大晦日にお会いしましょう。</description>
     </item>
     
     <item>
@@ -221,23 +127,9 @@ C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#3
       <pubDate>Thu, 11 Aug 2016 00:47:15 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c90-sample/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;//blog.urandom.team/pdfs/c90_sample.pdf&#34;&gt;&lt;img src=&#34;//blog.urandom.team/images/c90_cover_thumb.png&#34; alt=&#34;C90 Sample&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。
-スペースは&lt;strong&gt;3日目 東4ホール ム-43b&lt;/strong&gt;です。
-記事は以下の2本で、42P 300円で頒布します。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;バイナリの調べ方 (by op)&lt;/li&gt;
-&lt;li&gt;Mental Game! (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;表紙デザインはpolamjagです。
-それぞれの記事から2Pずつ抜粋した&lt;a href=&#34;//blog.urandom.team/pdfs/c90_sample.pdf&#34;&gt;サンプル&lt;/a&gt;を公開します。&lt;/p&gt;
-
-&lt;p&gt;また、この新刊のおまけとして&lt;strong&gt;DEF CON CTF 2016 Final参戦記&lt;/strong&gt;をコピ本で頒布予定です。
-8/5-7にアメリカ ラスベガスで開催されたDEF CON CTF 2016 Finalについて、opがCTFチームbinjaのメンバーとして参加した経験を記したもので、現在執筆中です(こちらはurandomとは関係ありません)。&lt;/p&gt;
-</description>
+      <description>CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。 スペースは3日目 東4ホール ム-43bです。 記事は以下の2本で、42P 300円で頒布します。
+ バイナリの調べ方 (by op) Mental Game! (by yyu)  表紙デザインはpolamjagです。 それぞれの記事から2Pずつ抜粋したサンプルを公開します。
+また、この新刊のおまけとしてDEF CON CTF 2016 Final参戦記をコピ本で頒布予定です。 8/5-7にアメリカ ラスベガスで開催されたDEF CON CTF 2016 Finalについて、opがCTFチームbinjaのメンバーとして参加した経験を記したもので、現在執筆中です(こちらはurandomとは関係ありません)。</description>
     </item>
     
     <item>
@@ -246,28 +138,10 @@ C91に引き続き、“&lt;a href=&#34;//blog.urandom.team/post/c91-digital/&#3
       <pubDate>Wed, 20 Jul 2016 00:57:00 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c90-announce/</guid>
-      <description>&lt;p&gt;C90（2016年夏コミ）当選してました。スペースは &lt;strong&gt;3日目 東ム-43b&lt;/strong&gt; です。C89に引き続き、&amp;rdquo;urandom vol.2&amp;rdquo;を出します。内容は引き続いてないです。&lt;/p&gt;
-
-&lt;p&gt;urandom vol.2はこんな感じの内容になります。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;バイナリの調べ方 (by op)&lt;/li&gt;
-&lt;li&gt;Mental Game! (by yyu)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;この内容で入稿を完了しています。後ほどサンプルをアップロードします。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;（2016-07-20 修正）
-
-&lt;ul&gt;
-&lt;li&gt;諸般の事情により『.NET難読化ツール事始め』(fetastein)に代わって、『Mental Game!』(yyu)となりました&lt;/li&gt;
-&lt;li&gt;入稿完了したよ！！！！&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>C90（2016年夏コミ）当選してました。スペースは 3日目 東ム-43b です。C89に引き続き、&amp;rdquo;urandom vol.2&amp;rdquo;を出します。内容は引き続いてないです。
+urandom vol.2はこんな感じの内容になります。
+ バイナリの調べ方 (by op) Mental Game! (by yyu)  この内容で入稿を完了しています。後ほどサンプルをアップロードします。
+ （2016-07-20 修正）  諸般の事情により『.NET難読化ツール事始め』(fetastein)に代わって、『Mental Game!』(yyu)となりました 入稿完了したよ！！！！   </description>
     </item>
     
   </channel>
