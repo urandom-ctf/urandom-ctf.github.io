@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureROMのmalloc/free追跡 &middot; urandom</title>
+
+    <meta name="description" content="">
+
+    <meta name="generator" content="Hugo 0.40.1" />
+    <meta name="twitter:card" content="summary">
+    
+    <meta name="twitter:title" content="SecureROMのmalloc/free追跡 &middot; urandom">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SecureROMのmalloc/free追跡 &middot; urandom">
+    <meta property="og:description" content="">
+
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" href="//blog.urandom.team/css/all.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="urandom" href="//blog.urandom.team/index.xml" />
+</head>
+<body>
+
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+    <div class="header">
+        <hgroup>
+            <h1 class="brand-title"><a href="//blog.urandom.team">urandom</a></h1>
+            <h2 class="brand-tagline"></h2>
+        </hgroup>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                
+                
+                <li class="nav-item">
+                    <a class="pure-button" href="//blog.urandom.team/index.xml"><i class="fa fa-rss"></i> rss</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            
+            <div class="posts">
+                <h1 class="content-subhead">29 Dec 2019, 21:54</h1>
+                <section class="post">
+                    <header class="post-header">
+
+                        <a href="//blog.urandom.team/post/tracing-securerom-malloc-free/" class="post-title">SecureROMのmalloc/free追跡</a>
+
+                        <p class="post-meta">
+                            
+                                By <strong class="post-author">op</strong>
+                            
+                            
+                        </p>
+                    </header>
+
+                    <div class="post-share">
+                        <div class="post-share-links">
+                            <h4 style="">Share</h4>
+                            <a href="#" data-type="facebook" data-url="//blog.urandom.team/post/tracing-securerom-malloc-free/" data-title="SecureROMのmalloc/free追跡" data-description="" data-media="" class="prettySocial fa fa-facebook"></a>
+                            <a href="#" data-type="googleplus" data-url="//blog.urandom.team/post/tracing-securerom-malloc-free/" data-description="" class="prettySocial fa fa-google-plus"></a>
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="post-description">
+                        
+
+<h1 id="概要">概要</h1>
+
+<p>axi0mX氏のcheckm8公開により、広く一般にSecureROM(iPhone/iPadのブートローダー)の動的解析が可能になった。SecureROMのヒープレイアウトへの理解を深める為にヒープ関連処理を解析し、その一環としてSecureROM開始時からDFUモード起動完了までの間に発生するmalloc/freeの呼び出しをデバッガーで追跡したので、研究用として記事に残す。</p>
+
+<p>C97でもこの記事のコピ本を頒布予定(火曜日 南地区 リ-04b)で、間に合えば細かい話を加筆する。</p>
+
+<h1 id="関連記事">関連記事</h1>
+
+<p>checkm8の解説ではa1exdandy氏による次の記事が非常によくまとまっている。</p>
+
+<p><a href="https://habr.com/en/company/dsec/blog/472762/">Technical analysis of the checkm8 exploit</a></p>
+
+<p>上の記事でもヒープの確保シーケンスについて静的解析に基づいた解説があるが、この記事の動的解析でも上の記事と近い結果が得られた。</p>
+
+<h1 id="検証環境">検証環境</h1>
+
+<ul>
+<li>iPhone 7 (A1779)</li>
+<li>Bonobo JTAG/SWD Debug Cable</li>
+<li>ipwndfu
+
+<ul>
+<li>Matthew Pierson氏によるfork版</li>
+<li>commit bb3c1d618f96ce96956089823f396b777b4c46acに一部変更を加えたもの</li>
+</ul></li>
+</ul>
+
+<h1 id="調査手順">調査手順</h1>
+
+<p>checkm8(ipwndfu)を使用してiPhone 7(ターゲット)からSecureROMを読み出しGhidraで解析した。解析によりいわゆるmalloc, free, memalignと思われる3関数のアドレスを特定した。</p>
+
+<p>ipwndfuを使用してターゲットのSWDを有効化(demote)し、Bonobo JTAG/SWD Debug Cableを使用してgdbでターゲットにアタッチした。</p>
+
+<p>SecureROM開始直後から実行を追跡するにはターゲットをリセットする必要があるが、通常の手順でターゲットをリセットすると、リセットによりdemotionの状態が初期化されてSWDが無効になり追跡できなくなる。このため、今回はdemote後にターゲットをreset vectorへジャンプさせてもう一度最初から起動処理を行わせて追跡した。Reset vectorへのジャンプ前に予めmalloc, free, memalignへハードウェアブレークポイントを張っておいて、それぞれへの呼び出しを監視・記録した。</p>
+
+<h1 id="追跡結果">追跡結果</h1>
+
+<h2 id="備考">備考</h2>
+
+<p>この章では、iPhone 7の実機から読みだした情報を引用する。この章で引用するメモリダンプのベースはDFUモード起動完了直後のもので、ベースは0x180000000である。</p>
+
+<h2 id="一覧">一覧</h2>
+
+<p>次の書式でalloc, free, memalignの呼び出しの遷移を記す。</p>
+
+<p>呼び出し元アドレス : 関数名(引数) =&gt; 返り値</p>
+
+<pre><code>000000010000f858 : free(0x00000001801b4080)
+000000010000edd0 : alloc(48)                    =&gt; 0x00000001801b4080
+000000010000ede0 : alloc(256)                   =&gt; 0x00000001801b4100
+0000000100011548 : alloc(4000)                  =&gt; 0x00000001801b4240
+00000001000115d0 : free(0x00000001801b4240)
+000000010000f124 : alloc(512)                   =&gt; 0x00000001801b4240
+000000010000d10c : alloc(234)                   =&gt; 0x00000001801b4480
+000000010000d10c : alloc(22)                    =&gt; 0x00000001801b45c0
+000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4640
+000000010000d10c : alloc(198)                   =&gt; 0x00000001801b46c0
+000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4800
+000000010000a9e0 : alloc(960)                   =&gt; 0x00000001801b4880
+000000010000a9f0 : alloc(16384)                 =&gt; 0x00000001801b4c80
+000000010000df08 : memalign(2048, 0x00000040)   =&gt; 0x00000001801b8d00
+000000010000d2a4 : alloc(25)                    =&gt; 0x00000001801b9540
+000000010000d2b4 : alloc(25)                    =&gt; 0x00000001801b95c0
+</code></pre>
+
+<h2 id="メモ">メモ</h2>
+
+<h3 id="000000010000f858-free-0x00000001801b4080">000000010000f858 : free(0x00000001801b4080)</h3>
+
+<p>このfreeは不要領域の解放のためではなく、ヒープの初期化時に使用可能な領域をリストに登録するためのもの。</p>
+
+<p>ヒープのベースは0x1801b4000で、空ブロック1つ(長さ0x40)と、追加しようとしているブロック自身のメタデータ(長さ0x40)が先行して配置されるため、ベース + 0x80が追加する領域の（データ部分の）オフセットになる。空ブロックは後方にも配置される。</p>
+
+<h3 id="000000010000edd0-alloc-48-0x00000001801b4080">000000010000edd0 : alloc(48)                    =&gt; 0x00000001801b4080</h3>
+
+<p>役割不明のバッファー。</p>
+
+<h3 id="000000010000ede0-alloc-256-0x00000001801b4100">000000010000ede0 : alloc(256)                   =&gt; 0x00000001801b4100</h3>
+
+<p>役割不明のバッファー。</p>
+
+<h3 id="0000000100011548-alloc-4000-0x00000001801b4240">0000000100011548 : alloc(4000)                  =&gt; 0x00000001801b4240</h3>
+
+<p>役割不明のバッファー。</p>
+
+<h3 id="00000001000115d0-free-0x00000001801b4240">00000001000115d0 : free(0x00000001801b4240)</h3>
+
+<p>直前で確保した長さ4000のバッファーを解放。</p>
+
+<h3 id="000000010000f124-alloc-512-0x00000001801b4240">000000010000f124 : alloc(512)                   =&gt; 0x00000001801b4240</h3>
+
+<p>役割不明のバッファー。</p>
+
+<p>メモリの内容を確認すると、先頭に”host bridge”とのASCII文字列が書き込まれている。</p>
+
+<pre><code>001b4240  68 6f 73 74 20 62 72 69  64 67 65 00 00 00 00 00  |host bridge.....|
+001b4250  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+001b4310  0c 16 00 00 01 00 00 00  6c 16 00 00 01 00 00 00  |........l.......|
+001b4320  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 c0  |................|
+001b4330  00 00 00 02 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+001b4340  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+001b4440
+</code></pre>
+
+<h3 id="000000010000d10c-alloc-234-0x00000001801b4480">000000010000d10c : alloc(234)                   =&gt; 0x00000001801b4480</h3>
+
+<p>USB String Descriptor (Descriptor Index = 1)</p>
+
+<p>ApNonceとSEPNonceをHostに通知するためのもの。ASCII文字による16進表記かつUTF-32で表現するのでApNonceとSEPNonceの情報量に比してサイズが大きい。</p>
+
+<p>これ以降の追跡結果はa1exdandy氏の記事の解析結果と概ね一致する。</p>
+
+<h3 id="000000010000d10c-alloc-22-0x00000001801b45c0">000000010000d10c : alloc(22)                    =&gt; 0x00000001801b45c0</h3>
+
+<p>USB Manufacturer String Descriptor</p>
+
+<h3 id="000000010000d10c-alloc-62-0x00000001801b4640">000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4640</h3>
+
+<p>USB Product String Descriptor</p>
+
+<h3 id="000000010000d10c-alloc-198-0x00000001801b46c0">000000010000d10c : alloc(198)                   =&gt; 0x00000001801b46c0</h3>
+
+<p>USB Serial Number String Descriptor</p>
+
+<p>DFUモードではここにハードウェアとソフトウェアのバージョンや設定情報を詰め込むので長い。</p>
+
+<h3 id="000000010000d10c-alloc-62-0x00000001801b4800">000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4800</h3>
+
+<p>USB Configuration String Descriptor</p>
+
+<h3 id="000000010000a9e0-alloc-960-0x00000001801b4880">000000010000a9e0 : alloc(960)                   =&gt; 0x00000001801b4880</h3>
+
+<p>USBコントローラーを制御するタスクのタスク構造体。</p>
+
+<h3 id="000000010000a9f0-alloc-16384-0x00000001801b4c80">000000010000a9f0 : alloc(16384)                 =&gt; 0x00000001801b4c80</h3>
+
+<p>USBコントローラーを制御するタスクのタスクスタック。</p>
+
+<p>ここの確保サイズはa1exdandy氏の記事と異なる。a1exdandy氏の記事では確保サイズが0x1000となっているのに対して、今回実機で確認できた確保サイズは0x4000(16384)だった。呼び出し箇所の周辺を調べるとmax(0x1000, 0x4000)の比較結果を確保サイズとしていた。</p>
+
+<h3 id="000000010000df08-memalign-2048-0x00000040-0x00000001801b8d00">000000010000df08 : memalign(2048, 0x00000040)   =&gt; 0x00000001801b8d00</h3>
+
+<p>USBの入出力用バッファー。</p>
+
+<h3 id="000000010000d2a4-alloc-25-0x00000001801b9540">000000010000d2a4 : alloc(25)                    =&gt; 0x00000001801b9540</h3>
+
+<p>USB Configuration Descriptor</p>
+
+<p>a1exdandy氏の記事によればこちらがHigh-Speed用のdescriptorとのこと。書き込まれるデータは後述のFull-Speed用descriptorと同一。</p>
+
+<p>ipwndfu/src/checkm8_arm64.S内のgUSBDescriptorsは、ここで確保されたバッファーへのポインターを指す。</p>
+
+<pre><code>00088a30  40 95 1b 80 01 00 00 00  c0 95 1b 80 01 00 00 00  |@...............|
+</code></pre>
+
+<h3 id="000000010000d2b4-alloc-25-0x00000001801b95c0">000000010000d2b4 : alloc(25)                    =&gt; 0x00000001801b95c0</h3>
+
+<p>USB Configuration Descriptor</p>
+
+<p>a1exdandy氏の記事によればこちらがFull-Speed用のdescriptorとのこと。</p>
+
+<h1 id="備考-1">備考</h1>
+
+<p>今回はreset vectorにジャンプすることでwarm reset(的な操作)を施してSecureROMを開始直後から追跡したが、warm reset時の状態は通常起動時と異なるため、通常起動時と挙動が一致するかどうかは不明。ただし、warm reset後でもcheckm8が成功することは確認できた。</p>
+
+                    </div>
+                    
+                </section>
+            </div>
+            <div class="footer">
+    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+        <ul>
+            <li>Powered by <a class="hugo" href="http://hugo.spf13.com/" target="_blank">hugo</a></li>
+        </ul>
+    </div>
+</div>
+<script src="//blog.urandom.team/js/all.min.js"></script>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', '', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
