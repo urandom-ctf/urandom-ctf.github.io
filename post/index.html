@@ -185,29 +185,29 @@
 
 <h3 id="000000010000d10c-alloc-234-0x00000001801b4480">000000010000d10c : alloc(234)                   =&gt; 0x00000001801b4480</h3>
 
-<p>USB String Descriptor (Descriptor Index = 1)</p>
+<p>USBのString Descriptor (Descriptor Index = 1)</p>
 
-<p>ApNonceとSEPNonceをHostに通知するためのもの。ASCII文字による16進表記かつUTF-32で表現するのでApNonceとSEPNonceの情報量に比してサイズが大きい。</p>
+<p>ApNonceとSEPNonceをHostに通知するためのもの。ASCII文字による16進表記かつ1文字あたり2バイトで表現するのでApNonceとSEPNonceの情報量に比してサイズが大きい。</p>
 
 <p>これ以降の追跡結果はa1exdandy氏の記事の解析結果と概ね一致する。</p>
 
 <h3 id="000000010000d10c-alloc-22-0x00000001801b45c0">000000010000d10c : alloc(22)                    =&gt; 0x00000001801b45c0</h3>
 
-<p>USB Manufacturer String Descriptor</p>
+<p>USBのString Descriptor (Manufacturer)</p>
 
 <h3 id="000000010000d10c-alloc-62-0x00000001801b4640">000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4640</h3>
 
-<p>USB Product String Descriptor</p>
+<p>USBのString Descriptor (Product)</p>
 
 <h3 id="000000010000d10c-alloc-198-0x00000001801b46c0">000000010000d10c : alloc(198)                   =&gt; 0x00000001801b46c0</h3>
 
-<p>USB Serial Number String Descriptor</p>
+<p>USBのString Descriptor (Serial Number)</p>
 
 <p>DFUモードではここにハードウェアとソフトウェアのバージョンや設定情報を詰め込むので長い。</p>
 
 <h3 id="000000010000d10c-alloc-62-0x00000001801b4800">000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4800</h3>
 
-<p>USB Configuration String Descriptor</p>
+<p>USBのString Descriptor (Configuration)</p>
 
 <h3 id="000000010000a9e0-alloc-960-0x00000001801b4880">000000010000a9e0 : alloc(960)                   =&gt; 0x00000001801b4880</h3>
 
@@ -225,7 +225,7 @@
 
 <h3 id="000000010000d2a4-alloc-25-0x00000001801b9540">000000010000d2a4 : alloc(25)                    =&gt; 0x00000001801b9540</h3>
 
-<p>USB Configuration Descriptor</p>
+<p>USBのConfiguration Descriptor</p>
 
 <p>a1exdandy氏の記事によればこちらがHigh-Speed用のdescriptorとのこと。書き込まれるデータは後述のFull-Speed用descriptorと同一。</p>
 
@@ -236,13 +236,19 @@
 
 <h3 id="000000010000d2b4-alloc-25-0x00000001801b95c0">000000010000d2b4 : alloc(25)                    =&gt; 0x00000001801b95c0</h3>
 
-<p>USB Configuration Descriptor</p>
+<p>USBのConfiguration Descriptor</p>
 
 <p>a1exdandy氏の記事によればこちらがFull-Speed用のdescriptorとのこと。</p>
 
 <h1 id="備考-1">備考</h1>
 
 <p>今回はreset vectorにジャンプすることでwarm reset(的な操作)を施してSecureROMを開始直後から追跡したが、warm reset時の状態は通常起動時と異なるため、通常起動時と挙動が一致するかどうかは不明。ただし、warm reset後でもcheckm8が成功することは確認できた。</p>
+
+<h1 id="編集履歴">編集履歴</h1>
+
+<h2 id="2019-12-31">2019/12/31</h2>
+
+<p>USB関連の記述に誤りがあったため訂正した。</p>
 
                     </div>
                 </section>
