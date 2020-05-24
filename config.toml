@@ -2,5 +2,11 @@ baseurl = "//blog.urandom.team"
 languageCode = "ja-jp"
 title = "urandom"
 
+pygmentsUseClasses=true
+
 [markup.goldmark.renderer]
     unsafe = true
+
+[markup.highlight]
+    lineNos = true
+    style = "solarized-dark256"
