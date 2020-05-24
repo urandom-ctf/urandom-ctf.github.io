@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Misc on urandom</title>
@@ -19,18 +19,15 @@
       <guid>//blog.urandom.team/post/my-linux-kernel-on-nesclassic/</guid>
       <description>はじめに ファミコンミニ自体の権利表記画面や任天堂Webサイトで配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。
 ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) pic.twitter.com/00EZZgMx7A
-&amp;mdash; op (@6f70) 2016年11月13日 
-注意 この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。
-事前準備  sunxi-fel (sunxi-tools)
- abootimg
- ARMのコンパイル環境
- Ubuntu 12.04 + gcc-arm-linux-gnueabi でテストしています。  ファミコンミニのシリアルコンソール
- 参考: ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房 参考: Nintendo NES Classic Edition - linux-sunxi.org  ファミコンミニとホストPCのUSB接続
-  手順  U-boot, 起動イメージの取得
- シリアルコンソールで s キーを押しながらファミコンミニを起動して、U-bootのシェルに入ります。
- シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。
-sunxi_flash phy_read 58000000 0 80  読み出し先アドレス0x58000000とセクタ数0x80は、適当な使ってなさそうな所と長さなので、必然性はありません。
- シリアルコンソールで fastboot_test コマンドを実行して、FELモードに入ります。</description>
+&amp;mdash; op (@6f70) 2016年11月13日  注意 この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。
+事前準備   sunxi-fel (sunxi-tools)
+  abootimg
+  ARMのコンパイル環境
+ Ubuntu 12.04 + gcc-arm-linux-gnueabi でテストしています。    ファミコンミニのシリアルコンソール
+ 参考: ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房 参考: Nintendo NES Classic Edition - linux-sunxi.org    ファミコンミニとホストPCのUSB接続
+  手順   U-boot, 起動イメージの取得
+  シリアルコンソールで s キーを押しながらファミコンミニを起動して、U-bootのシェルに入ります。
+  シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。</description>
     </item>
     
   </channel>

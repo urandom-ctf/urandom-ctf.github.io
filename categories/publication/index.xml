@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Publication on urandom</title>
@@ -51,7 +51,8 @@ urandom vol.6は次の内容になります。
 urandom vol.5は次のような内容になります。
  CBCTF2017問題解説 - One of Three Billion (by op) Bitcoinによる公平なCTF (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
 それでは会場でお会いしましょう。
- これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。 [return]   </description>
+  これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。 &amp;#x21a9;&amp;#xfe0e;
+   </description>
     </item>
     
     <item>
@@ -83,7 +84,7 @@ urandom vol.4は次のような内容になります。
       <pubDate>Sun, 12 Mar 2017 17:17:50 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c91-digital/</guid>
-      <description> urandom vol.3電子版 C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。
+      <description>urandom vol.3電子版 C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。
 urandom vol.3電子版は 128円 での販売となります。内容は物理書籍版とほぼ同じです。
 販売ページはこちら（Gumroad）です。決済にはクレジットカードかPayPalが使えます。
 物理書籍版購入者の方へ 購入ページに“Offer code”という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
@@ -115,7 +116,7 @@ urandom vol.3電子版は 128円 での販売となります。内容は物理�
       <description>urandom vol.2電子版 大変長らくお待たせしました。urandom vol.2の電子版を公開しました。
 urandom vol.2電子版は 128円 での販売となります。内容は物理書籍版とほぼ同じです（どこが違うか探してみよう！　特に景品はないです）。
 販売ページはこちら（Gumroad）です。決済にはクレジットカードかPayPalが使えます。
-物理書籍版購入者の方へ 購入ページに&amp;rdquo;Offer code&amp;rdquo;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
+物理書籍版購入者の方へ 購入ページに&amp;quot;Offer code&amp;quot;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
  コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。 同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。  urandom vol.3 続けて冬のお知らせです。無事に冬コミ（C91）に当選しました。スペースは 土曜日 東R-12b です（Webカタログはこちら）。
 これまでだと「だいたいこういう内容になる予定ですよ」というリストくらいは出せていたのですが、今回は現時点で何も決まっておりません。 が、コンピュータセキュリティ的な本であるところからは変わりないと思います。内容が決まり次第随時告知しますので、今しばらくお待ちください。
 それでは、今年も大晦日にお会いしましょう。</description>
@@ -138,10 +139,10 @@ urandom vol.2電子版は 128円 での販売となります。内容は物理�
       <pubDate>Wed, 20 Jul 2016 00:57:00 +0900</pubDate>
       
       <guid>//blog.urandom.team/post/c90-announce/</guid>
-      <description>C90（2016年夏コミ）当選してました。スペースは 3日目 東ム-43b です。C89に引き続き、&amp;rdquo;urandom vol.2&amp;rdquo;を出します。内容は引き続いてないです。
+      <description>C90（2016年夏コミ）当選してました。スペースは 3日目 東ム-43b です。C89に引き続き、&amp;ldquo;urandom vol.2&amp;quot;を出します。内容は引き続いてないです。
 urandom vol.2はこんな感じの内容になります。
  バイナリの調べ方 (by op) Mental Game! (by yyu)  この内容で入稿を完了しています。後ほどサンプルをアップロードします。
- （2016-07-20 修正）  諸般の事情により『.NET難読化ツール事始め』(fetastein)に代わって、『Mental Game!』(yyu)となりました 入稿完了したよ！！！！   </description>
+  （2016-07-20 修正）  諸般の事情により『.NET難読化ツール事始め』(fetastein)に代わって、『Mental Game!』(yyu)となりました 入稿完了したよ！！！！    </description>
     </item>
     
   </channel>

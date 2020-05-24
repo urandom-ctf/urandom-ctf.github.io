@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on urandom</title>
@@ -6,18 +6,10 @@
     <description>Recent content in Categories on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
+    <lastBuildDate>Tue, 25 Dec 2018 18:03:47 +0900</lastBuildDate>
     
 	<atom:link href="//blog.urandom.team/categories/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Misc</title>
-      <link>//blog.urandom.team/categories/misc/</link>
-      <pubDate>Mon, 14 Nov 2016 20:01:17 +0900</pubDate>
-      
-      <guid>//blog.urandom.team/categories/misc/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Publication</title>
@@ -29,7 +21,16 @@
     </item>
     
     <item>
-      <title>Write Ups</title>
+      <title>Misc</title>
+      <link>//blog.urandom.team/categories/misc/</link>
+      <pubDate>Mon, 14 Nov 2016 20:01:17 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/categories/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Write-ups</title>
       <link>//blog.urandom.team/categories/write-ups/</link>
       <pubDate>Wed, 17 Aug 2016 00:17:26 +0900</pubDate>
       

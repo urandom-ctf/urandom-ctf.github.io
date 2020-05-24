@@ -7,7 +7,7 @@
 
     <meta name="description" content="">
 
-    <meta name="generator" content="Hugo 0.40.1" />
+    <meta name="generator" content="Hugo 0.68.3" />
     <meta name="twitter:card" content="summary">
     
     <meta name="twitter:title" content="Misc &middot; urandom">
@@ -19,17 +19,12 @@
 
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
-    <!--<![endif]-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
 
-    <link rel="stylesheet" href="//blog.urandom.team/css/all.min.css">
+    <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="alternate" type="application/rss+xml" title="urandom" href="//blog.urandom.team/index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
 </head>
 <body>
 
@@ -46,8 +41,12 @@
             <ul class="nav-list">
                 
                 
+                
+                
                 <li class="nav-item">
-                    <a class="pure-button" href="//blog.urandom.team/index.xml"><i class="fa fa-rss"></i> rss</a>
+                    <a class="pure-button" href='//blog.urandom.team/index.xml'>
+                        <i class="fa fa-rss"></i> rss
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -73,149 +72,139 @@
                             
                                 under 
                                 
-                                <a class="post-category post-category-Misc" href="//blog.urandom.team/categories/misc">Misc</a>
+                                    <a class="post-category post-category-Misc" href='//blog.urandom.team/categories/Misc'>Misc</a>
+                                
                             
                         </p>
                     </header>
 
                     <div class="post-description">
-                        
-
-<h1 id="はじめに">はじめに</h1>
-
+                        <h1 id="はじめに">はじめに</h1>
 <p>ファミコンミニ自体の権利表記画面や<a href="https://www.nintendo.co.jp/support/oss/">任天堂Webサイト</a>で配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。</p>
-
-<p><blockquote class="twitter-tweet tw-align-center" data-lang="ja"><p lang="ja" dir="ltr">ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) <a href="https://t.co/00EZZgMx7A">pic.twitter.com/00EZZgMx7A</a></p>&mdash; op (@6f70) <a href="https://twitter.com/6f70/status/797939754528444416">2016年11月13日</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
+<blockquote class="twitter-tweet tw-align-center" data-lang="ja"><p lang="ja" dir="ltr">ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) <a href="https://t.co/00EZZgMx7A">pic.twitter.com/00EZZgMx7A</a></p>&mdash; op (@6f70) <a href="https://twitter.com/6f70/status/797939754528444416">2016年11月13日</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 <h1 id="注意">注意</h1>
-
 <p><strong>この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。</strong></p>
-
 <h1 id="事前準備">事前準備</h1>
-
 <ul>
-<li><p>sunxi-fel (<a href="http://linux-sunxi.org/Sunxi-tools">sunxi-tools</a>)</p></li>
-
-<li><p>abootimg</p></li>
-
-<li><p>ARMのコンパイル環境</p>
-
+<li>
+<p>sunxi-fel (<a href="http://linux-sunxi.org/Sunxi-tools">sunxi-tools</a>)</p>
+</li>
+<li>
+<p>abootimg</p>
+</li>
+<li>
+<p>ARMのコンパイル環境</p>
 <ul>
 <li>Ubuntu 12.04 + gcc-arm-linux-gnueabi でテストしています。</li>
-</ul></li>
-
-<li><p>ファミコンミニのシリアルコンソール</p>
-
+</ul>
+</li>
+<li>
+<p>ファミコンミニのシリアルコンソール</p>
 <ul>
 <li>参考: <a href="https://www.ns-koubou.com/blog/2016/11/11/nes_classic/">ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房</a></li>
 <li>参考: <a href="http://linux-sunxi.org/Nintendo_NES_Classic_Edition">Nintendo NES Classic Edition - linux-sunxi.org</a></li>
-</ul></li>
-
-<li><p>ファミコンミニとホストPCのUSB接続</p></li>
 </ul>
-
+</li>
+<li>
+<p>ファミコンミニとホストPCのUSB接続</p>
+</li>
+</ul>
 <h1 id="手順">手順</h1>
-
 <ol>
-<li><p>U-boot, 起動イメージの取得</p>
-
+<li>
+<p>U-boot, 起動イメージの取得</p>
 <ol>
-<li><p>シリアルコンソールで <code>s</code> キーを押しながらファミコンミニを起動して、U-bootのシェルに入ります。</p></li>
-
-<li><p>シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。</p>
-
+<li>
+<p>シリアルコンソールで <code>s</code> キーを押しながらファミコンミニを起動して、U-bootのシェルに入ります。</p>
+</li>
+<li>
+<p>シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。</p>
 <pre><code>sunxi_flash phy_read 58000000 0 80
-</code></pre>
-
-<p>読み出し先アドレス0x58000000とセクタ数0x80は、適当な使ってなさそうな所と長さなので、必然性はありません。</p></li>
-
-<li><p>シリアルコンソールで <code>fastboot_test</code> コマンドを実行して、FELモードに入ります。</p>
-
-<p>fastbootと言いつつFELモードに入ります。このFELモードでは最初からDRAMが有効化されています。ただし、シリアルコンソールが壊れるようです。</p></li>
-
-<li><p>ホストで以下のコマンドを実行して、手順1.2で読みだしたイメージをホストへ転送します。</p>
-
+</code></pre><p>読み出し先アドレス0x58000000とセクタ数0x80は、適当な使ってなさそうな所と長さなので、必然性はありません。</p>
+</li>
+<li>
+<p>シリアルコンソールで <code>fastboot_test</code> コマンドを実行して、FELモードに入ります。</p>
+<p>fastbootと言いつつFELモードに入ります。このFELモードでは最初からDRAMが有効化されています。ただし、シリアルコンソールが壊れるようです。</p>
+</li>
+<li>
+<p>ホストで以下のコマンドを実行して、手順1.2で読みだしたイメージをホストへ転送します。</p>
 <pre><code>sunxi-fel read 0x58000000 0x1000000 0000-0080.bin
 </code></pre></li>
-
-<li><p>U-bootのマジック <code>uboot</code> でイメージ中を検索するとU-bootが見つかります。オフセット0x14にサイズが格納されているので、それを元に切り出します。切り出したファイルをu-boot.binとします。</p></li>
-
-<li><p>起動イメージのマジック <code>ANDROID!</code> でイメージ中を検索すると起動イメージが見つかるので、適当に切り出します。切り出したファイルをboot.imgとします。</p></li>
-</ol></li>
-
-<li><p>Linuxのビルド</p>
-
+<li>
+<p>U-bootのマジック <code>uboot</code> でイメージ中を検索するとU-bootが見つかります。オフセット0x14にサイズが格納されているので、それを元に切り出します。切り出したファイルをu-boot.binとします。</p>
+</li>
+<li>
+<p>起動イメージのマジック <code>ANDROID!</code> でイメージ中を検索すると起動イメージが見つかるので、適当に切り出します。切り出したファイルをboot.imgとします。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Linuxのビルド</p>
 <p>配布されているソースコード中の linux-9ed0e6c8612113834e9af9d16a3e90b573c488ca をビルドします。</p>
-
 <ol>
-<li><p><code>drivers/video/sunxi/hdmi_ep952/EP952api.h</code> のコメントアウトされている <code>WARN</code> マクロを有効にします。</p></li>
-
-<li><p>以下のコマンドを実行してconfigします。</p>
-
+<li>
+<p><code>drivers/video/sunxi/hdmi_ep952/EP952api.h</code> のコメントアウトされている <code>WARN</code> マクロを有効にします。</p>
+</li>
+<li>
+<p>以下のコマンドを実行してconfigします。</p>
 <pre><code>export ARCH=arm
 export CROSS_COMPILE=arm-linux-gnueabi-
 
 make sun8iw5p1smp_defconfig
 </code></pre></li>
-
-<li><p>.configに以下の変更を加えます。</p>
-
+<li>
+<p>.configに以下の変更を加えます。</p>
 <pre><code>CONFIG_INITRAMFS_SOURCE=&quot;&quot;
 CONFIG_CMA=y
 CONFIG_FB_SUNXI=y
 CONFIG_CMDLINE_FORCE=n
 CONFIG_USB_SUPPORT=n
-</code></pre>
-
-<p>USBを切っているのは単にサイズ削減の為です。</p></li>
-
-<li><p>以下のコマンドを実行してビルドします。</p>
-
+</code></pre><p>USBを切っているのは単にサイズ削減の為です。</p>
+</li>
+<li>
+<p>以下のコマンドを実行してビルドします。</p>
 <pre><code>make zImage
-</code></pre>
-
-<p>対話的に聞かれるconfigの確認は全部そのままでもとりあえず動きました。</p></li>
-</ol></li>
-
-<li><p>U-boot, 起動イメージの作成</p>
-
+</code></pre><p>対話的に聞かれるconfigの確認は全部そのままでもとりあえず動きました。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>U-boot, 起動イメージの作成</p>
 <ol>
-<li><p>u-boot.bin中の <code>bootcmd=sunxi_flash phy_read 43800000 30 20;boota 43800000</code> を <code>bootcmd=boota 43800000</code> に置換します(オフセットがずれないようにNULLパディング)。</p></li>
-
-<li><p>以下のコマンドで起動イメージを展開します。</p>
-
+<li>
+<p>u-boot.bin中の <code>bootcmd=sunxi_flash phy_read 43800000 30 20;boota 43800000</code> を <code>bootcmd=boota 43800000</code> に置換します(オフセットがずれないようにNULLパディング)。</p>
+</li>
+<li>
+<p>以下のコマンドで起動イメージを展開します。</p>
 <pre><code>abootimg -x boot.img
 </code></pre></li>
-
-<li><p>zImageを手順2で作成したものに差し替え、以下のコマンドで起動イメージを再作成します。</p>
-
+<li>
+<p>zImageを手順2で作成したものに差し替え、以下のコマンドで起動イメージを再作成します。</p>
 <pre><code>abootimg --create myboot.img -f bootimg.cfg -k zImage -r initrd.img
-</code></pre>
-
-<p>このままではinitrd.imgを展開できないので、起動しても <code>/init</code> を実行できずにPanicします。
-起動後にシェル等を操作したい場合は、カーネルパラメーターとinitrd.imgを適宜編集したり作りなおして下さい。</p></li>
-</ol></li>
-
-<li><p>Linuxの起動</p>
-
+</code></pre><p>このままではinitrd.imgを展開できないので、起動しても <code>/init</code> を実行できずにPanicします。
+起動後にシェル等を操作したい場合は、カーネルパラメーターとinitrd.imgを適宜編集したり作りなおして下さい。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Linuxの起動</p>
 <ol>
-<li><p>手順1.1, 1.3でFELモードに入ります。</p></li>
-
-<li><p>ホストで以下のコマンドを実行すると、Linuxが起動します。</p>
-
+<li>
+<p>手順1.1, 1.3でFELモードに入ります。</p>
+</li>
+<li>
+<p>ホストで以下のコマンドを実行すると、Linuxが起動します。</p>
 <pre><code>sunxi-fel write 0x43800000 myboot.img
 sunxi-fel write 0x47000000 u-boot.bin
 sunxi-fel exe   0x47000000
 </code></pre></li>
-</ol></li>
 </ol>
-
+</li>
+</ol>
 <h1 id="おわりに">おわりに</h1>
-
 <p>ざっと手順を書き出しました。ファミコンミニは拡張性が低いのが難点ですが、計算能力はそれなりにあるので色々な事ができそうです。
 Linuxカーネルはとりあえず動くものをビルドしたので、より適切なビルド方法は他にあるかと思いますし、起動手順ももっと簡素な物がありそうです。</p>
-
 <p>作業を始めた当初は <code>fastboot_test</code> コマンドでDRAM有効化済みのFELモードに入れる事に気付いておらず、 <code>efex</code> コマンドでDRAM無効なFELモードに入って、頑張って自前でDRAMを有効化して作業していました。
 その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 <a href="//blog.urandom.team/post/c90-digital-and-c91/">urandom vol.3</a> に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。</p>
 
@@ -228,11 +217,12 @@ Linuxカーネルはとりあえず動くものをビルドしたので、より
             <div class="footer">
     <div class="pure-menu pure-menu-horizontal pure-menu-open">
         <ul>
-            <li>Powered by <a class="hugo" href="http://hugo.spf13.com/" target="_blank">hugo</a></li>
+            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
         </ul>
     </div>
 </div>
-<script src="//blog.urandom.team/js/all.min.js"></script>
+<script src='//blog.urandom.team/js/all.min.js'></script>
+
         </div>
     </div>
 </div>
