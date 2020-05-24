@@ -2,5 +2,5 @@ baseurl = "//blog.urandom.team"
 languageCode = "ja-jp"
 title = "urandom"
 
-[blackfriday]
-    fractions = false
+[markup.goldmark.renderer]
+    unsafe = true
