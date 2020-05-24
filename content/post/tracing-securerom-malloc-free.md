@@ -109,29 +109,29 @@ SecureROM開始直後から実行を追跡するにはターゲットをリセ�
 
 ### 000000010000d10c : alloc(234)                   => 0x00000001801b4480
 
-USB String Descriptor (Descriptor Index = 1)
+USBのString Descriptor (Descriptor Index = 1)
 
-ApNonceとSEPNonceをHostに通知するためのもの。ASCII文字による16進表記かつUTF-32で表現するのでApNonceとSEPNonceの情報量に比してサイズが大きい。
+ApNonceとSEPNonceをHostに通知するためのもの。ASCII文字による16進表記かつ1文字あたり2バイトで表現するのでApNonceとSEPNonceの情報量に比してサイズが大きい。
 
 これ以降の追跡結果はa1exdandy氏の記事の解析結果と概ね一致する。
 
 ### 000000010000d10c : alloc(22)                    => 0x00000001801b45c0
 
-USB Manufacturer String Descriptor
+USBのString Descriptor (Manufacturer)
 
 ### 000000010000d10c : alloc(62)                    => 0x00000001801b4640
 
-USB Product String Descriptor
+USBのString Descriptor (Product)
 
 ### 000000010000d10c : alloc(198)                   => 0x00000001801b46c0
 
-USB Serial Number String Descriptor
+USBのString Descriptor (Serial Number)
 
 DFUモードではここにハードウェアとソフトウェアのバージョンや設定情報を詰め込むので長い。
 
 ### 000000010000d10c : alloc(62)                    => 0x00000001801b4800
 
-USB Configuration String Descriptor
+USBのString Descriptor (Configuration)
 
 ### 000000010000a9e0 : alloc(960)                   => 0x00000001801b4880
 
@@ -149,7 +149,7 @@ USBの入出力用バッファー。
 
 ### 000000010000d2a4 : alloc(25)                    => 0x00000001801b9540
 
-USB Configuration Descriptor
+USBのConfiguration Descriptor
 
 a1exdandy氏の記事によればこちらがHigh-Speed用のdescriptorとのこと。書き込まれるデータは後述のFull-Speed用descriptorと同一。
 
@@ -161,10 +161,16 @@ ipwndfu/src/checkm8_arm64.S内のgUSBDescriptorsは、ここで確保された�
 
 ### 000000010000d2b4 : alloc(25)                    => 0x00000001801b95c0
 
-USB Configuration Descriptor
+USBのConfiguration Descriptor
 
 a1exdandy氏の記事によればこちらがFull-Speed用のdescriptorとのこと。
 
 # 備考
 
 今回はreset vectorにジャンプすることでwarm reset(的な操作)を施してSecureROMを開始直後から追跡したが、warm reset時の状態は通常起動時と異なるため、通常起動時と挙動が一致するかどうかは不明。ただし、warm reset後でもcheckm8が成功することは確認できた。
+
+# 編集履歴
+
+## 2019/12/31
+
+USB関連の記述に誤りがあったため訂正した。
