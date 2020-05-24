@@ -6,10 +6,30 @@
     <description>Recent content in Posts on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 25 Dec 2018 18:03:47 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 29 Dec 2019 21:54:20 +0900</lastBuildDate>
     
 	<atom:link href="//blog.urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SecureROMのmalloc/free追跡</title>
+      <link>//blog.urandom.team/post/tracing-securerom-malloc-free/</link>
+      <pubDate>Sun, 29 Dec 2019 21:54:20 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/tracing-securerom-malloc-free/</guid>
+      <description>概要 axi0mX氏のcheckm8公開により、広く一般にSecureROM(iPhone/iPadのブートローダー)の動的解析が可能になった。SecureROMのヒープレイアウトへの理解を深める為にヒープ関連処理を解析し、その一環としてSecureROM開始時からDFUモード起動完了までの間に発生するmalloc/freeの呼び出しをデバッガーで追跡したので、研究用として記事に残す。
+C97でもこの記事のコピ本を頒布予定(火曜日 南地区 リ-04b)で、間に合えば細かい話を加筆する。
+関連記事 checkm8の解説ではa1exdandy氏による次の記事が非常によくまとまっている。
+Technical analysis of the checkm8 exploit
+上の記事でもヒープの確保シーケンスについて静的解析に基づいた解説があるが、この記事の動的解析でも上の記事と近い結果が得られた。
+検証環境  iPhone 7 (A1779) Bonobo JTAG/SWD Debug Cable ipwndfu  Matthew Pierson氏によるfork版 commit bb3c1d618f96ce96956089823f396b777b4c46acに一部変更を加えたもの    調査手順 checkm8(ipwndfu)を使用してiPhone 7(ターゲット)からSecureROMを読み出しGhidraで解析した。解析によりいわゆるmalloc, free, memalignと思われる3関数のアドレスを特定した。
+ipwndfuを使用してターゲットのSWDを有効化(demote)し、Bonobo JTAG/SWD Debug Cableを使用してgdbでターゲットにアタッチした。
+SecureROM開始直後から実行を追跡するにはターゲットをリセットする必要があるが、通常の手順でターゲットをリセットすると、リセットによりdemotionの状態が初期化されてSWDが無効になり追跡できなくなる。このため、今回はdemote後にターゲットをreset vectorへジャンプさせてもう一度最初から起動処理を行わせて追跡した。Reset vectorへのジャンプ前に予めmalloc, free, memalignへハードウェアブレークポイントを張っておいて、それぞれへの呼び出しを監視・記録した。
+追跡結果 備考 この章では、iPhone 7の実機から読みだした情報を引用する。この章で引用するメモリダンプのベースはDFUモード起動完了直後のもので、ベースは0x180000000である。
+一覧 次の書式でalloc, free, memalignの呼び出しの遷移を記す。
+呼び出し元アドレス : 関数名(引数) =&amp;gt; 返り値
+000000010000f858 : free(0x00000001801b4080) 000000010000edd0 : alloc(48) =&amp;gt; 0x00000001801b4080 000000010000ede0 : alloc(256) =&amp;gt; 0x00000001801b4100 0000000100011548 : alloc(4000) =&amp;gt; 0x00000001801b4240 00000001000115d0 : free(0x00000001801b4240) 000000010000f124 : alloc(512) =&amp;gt; 0x00000001801b4240 000000010000d10c : alloc(234) =&amp;gt; 0x00000001801b4480 000000010000d10c : alloc(22) =&amp;gt; 0x00000001801b45c0 000000010000d10c : alloc(62) =&amp;gt; 0x00000001801b4640 000000010000d10c : alloc(198) =&amp;gt; 0x00000001801b46c0 000000010000d10c : alloc(62) =&amp;gt; 0x00000001801b4800 000000010000a9e0 : alloc(960) =&amp;gt; 0x00000001801b4880 000000010000a9f0 : alloc(16384) =&amp;gt; 0x00000001801b4c80 000000010000df08 : memalign(2048, 0x00000040) =&amp;gt; 0x00000001801b8d00 000000010000d2a4 : alloc(25) =&amp;gt; 0x00000001801b9540 000000010000d2b4 : alloc(25) =&amp;gt; 0x00000001801b95c0 メモ 000000010000f858 : free(0x00000001801b4080) このfreeは不要領域の解放のためではなく、ヒープの初期化時に使用可能な領域をリストに登録するためのもの。</description>
+    </item>
     
     <item>
       <title>C95参加と新刊のお知らせ</title>
