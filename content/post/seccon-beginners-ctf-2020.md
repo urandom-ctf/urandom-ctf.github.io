@@ -6,7 +6,6 @@ author: "mayth"
 categories: ["Write-ups"]
 ---
 
-</script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -331,7 +330,7 @@ print(answers)
 
 この変数`FLAG`の内容を知ることができればOKという問題。
 `answers`が表示されているが、これには乱数`getrandbits(L)`が加算されているので、
-2回分のデータを使っていくと方法がある。
+2回分のデータを使っていくという方法がある。
 いま1回目の結果得られた`coeffs`を\\(C_1\\)、そして2回目を\\(C_2\\)とすると、
 これらは次のような行列である。
 
