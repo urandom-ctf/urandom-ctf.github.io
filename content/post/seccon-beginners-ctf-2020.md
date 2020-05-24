@@ -6,6 +6,10 @@ author: "mayth"
 categories: ["Write-ups"]
 ---
 
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催された[SECCON Beginners CTF 2020](https://www.seccon.jp/2019/seccon_beginners/seccon_beginners_ctf_2020_5_23_1400.html)のwrite-upです。
 
 なお、今回は以下のメンバー編成で参加しました。
@@ -296,8 +300,354 @@ log.info(p.recvline_contains("ctf4b"))
 
 ### Noisy equations
 
+下記のPythonプログラムが動いている。
+
+```python
+from os import getenv
+from time import time
+from random import getrandbits, seed
+
+
+FLAG = getenv("FLAG").encode()
+SEED = getenv("SEED").encode()
+
+L = 256
+N = len(FLAG)
+
+
+def dot(A, B):
+    assert len(A) == len(B)
+    return sum([a * b for a, b in zip(A, B)])
+
+coeffs = [[getrandbits(L) for _ in range(N)] for _ in range(N)]
+
+seed(SEED)
+
+answers = [dot(coeff, FLAG) + getrandbits(L) for coeff in coeffs]
+
+print(coeffs)
+print(answers)
+```
+
+この変数`FLAG`の内容を知ることができればOKという問題。
+`answers`が表示されているが、これには乱数`getrandbits(L)`が加算されているので、
+2回分のデータを使っていくと方法がある。
+いま1回目の結果得られた`coeffs`を\\(C_1\\)、そして2回目を\\(C_2\\)とすると、
+これらは次のような行列である。
+
+$$
+\\begin{align\*}
+C_1 &= \\left\[
+\\begin{array}{cccc}
+c^1\_{1,1} & c^1\_{1,2} & \dots & c^1\_{1,44} \\\\\
+\vdots & \ddots &  & \vdots \\\\\
+\vdots &  & \ddots  & \vdots \\\\\
+c^1\_{44,1} & c^1\_{44,2} & \dots & c^1{44,44}
+\\end{array}
+\\right\] \\\\\
+\\\\\
+C_2 &= \\left\[
+\\begin{array}{cccc}
+c^2\_{1,1} & c^2\_{1,2} & \dots & c^2\_{1,44} \\\\\
+\vdots & \ddots &  & \vdots \\\\\
+\vdots &  & \ddots  & \vdots \\\\\
+c^2\_{44,1} & c^2\_{44,2} & \dots & c^2\_{44,44}
+\\end{array}
+\\right\]
+\\end{align\*}
+$$
+
+そして`answer`は1回目を\\(A_1\\)、そして2回目を\\(A_2\\)とすると次のようになる。
+
+$$
+\\begin{align\*}
+A_1 &= \\left\[
+\\begin{array}{c}
+a^1\_{1} \\\\\
+\vdots \\\\\
+a^1\_{44}
+\\end{array}
+\\right\] \\\\\
+\\\\\
+A_2 &= \\left\[
+\\begin{array}{c}
+a^2\_{1} \\\\\
+\vdots \\\\\
+a^2\_{44}
+\\end{array}
+\\right\]
+\\end{align\*}
+$$
+
+ここで\\(a^1\_{i} - a^2\_{i}\\)について考える。求めたい`FLAG`の1文字目から\\(x\_1, \\dots, x\_{44}\\)とすると、
+
+$$
+a^1\_{i} = \\left(\\sum^{44}\_{j=1}{C^1\_{i,j} \\times x\_j}\\right) + R_i
+$$
+
+であり、この\\(R_i\\)は`getrandbits(L)`だがPythonプログラムを見ると、シードを固定しているため、
+どんな値なのかよく分からないが毎回同じ結果になる。
+したがって、\\(a^1\_{i} - a^2\_{i}\\)は次のように\\(R_i\\)がキャンセルされる。
+
+$$
+a^1\_{i} - a^2\_{i} = \\left(\\sum^{44}\_{j=1}{C^1\_{i,j} \\times x\_j}\\right) -
+  \\left(\\sum^{44}\_{j=1}{C^2\_{i,j} \\times x\_j}\\right)
+$$
+
+したがってこれを行列表現すると
+
+$$
+\\left\[
+\\begin{array}{c}
+a^1\_{1} - a^2\_{1} \\\\\
+\vdots \\\\\
+a^1\_{44} - a^2\_{44}
+\\end{array}
+\\right\] = \\left\[
+\\begin{array}{cccc}
+c^1\_{1,1} - c^2\_{1,1} & c^1\_{1,2} - c^2\_{1,2} & \dots & c^1\_{1,44} - c^2\_{1,44} \\\\\
+\vdots & \ddots &  & \vdots \\\\\
+\vdots &  & \ddots  & \vdots \\\\\
+c^1\_{44,1} - c^2\_{44,1} & c^1\_{44,2} - c^2\_{44,2} & \dots & c^1\_{44,44} - c^2_{44,44}
+\\end{array}
+\\right\]
+\\left\[
+\\begin{array}{c}
+x\_{1} \\\\\
+\vdots \\\\\
+x\_{44}
+\\end{array}
+\\right\]
+$$
+
+したがってあとは\\(C\_1 - C\_2\\)の逆行列から`FLAG`を得られる。
+
+```python
+import os
+import json
+import numpy as np
+from numpy.linalg import inv
+
+stream = os.popen("nc noisy-equations.quals.beginners.seccon.jp 3000")
+
+coeffs1 = json.loads(stream.readline())
+answer1 = json.loads(stream.readline())
+
+stream2 = os.popen("nc noisy-equations.quals.beginners.seccon.jp 3000")
+
+coeffs2 = json.loads(stream2.readline())
+answer2 = json.loads(stream2.readline())
+
+coeff_diffs =np.matrix(
+    [ [ c1 - c2 for (c1, c2) in zip(c1s, c2s) ] for (c1s, c2s) in zip(coeffs1, coeffs2)  ],
+    dtype = 'float'
+)
+
+answer_diffs = np.transpose(
+        np.matrix(
+            [ a1 - a2 for (a1, a2) in zip(answer1, answer2) ],
+            dtype = 'float'
+        )
+)
+
+coeff_diffs_inv = inv(
+    np.matrix(coeff_diffs, dtype = 'float')
+)
+flag = np.transpose(np.linalg.solve(coeff_diffs, answer_diffs))
+
+flag_int = np.around(flag).astype(int).tolist()[0]
+
+print(flag)
+
+print( "".join([ chr(i) for i in flag_int ]) )
+```
+
 ### RSA Calc
 
+下記のようなプログラムが動いている。
+
+```python
+from Crypto.Util.number import *
+from params import p, q, flag
+import binascii
+import sys
+import signal
+
+
+N = p * q
+e = 65537
+d = inverse(e, (p-1)*(q-1))
+
+
+def input(prompt=''):
+    sys.stdout.write(prompt)
+    sys.stdout.flush()
+    return sys.stdin.buffer.readline().strip()
+
+def menu():
+    sys.stdout.write('''----------
+1) Sign
+2) Exec
+3) Exit
+''')
+    try:
+        sys.stdout.write('> ')
+        sys.stdout.flush()
+        return int(sys.stdin.readline().strip())
+    except:
+        return 3
+
+
+def cmd_sign():
+    data = input('data> ')
+    if len(data) > 256:
+        sys.stdout.write('Too long\n')
+        return
+
+    if b'F' in data or b'1337' in data:
+        sys.stdout.write('Error\n')
+        return
+
+    signature = pow(bytes_to_long(data), d, N)
+    sys.stdout.write('Signature: {}\n'.format(binascii.hexlify(long_to_bytes(signature)).decode()))
+
+def cmd_exec():
+    data = input('data> ')
+    signature = int(input('signature> '), 16)
+
+    if signature < 0 or signature >= N:
+        sys.stdout.write('Invalid signature\n')
+        return
+
+    check = long_to_bytes(pow(signature, e, N))
+    if data != check:
+        sys.stdout.write('Invalid signature\n')
+        return
+
+    chunks = data.split(b',')
+    stack = []
+    for c in chunks:
+        if c == b'+':
+            stack.append(stack.pop() + stack.pop())
+        elif c == b'-':
+            stack.append(stack.pop() - stack.pop())
+        elif c == b'*':
+            stack.append(stack.pop() * stack.pop())
+        elif c == b'/':
+            stack.append(stack.pop() / stack.pop())
+        elif c == b'F':
+            val = stack.pop()
+            if val == 1337:
+                sys.stdout.write(flag + '\n')
+        else:
+            stack.append(int(c))
+
+    sys.stdout.write('Answer: {}\n'.format(int(stack.pop())))
+
+
+def main():
+    sys.stdout.write('N: {}\n'.format(N))
+    while True:
+        try:
+            command = menu()
+            if command == 1:
+                cmd_sign()
+            if command == 2:
+                cmd_exec()
+            elif command == 3:
+                break
+        except:
+            sys.stdout.write('Error\n')
+            break
+
+
+if __name__ == '__main__':
+    signal.alarm(60)
+    main()
+```
+
+`F`または`1337`を含まないならば、任意の文字列に署名してくれる。そしてスタック署名されたスタックマシンの命令列を実行し、狙ったところに入れる（そのために`F`や`1337`が必要）ことができればフラグが入手できる。
+RSAの準同型性を利用した。端的にいうと、いまRSAのパラメーターとして\\(N, e, d\\)と、任意の平文\\(m\_1, m\_2\\)があるとして、RSAは次がなりたつ。
+
+$$
+\\text{Sign}\_{d, N}(m\_1 \times m\_2) \\equiv \\text{Sign}\_{d, N}(m\_1) \\times \\text{Sign}\_{d, N}(m\_2) \\bmod N
+$$
+
+よって次のようなプランでアタックする。
+
+1. \\(2\\)に署名させる
+2. \\(\\frac{\\mathtt{1337,F}}{2}\\)した値に署名させる
+    - 偶然`1337,F`の数値表現は\\(2\\)で割り切ることができた
+3. 上記2つの署名をかけ算して\\(N\\)で割った余りをとる
+    - これが`1337,F`の署名となっている
+4. `1337,F`を実行し、署名として（3）で得られたものを入れる
+
+これをやるのが下記のプログラムである。
+
+```python
+import numpy as np
+import re
+import socket
+from Crypto.Util.number import *
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("rsacalc.quals.beginners.seccon.jp", 10001))
+data = s.recv(4096).decode("utf-8")
+data_n = re.search('N: (\d+)\n', data).group(1)
+
+N = int(data_n)
+
+print("N: " + str(N))
+
+command = bytes_to_long(b'1337,F')
+half_command = int(command / 2)
+
+print("command: " + str(command))
+
+# Get `2` signature
+s.sendall(b'1\n')
+print(s.recv(1024).decode("utf-8"))
+
+s.sendall(b'\02\n')
+
+signature_2 = int(
+    re.search('Signature: ([\da-f]+)', s.recv(4096).decode("utf-8")).group(1),
+    16
+)
+
+print("signature_2: " + str(signature_2))
+
+# Get `half_command` signature
+s.sendall(b'1\n')
+print(s.recv(1024).decode("utf-8"))
+
+s.sendall(
+    half_command.to_bytes((half_command.bit_length() + 7) , byteorder='big', signed=False) + b'\n'
+)
+
+signature_half_command = int(
+    re.search('Signature: ([\da-f]+)', s.recv(4096).decode("utf-8")).group(1),
+    16
+)
+
+print("signature half command: " + str(signature_half_command))
+
+# Calculate signature
+signature_command = signature_half_command * signature_2 % N
+
+print("GOOOOOOOOOOOOOOOOOO")
+
+# Execute command
+s.sendall(b'2\n')
+print(s.recv(1024).decode("utf-8"))
+s.sendall(b'1337,F\n')
+print(s.recv(1024).decode("utf-8"))
+sig = (format(signature_command, 'x')).encode("ascii")
+
+s.sendall(sig + b'\n\n')
+
+print(s.recv(2024).decode("utf-8"))
+```
 
 ## Web
 
