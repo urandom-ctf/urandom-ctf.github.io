@@ -12,6 +12,20 @@
     
     
     <item>
+      <title>SECCON Beginners CTF 2020 Write-up</title>
+      <link>//blog.urandom.team/post/seccon-beginners-ctf-2020/</link>
+      <pubDate>Sun, 24 May 2020 23:27:00 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/post/seccon-beginners-ctf-2020/</guid>
+      <description>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。
+なお、今回は以下のメンバー編成で参加しました。
+ yuscarlet mayth yyu favcastle  Pwn Beginner&amp;rsquo;s Stack  Let&amp;rsquo;s learn how to abuse stack overflow!
+ 64bit ELFのバイナリが与えられる。これがサーバーで動いている。
+実行すると
+ Your goal is to call `win` function (located at 0x400861) [ Address ] [ Stack ] +--------------------+ 0x00007ffeb1443ac0 | 0x00007f30a003dfc8 | &amp;lt;-- buf +--------------------+ 0x00007ffeb1443ac8 | 0x0000000000400ad0 | +--------------------+ 0x00007ffeb1443ad0 | 0x0000000000400ad0 | +--------------------+ 0x00007ffeb1443ad8 | 0x00007f30a0078190 | +--------------------+ 0x00007ffeb1443ae0 | 0x00007ffeb1443af0 | &amp;lt;-- saved rbp (vuln) +--------------------+ 0x00007ffeb1443ae8 | 0x000000000040084e | &amp;lt;-- return address (vuln) +--------------------+ 0x00007ffeb1443af0 | 0x0000000000000000 | &amp;lt;-- saved rbp (main) +--------------------+ 0x00007ffeb1443af8 | 0x00007f309fe740b3 | &amp;lt;-- return address (main) +--------------------+ 0x00007ffeb1443b00 | 0x0000000100000001 | +--------------------+ 0x00007ffeb1443b08 | 0x00007ffeb1443be8 | +--------------------+  といった感じに目標と現時点のスタックフレームが示される親切設計となっている。ついでに目的のwin関数では、system(&amp;quot;/bin/sh&amp;quot;)を呼び出してくれる。つまりwin関数を呼べれば自動的にシェルが取れる。</description>
+    </item>
+    
+    <item>
       <title>SecureROMのmalloc/free追跡</title>
       <link>//blog.urandom.team/post/tracing-securerom-malloc-free/</link>
       <pubDate>Sun, 29 Dec 2019 21:54:20 +0900</pubDate>

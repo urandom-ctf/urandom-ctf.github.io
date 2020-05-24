@@ -6,10 +6,19 @@
     <description>Recent content in Categories on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 25 Dec 2018 18:03:47 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2020 23:27:00 +0900</lastBuildDate>
     
 	<atom:link href="//blog.urandom.team/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Write-ups</title>
+      <link>//blog.urandom.team/categories/write-ups/</link>
+      <pubDate>Sun, 24 May 2020 23:27:00 +0900</pubDate>
+      
+      <guid>//blog.urandom.team/categories/write-ups/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Publication</title>
@@ -26,15 +35,6 @@
       <pubDate>Mon, 14 Nov 2016 20:01:17 +0900</pubDate>
       
       <guid>//blog.urandom.team/categories/misc/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Write-ups</title>
-      <link>//blog.urandom.team/categories/write-ups/</link>
-      <pubDate>Wed, 17 Aug 2016 00:17:26 +0900</pubDate>
-      
-      <guid>//blog.urandom.team/categories/write-ups/</guid>
       <description></description>
     </item>
     
