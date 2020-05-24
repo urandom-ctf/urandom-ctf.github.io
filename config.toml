@@ -4,6 +4,9 @@ title = "urandom"
 
 pygmentsUseClasses=true
 
+[params]
+    hideShareOptions = true
+
 [markup.goldmark.renderer]
     unsafe = true
 
