@@ -1,7 +1,6 @@
 ---
 title: "SECCON Beginners CTF 2020 Write-up"
-date: "2020-05-24T14:56:11+09:00"
-draft: true
+date: "2020-05-24T23:27:00+09:00"
 author: "mayth"
 categories: ["Write-ups"]
 ---
