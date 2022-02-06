@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SECCON on urandom</title>
+    <link>https://urandom.team/tags/seccon/</link>
+    <description>Recent content in SECCON on urandom</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Sun, 24 May 2020 23:27:00 +0900</lastBuildDate><atom:link href="https://urandom.team/tags/seccon/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SECCON Beginners CTF 2020 Write-up</title>
+      <link>https://urandom.team/post/seccon-beginners-ctf-2020/</link>
+      <pubDate>Sun, 24 May 2020 23:27:00 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/seccon-beginners-ctf-2020/</guid>
+      <description>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&amp;rsquo;s Stack Let&amp;rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー</description>
+    </item>
+    
+  </channel>
+</rss>

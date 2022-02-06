@@ -1,149 +1,134 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
-    <loc>//blog.urandom.team/categories/</loc>
+    <loc>https://urandom.team/books/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/books/urandom-vol1/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/books/urandom-vol2/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/books/urandom-vol3/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/books/urandom-vol4/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/books/urandom-vol5/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/books/urandom-vol6/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/books/urandom-vol7/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/books/urandom-vol8/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/books/urandom-vol8pre/</loc>
+    <lastmod>2022-01-17T00:12:40+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/tags/ctf/</loc>
     <lastmod>2020-05-24T23:27:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/</loc>
     <lastmod>2020-05-24T23:27:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/seccon-beginners-ctf-2020/</loc>
+  </url><url>
+    <loc>https://urandom.team/tags/seccon/</loc>
     <lastmod>2020-05-24T23:27:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/categories/write-ups/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/seccon-beginners-ctf-2020/</loc>
     <lastmod>2020-05-24T23:27:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/tracing-securerom-malloc-free/</loc>
+  </url><url>
+    <loc>https://urandom.team/tags/write-ups/</loc>
+    <lastmod>2020-05-24T23:27:00+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/tags/misc/</loc>
     <lastmod>2019-12-29T21:54:20+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c95-announce/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/tracing-securerom-malloc-free/</loc>
+    <lastmod>2019-12-29T21:54:20+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/tags/tech/</loc>
+    <lastmod>2019-12-29T21:54:20+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/post/c95-announce/</loc>
     <lastmod>2018-12-25T18:03:47+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/categories/publication/</loc>
+  </url><url>
+    <loc>https://urandom.team/tags/publication/</loc>
     <lastmod>2018-12-25T18:03:47+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c94-announce/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c94-announce/</loc>
     <lastmod>2018-08-05T22:13:33+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c93-announce/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c93-announce/</loc>
     <lastmod>2017-12-25T18:40:33+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c92-announce/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c92-announce/</loc>
     <lastmod>2017-08-08T02:03:25+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/cho-tech/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/cho-tech/</loc>
     <lastmod>2017-04-28T21:15:56+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c91-digital/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c91-digital/</loc>
     <lastmod>2017-03-12T17:17:50+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c91-sample/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c91-sample/</loc>
     <lastmod>2016-12-13T01:30:16+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/categories/misc/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/my-linux-kernel-on-nesclassic/</loc>
     <lastmod>2016-11-14T20:01:17+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/my-linux-kernel-on-nesclassic/</loc>
-    <lastmod>2016-11-14T20:01:17+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c90-digital-and-c91/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c90-digital-and-c91/</loc>
     <lastmod>2016-11-02T22:55:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/tmctf2016-qual/</loc>
+  </url><url>
+    <loc>https://urandom.team/tags/tmctf/</loc>
     <lastmod>2016-08-17T00:17:26+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c90-sample/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/tmctf2016-qual/</loc>
+    <lastmod>2016-08-17T00:17:26+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/post/c90-sample/</loc>
     <lastmod>2016-08-11T00:47:15+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c90-announce/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c90-announce/</loc>
     <lastmod>2016-07-20T00:57:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/sunshine-ctf-2016/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/sunshine-ctf-2016/</loc>
     <lastmod>2016-03-15T01:42:29+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c89-digital-book/</loc>
+  </url><url>
+    <loc>https://urandom.team/tags/e-book/</loc>
     <lastmod>2016-02-21T17:42:38+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c89-idapython/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c89-digital-book/</loc>
+    <lastmod>2016-02-21T17:42:38+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/post/c89-idapython/</loc>
     <lastmod>2015-12-29T20:23:43+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c89-decompiler/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c89-decompiler/</loc>
     <lastmod>2015-12-29T16:01:01+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c89-pre/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c89-pre/</loc>
     <lastmod>2015-12-16T00:41:36+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c89/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c89/</loc>
     <lastmod>2015-11-04T05:21:39+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/post/c89-appl/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/c89-appl/</loc>
     <lastmod>2015-08-29T01:16:53+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/about/</loc>
+  </url><url>
+    <loc>https://urandom.team/post/hello/</loc>
+    <lastmod>2015-08-28T20:25:57+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/about/</loc>
     <lastmod>2015-08-28T19:40:47+09:00</lastmod>
   </url>
-  
-  <url>
-    <loc>//blog.urandom.team/</loc>
-    <lastmod>2015-08-28T19:40:47+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//blog.urandom.team/tags/</loc>
-  </url>
-  
 </urlset>

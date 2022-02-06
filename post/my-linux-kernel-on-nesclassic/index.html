@@ -1,87 +1,122 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ファミコンミニで自前のLinuxカーネルを動かす手順 &middot; urandom</title>
-
-    <meta name="description" content="">
-
-    <meta name="generator" content="Hugo 0.68.3" />
-    <meta name="twitter:card" content="summary">
     
-    <meta name="twitter:title" content="ファミコンミニで自前のLinuxカーネルを動かす手順 &middot; urandom">
-    <meta name="twitter:description" content="">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.1" />
 
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="ファミコンミニで自前のLinuxカーネルを動かす手順 &middot; urandom">
-    <meta property="og:description" content="">
 
-    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/syntax.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/custom.css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
+<title>ファミコンミニで自前のLinuxカーネルを動かす手順 - urandom</title>
+
+
+<meta name="author" content="op" />
+
+
+<meta name="description" content="CTF team made up of graduates from University of Tsukuba, Japan" />
+
+
+<meta name="keywords" content="tech, Misc" />
+
+
+<meta property="og:title" content="ファミコンミニで自前のLinuxカーネルを動かす手順" />
+<meta name="twitter:title" content="ファミコンミニで自前のLinuxカーネルを動かす手順" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://urandom.team/post/my-linux-kernel-on-nesclassic/" /><meta property="og:description" content="はじめに ファミコンミニ自体の権利表記画面や任天堂Webサイトで配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファ" />
+<meta name="twitter:description" content="はじめに ファミコンミニ自体の権利表記画面や任天堂Webサイトで配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファ" /><meta property="og:image" content="https://urandom.team/images/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://urandom.team/images/og.png" /><meta property="article:published_time" content="2016-11-14T20:01:17+09:00" /><meta property="article:modified_time" content="2016-11-14T20:01:17+09:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://urandom.team/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
 </head>
-<body>
 
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
 
-<div id="layout" class="pure-g">
-    <div class="sidebar pure-u-1 pure-u-md-1-4">
-    <div class="header">
-        <hgroup>
-            <h1 class="brand-title"><a href="//blog.urandom.team">urandom</a></h1>
-            <h2 class="brand-tagline"></h2>
-        </hgroup>
-
-        <nav class="nav">
-            <ul class="nav-list">
-                
-                
-                
-                
-                <li class="nav-item">
-                    <a class="pure-button" href='//blog.urandom.team/index.xml'>
-                        <i class="fa fa-rss"></i> rss
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-
-    <div class="content pure-u-1 pure-u-md-3-4">
-        <div>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://urandom.team">urandom</a>
             
-            <div class="posts">
-                <h1 class="content-subhead">14 Nov 2016, 20:01</h1>
-                <section class="post">
-                    <header class="post-header">
+        </div>
+    </div>
+</header>
 
-                        <a href="//blog.urandom.team/post/my-linux-kernel-on-nesclassic/" class="post-title">ファミコンミニで自前のLinuxカーネルを動かす手順</a>
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/my-linux-kernel-on-nesclassic/">ファミコンミニで自前のLinuxカーネルを動かす手順</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2016-11-14</span>
 
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">op</strong>
-                            
-                            
-                                under 
-                                
-                                    <a class="post-category post-category-Misc" href='//blog.urandom.team/categories/Misc'>Misc</a>
-                                
-                            
-                        </p>
-                    </header>
-                    
-                    <div class="post-description">
-                        <h1 id="はじめに">はじめに</h1>
-<p>ファミコンミニ自体の権利表記画面や<a href="https://www.nintendo.co.jp/support/oss/">任天堂Webサイト</a>で配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。</p>
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/tech">tech</a>&nbsp;<a href="/tags/misc">Misc</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h1 id="はじめに">はじめに</h1>
+<p>ファミコンミニ自体の権利表記画面や<a href="https://www.nintendo.co.jp/support/oss/" target="_blank">任天堂Webサイト</a>で配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。</p>
 <blockquote class="twitter-tweet tw-align-center" data-lang="ja"><p lang="ja" dir="ltr">ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) <a href="https://t.co/00EZZgMx7A">pic.twitter.com/00EZZgMx7A</a></p>&mdash; op (@6f70) <a href="https://twitter.com/6f70/status/797939754528444416">2016年11月13日</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 <h1 id="注意">注意</h1>
@@ -89,7 +124,7 @@
 <h1 id="事前準備">事前準備</h1>
 <ul>
 <li>
-<p>sunxi-fel (<a href="http://linux-sunxi.org/Sunxi-tools">sunxi-tools</a>)</p>
+<p>sunxi-fel (<a href="http://linux-sunxi.org/Sunxi-tools" target="_blank">sunxi-tools</a>)</p>
 </li>
 <li>
 <p>abootimg</p>
@@ -103,8 +138,8 @@
 <li>
 <p>ファミコンミニのシリアルコンソール</p>
 <ul>
-<li>参考: <a href="https://www.ns-koubou.com/blog/2016/11/11/nes_classic/">ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房</a></li>
-<li>参考: <a href="http://linux-sunxi.org/Nintendo_NES_Classic_Edition">Nintendo NES Classic Edition - linux-sunxi.org</a></li>
+<li>参考: <a href="https://www.ns-koubou.com/blog/2016/11/11/nes_classic/" target="_blank">ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房</a></li>
+<li>参考: <a href="http://linux-sunxi.org/Nintendo_NES_Classic_Edition" target="_blank">Nintendo NES Classic Edition - linux-sunxi.org</a></li>
 </ul>
 </li>
 <li>
@@ -122,7 +157,8 @@
 <li>
 <p>シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。</p>
 <pre><code>sunxi_flash phy_read 58000000 0 80
-</code></pre><p>読み出し先アドレス0x58000000とセクタ数0x80は、適当な使ってなさそうな所と長さなので、必然性はありません。</p>
+</code></pre>
+<p>読み出し先アドレス0x58000000とセクタ数0x80は、適当な使ってなさそうな所と長さなので、必然性はありません。</p>
 </li>
 <li>
 <p>シリアルコンソールで <code>fastboot_test</code> コマンドを実行して、FELモードに入ります。</p>
@@ -131,7 +167,8 @@
 <li>
 <p>ホストで以下のコマンドを実行して、手順1.2で読みだしたイメージをホストへ転送します。</p>
 <pre><code>sunxi-fel read 0x58000000 0x1000000 0000-0080.bin
-</code></pre></li>
+</code></pre>
+</li>
 <li>
 <p>U-bootのマジック <code>uboot</code> でイメージ中を検索するとU-bootが見つかります。オフセット0x14にサイズが格納されているので、それを元に切り出します。切り出したファイルをu-boot.binとします。</p>
 </li>
@@ -153,7 +190,8 @@
 export CROSS_COMPILE=arm-linux-gnueabi-
 
 make sun8iw5p1smp_defconfig
-</code></pre></li>
+</code></pre>
+</li>
 <li>
 <p>.configに以下の変更を加えます。</p>
 <pre><code>CONFIG_INITRAMFS_SOURCE=&quot;&quot;
@@ -161,12 +199,14 @@ CONFIG_CMA=y
 CONFIG_FB_SUNXI=y
 CONFIG_CMDLINE_FORCE=n
 CONFIG_USB_SUPPORT=n
-</code></pre><p>USBを切っているのは単にサイズ削減の為です。</p>
+</code></pre>
+<p>USBを切っているのは単にサイズ削減の為です。</p>
 </li>
 <li>
 <p>以下のコマンドを実行してビルドします。</p>
 <pre><code>make zImage
-</code></pre><p>対話的に聞かれるconfigの確認は全部そのままでもとりあえず動きました。</p>
+</code></pre>
+<p>対話的に聞かれるconfigの確認は全部そのままでもとりあえず動きました。</p>
 </li>
 </ol>
 </li>
@@ -179,11 +219,13 @@ CONFIG_USB_SUPPORT=n
 <li>
 <p>以下のコマンドで起動イメージを展開します。</p>
 <pre><code>abootimg -x boot.img
-</code></pre></li>
+</code></pre>
+</li>
 <li>
 <p>zImageを手順2で作成したものに差し替え、以下のコマンドで起動イメージを再作成します。</p>
 <pre><code>abootimg --create myboot.img -f bootimg.cfg -k zImage -r initrd.img
-</code></pre><p>このままではinitrd.imgを展開できないので、起動しても <code>/init</code> を実行できずにPanicします。
+</code></pre>
+<p>このままではinitrd.imgを展開できないので、起動しても <code>/init</code> を実行できずにPanicします。
 起動後にシェル等を操作したい場合は、カーネルパラメーターとinitrd.imgを適宜編集したり作りなおして下さい。</p>
 </li>
 </ol>
@@ -199,7 +241,8 @@ CONFIG_USB_SUPPORT=n
 <pre><code>sunxi-fel write 0x43800000 myboot.img
 sunxi-fel write 0x47000000 u-boot.bin
 sunxi-fel exe   0x47000000
-</code></pre></li>
+</code></pre>
+</li>
 </ol>
 </li>
 </ol>
@@ -207,36 +250,221 @@ sunxi-fel exe   0x47000000
 <p>ざっと手順を書き出しました。ファミコンミニは拡張性が低いのが難点ですが、計算能力はそれなりにあるので色々な事ができそうです。
 Linuxカーネルはとりあえず動くものをビルドしたので、より適切なビルド方法は他にあるかと思いますし、起動手順ももっと簡素な物がありそうです。</p>
 <p>作業を始めた当初は <code>fastboot_test</code> コマンドでDRAM有効化済みのFELモードに入れる事に気付いておらず、 <code>efex</code> コマンドでDRAM無効なFELモードに入って、頑張って自前でDRAMを有効化して作業していました。
-その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 <a href="//blog.urandom.team/post/c90-digital-and-c91/">urandom vol.3</a> に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。</p>
+その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 <a href="https://urandom.team/post/c90-digital-and-c91/">urandom vol.3</a> に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。</p>
 
-                    </div>
-                    
-                </section>
+    </div>
+</article>
+
+
+
+
             </div>
-            <div class="footer">
-    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
         <ul>
-            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
         </ul>
     </div>
-</div>
-<script src='//blog.urandom.team/js/all.min.js'></script>
-
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
         </div>
     </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents"></nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
 </div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents"></nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2015-2022
+                <a href="https://urandom.team">urandom</a>
+                All rights reserved.
+                 | <a href="https://github.com/urandom-ctf/urandom-ctf.github.io">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', '', 'auto');
-ga('send', 'pageview');
+<script defer src="/assets/js/fuji.min.js"></script>
 
-</script>
+
 
 </body>
+
 </html>

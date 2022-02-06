@@ -2,325 +2,207 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on urandom</title>
-    <link>//blog.urandom.team/post/</link>
+    <link>https://urandom.team/post/</link>
     <description>Recent content in Posts on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sun, 24 May 2020 23:27:00 +0900</lastBuildDate>
-    
-	<atom:link href="//blog.urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 24 May 2020 23:27:00 +0900</lastBuildDate><atom:link href="https://urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SECCON Beginners CTF 2020 Write-up</title>
-      <link>//blog.urandom.team/post/seccon-beginners-ctf-2020/</link>
+      <link>https://urandom.team/post/seccon-beginners-ctf-2020/</link>
       <pubDate>Sun, 24 May 2020 23:27:00 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/seccon-beginners-ctf-2020/</guid>
-      <description>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。
-なお、今回は以下のメンバー編成で参加しました。
- yuscarlet mayth yyu favcastle  Pwn Beginner&amp;rsquo;s Stack  Let&amp;rsquo;s learn how to abuse stack overflow!
- 64bit ELFのバイナリが与えられる。これがサーバーで動いている。
-実行すると
- Your goal is to call `win` function (located at 0x400861) [ Address ] [ Stack ] +--------------------+ 0x00007ffeb1443ac0 | 0x00007f30a003dfc8 | &amp;lt;-- buf +--------------------+ 0x00007ffeb1443ac8 | 0x0000000000400ad0 | +--------------------+ 0x00007ffeb1443ad0 | 0x0000000000400ad0 | +--------------------+ 0x00007ffeb1443ad8 | 0x00007f30a0078190 | +--------------------+ 0x00007ffeb1443ae0 | 0x00007ffeb1443af0 | &amp;lt;-- saved rbp (vuln) +--------------------+ 0x00007ffeb1443ae8 | 0x000000000040084e | &amp;lt;-- return address (vuln) +--------------------+ 0x00007ffeb1443af0 | 0x0000000000000000 | &amp;lt;-- saved rbp (main) +--------------------+ 0x00007ffeb1443af8 | 0x00007f309fe740b3 | &amp;lt;-- return address (main) +--------------------+ 0x00007ffeb1443b00 | 0x0000000100000001 | +--------------------+ 0x00007ffeb1443b08 | 0x00007ffeb1443be8 | +--------------------+  といった感じに目標と現時点のスタックフレームが示される親切設計となっている。ついでに目的のwin関数では、system(&amp;quot;/bin/sh&amp;quot;)を呼び出してくれる。つまりwin関数を呼べれば自動的にシェルが取れる。</description>
+      <guid>https://urandom.team/post/seccon-beginners-ctf-2020/</guid>
+      <description>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&amp;rsquo;s Stack Let&amp;rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー</description>
     </item>
     
     <item>
       <title>SecureROMのmalloc/free追跡</title>
-      <link>//blog.urandom.team/post/tracing-securerom-malloc-free/</link>
+      <link>https://urandom.team/post/tracing-securerom-malloc-free/</link>
       <pubDate>Sun, 29 Dec 2019 21:54:20 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/tracing-securerom-malloc-free/</guid>
-      <description>概要 axi0mX氏のcheckm8公開により、広く一般にSecureROM(iPhone/iPadのブートローダー)の動的解析が可能になった。SecureROMのヒープレイアウトへの理解を深める為にヒープ関連処理を解析し、その一環としてSecureROM開始時からDFUモード起動完了までの間に発生するmalloc/freeの呼び出しをデバッガーで追跡したので、研究用として記事に残す。
-C97でもこの記事のコピ本を頒布予定(火曜日 南地区 リ-04b)で、間に合えば細かい話を加筆する。
-関連記事 checkm8の解説ではa1exdandy氏による次の記事が非常によくまとまっている。
-Technical analysis of the checkm8 exploit
-上の記事でもヒープの確保シーケンスについて静的解析に基づいた解説があるが、この記事の動的解析でも上の記事と近い結果が得られた。
-検証環境  iPhone 7 (A1779) Bonobo JTAG/SWD Debug Cable ipwndfu  Matthew Pierson氏によるfork版 commit bb3c1d618f96ce96956089823f396b777b4c46acに一部変更を加えたもの    調査手順 checkm8(ipwndfu)を使用してiPhone 7(ターゲット)からSecureROMを読み出しGhidraで解析した。解析によりいわゆるmalloc, free, memalignと思われる3関数のアドレスを特定した。
-ipwndfuを使用してターゲットのSWDを有効化(demote)し、Bonobo JTAG/SWD Debug Cableを使用してgdbでターゲットにアタッチした。
-SecureROM開始直後から実行を追跡するにはターゲットをリセットする必要があるが、通常の手順でターゲットをリセットすると、リセットによりdemotionの状態が初期化されてSWDが無効になり追跡できなくなる。このため、今回はdemote後にターゲットをreset vectorへジャンプさせてもう一度最初から起動処理を行わせて追跡した。Reset vectorへのジャンプ前に予めmalloc, free, memalignへハードウェアブレークポイントを張っておいて、それぞれへの呼び出しを監視・記録した。
-追跡結果 備考 この章では、iPhone 7の実機から読みだした情報を引用する。この章で引用するメモリダンプのベースはDFUモード起動完了直後のもので、ベースは0x180000000である。
-一覧 次の書式でalloc, free, memalignの呼び出しの遷移を記す。
-呼び出し元アドレス : 関数名(引数) =&amp;gt; 返り値
-000000010000f858 : free(0x00000001801b4080) 000000010000edd0 : alloc(48) =&amp;gt; 0x00000001801b4080 000000010000ede0 : alloc(256) =&amp;gt; 0x00000001801b4100 0000000100011548 : alloc(4000) =&amp;gt; 0x00000001801b4240 00000001000115d0 : free(0x00000001801b4240) 000000010000f124 : alloc(512) =&amp;gt; 0x00000001801b4240 000000010000d10c : alloc(234) =&amp;gt; 0x00000001801b4480 000000010000d10c : alloc(22) =&amp;gt; 0x00000001801b45c0 000000010000d10c : alloc(62) =&amp;gt; 0x00000001801b4640 000000010000d10c : alloc(198) =&amp;gt; 0x00000001801b46c0 000000010000d10c : alloc(62) =&amp;gt; 0x00000001801b4800 000000010000a9e0 : alloc(960) =&amp;gt; 0x00000001801b4880 000000010000a9f0 : alloc(16384) =&amp;gt; 0x00000001801b4c80 000000010000df08 : memalign(2048, 0x00000040) =&amp;gt; 0x00000001801b8d00 000000010000d2a4 : alloc(25) =&amp;gt; 0x00000001801b9540 000000010000d2b4 : alloc(25) =&amp;gt; 0x00000001801b95c0 メモ 000000010000f858 : free(0x00000001801b4080) このfreeは不要領域の解放のためではなく、ヒープの初期化時に使用可能な領域をリストに登録するためのもの。</description>
+      <guid>https://urandom.team/post/tracing-securerom-malloc-free/</guid>
+      <description>概要 axi0mX氏のcheckm8公開により、広く一般にSecureROM(iPhone/iPadのブートローダー)の動的解析が可能になった。SecureROMのヒープレイアウトへの理解を深める為にヒ</description>
     </item>
     
     <item>
       <title>C95参加と新刊のお知らせ</title>
-      <link>//blog.urandom.team/post/c95-announce/</link>
+      <link>https://urandom.team/post/c95-announce/</link>
       <pubDate>Tue, 25 Dec 2018 18:03:47 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c95-announce/</guid>
-      <description>C95（2018年冬コミ）に当選してました。 スペースは 2日目 東6 ト44b です。 新刊“urandom vol.7”を出します。
-次の画像をクリックすると本文サンプルが見えます。
-
-urandom vol.7は次の内容になります。
- SECCON2018 国際大会決勝参戦記 (by urandom) 展開署名: Folding Signatureの進捗 (by yyu)  ページ数は本文30pとなっております。頒布価格は300円の予定です。
-それでは会場でお会いしましょう。</description>
+      <guid>https://urandom.team/post/c95-announce/</guid>
+      <description>C95（2018年冬コミ）に当選してました。 スペースは 2日目 東6 ト44b です。 新刊“urandom vol.7”を出します。 次の画像をクリックすると本文サンプルが見えます。 urandom vol.7は次の内容になりま</description>
     </item>
     
     <item>
       <title>C94参加と新刊のお知らせ</title>
-      <link>//blog.urandom.team/post/c94-announce/</link>
+      <link>https://urandom.team/post/c94-announce/</link>
       <pubDate>Sun, 05 Aug 2018 22:13:33 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c94-announce/</guid>
-      <description>C94（2018年夏コミ）に当選してました。 スペースは 1日目 西1 む39b です。 新刊“urandom vol.6”を出します。
-次の画像をクリックすると本文サンプルが見えます。
-
-urandom vol.6は次の内容になります。
- IoT機器のFW解析 -CBCTF2018予選問題 Odin解説- (by op) 素因数分解ゲーム (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
-それでは会場でお会いしましょう。</description>
+      <guid>https://urandom.team/post/c94-announce/</guid>
+      <description>C94（2018年夏コミ）に当選してました。 スペースは 1日目 西1 む39b です。 新刊“urandom vol.6”を出します。 次の画像をクリックすると本文サンプルが見えます。 urandom vol.6は次の内容になりま</description>
     </item>
     
     <item>
       <title>C93参加と新刊のお知らせ</title>
-      <link>//blog.urandom.team/post/c93-announce/</link>
+      <link>https://urandom.team/post/c93-announce/</link>
       <pubDate>Mon, 25 Dec 2017 18:40:33 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c93-announce/</guid>
-      <description>C93（2017年冬コミ）に当選してました。 スペースは 1日目 東キ47a です1。 新刊“urandom vol.5”を出します。
-次の画像をクリックすると本文サンプルが見えます。
-
-urandom vol.5は次のような内容になります。
- CBCTF2017問題解説 - One of Three Billion (by op) Bitcoinによる公平なCTF (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
-それでは会場でお会いしましょう。
-  これまでは3日目でしたが、今回から1日目となりましたのでご注意ください。 &amp;#x21a9;&amp;#xfe0e;
-   </description>
+      <guid>https://urandom.team/post/c93-announce/</guid>
+      <description>C93（2017年冬コミ）に当選してました。 スペースは 1日目 東キ47a です1。 新刊“urandom vol.5”を出します。 次の画像をクリックすると本文サンプルが見えます。 urandom vol.5は次のような内容に</description>
     </item>
     
     <item>
       <title>C92参加と新刊のお知らせ</title>
-      <link>//blog.urandom.team/post/c92-announce/</link>
+      <link>https://urandom.team/post/c92-announce/</link>
       <pubDate>Tue, 08 Aug 2017 02:03:25 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c92-announce/</guid>
-      <description>C92（2017年夏コミ）に当選してました。 スペースは 3日目 東イ-60b です。 新刊“urandom vol.4”と既刊“urandom vol.3”を出します。
-
-urandom vol.4は次のような内容になります。
- mitmproxy入門 (by op) 公平なランサムウェアプロトコル (by yyu)  ページ数は本文34pとなっております。頒布価格は300円の予定です。
-それでは会場でお会いしましょう。</description>
+      <guid>https://urandom.team/post/c92-announce/</guid>
+      <description>C92（2017年夏コミ）に当選してました。 スペースは 3日目 東イ-60b です。 新刊“urandom vol.4”と既刊“urandom vol.3”を出します。 urandom vol.4は次のような内容になります。 mi</description>
     </item>
     
     <item>
       <title>超技術書典参加のお知らせ</title>
-      <link>//blog.urandom.team/post/cho-tech/</link>
+      <link>https://urandom.team/post/cho-tech/</link>
       <pubDate>Fri, 28 Apr 2017 21:15:56 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/cho-tech/</guid>
-      <description>ニコニコ超会議2017に併催の超技術書典に当選しました。スペースは 1日目 B-17 です。 C91に引き続き、“urandom vol.3”を頒布します。
- https://techbookfest.org/event/cho01/circle/5671617594130432  頒布価格は300円です。それでは会場でお会いしましょう。</description>
+      <guid>https://urandom.team/post/cho-tech/</guid>
+      <description>ニコニコ超会議2017に併催の超技術書典に当選しました。スペースは 1日目 B-17 です。 C91に引き続き、“urandom vol.3”を頒布します。 https://techbookfest.org/event/cho01/circle/5671617594130432 頒布価格は300円です。それでは会場でお会いしましょう。</description>
     </item>
     
     <item>
       <title>urandom vol.3電子版公開のお知らせ</title>
-      <link>//blog.urandom.team/post/c91-digital/</link>
+      <link>https://urandom.team/post/c91-digital/</link>
       <pubDate>Sun, 12 Mar 2017 17:17:50 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c91-digital/</guid>
-      <description>urandom vol.3電子版 C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。
-urandom vol.3電子版は 128円 での販売となります。内容は物理書籍版とほぼ同じです。
-販売ページはこちら（Gumroad）です。決済にはクレジットカードかPayPalが使えます。
-物理書籍版購入者の方へ 購入ページに“Offer code”という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
- コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。 同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。  </description>
+      <guid>https://urandom.team/post/c91-digital/</guid>
+      <description>urandom vol.3電子版 C91の1ヶ月後に出すと告知しておいて、結局3月になってしまいましたが、urandom vol.3の電子版を公開しました。 urandom vol.3電子版は 128円 での販売となります。内容は物理書籍</description>
     </item>
     
     <item>
       <title>C91 新刊のお知らせ</title>
-      <link>//blog.urandom.team/post/c91-sample/</link>
+      <link>https://urandom.team/post/c91-sample/</link>
       <pubDate>Tue, 13 Dec 2016 01:30:16 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c91-sample/</guid>
-      <description>表紙だよ！　リンク先はサンプルのPDFだよ！（※サンプルにはカラー写真が含まれていますが、当日頒布する冊子はグレースケールです）
-数多の困難を乗り越え、来るC91で頒布する新刊「urandom vol.3」の入稿が完了しました。
-改めて告知しますと、スペースは 土曜日 東R-12b です（Webカタログ）。3日目だよ、大晦日だよ。
-ページ数は本文64pと読みごたえ抜群の仕様となっております。頒布価格は300円です。
-今回の記事は以下の3本です。
- ファミコンミニとLinux - op Secure Grouping Protocol Using Mental Poker - yyu urandom出版技術部活動報告 - mayth  なお、今回既刊の頒布はありません。vol.1、vol.2は次の電子書籍をご利用ください。
- urandom vol.1 urandom vol.2  vol.3の電子書籍版はコミックマーケット91の1ヶ月後を目処に配信予定です。
-それでは、大晦日に会場でお会いしましょう。</description>
+      <guid>https://urandom.team/post/c91-sample/</guid>
+      <description>表紙だよ！ リンク先はサンプルのPDFだよ！（※サンプルにはカラー写真が含まれていますが、当日頒布する冊子はグレースケールです） 数多の困難を乗り越え、来るC91で頒布する新刊「urandom vol.3」</description>
     </item>
     
     <item>
       <title>ファミコンミニで自前のLinuxカーネルを動かす手順</title>
-      <link>//blog.urandom.team/post/my-linux-kernel-on-nesclassic/</link>
+      <link>https://urandom.team/post/my-linux-kernel-on-nesclassic/</link>
       <pubDate>Mon, 14 Nov 2016 20:01:17 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/my-linux-kernel-on-nesclassic/</guid>
-      <description>はじめに ファミコンミニ自体の権利表記画面や任天堂Webサイトで配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファミコンミニを適切に初期化した上で、適切にビルドしたLinuxカーネルを流しこめば、ファミコンミニ上で自前のLinuxを動かせます。U-boot(GPLv2)とLinux(GPLv2)のソースコードを読解・ビルドして自前のLinuxを起動したので、手順を書きます。
-ファミコンミニで自前ビルドのLinux動いた (My Linux kernel on NES Classic) pic.twitter.com/00EZZgMx7A
-&amp;mdash; op (@6f70) 2016年11月13日  注意 この記事の内容を実践すると、製品保証が無効になったり、故障に繋がる可能性があります。内容を理解できる人が自己責任で行って下さい。
-事前準備   sunxi-fel (sunxi-tools)
-  abootimg
-  ARMのコンパイル環境
- Ubuntu 12.04 + gcc-arm-linux-gnueabi でテストしています。    ファミコンミニのシリアルコンソール
- 参考: ニンテンドークラシックミニ ファミリーコンピュータの中身の話 - えぬえす工房 参考: Nintendo NES Classic Edition - linux-sunxi.org    ファミコンミニとホストPCのUSB接続
-  手順   U-boot, 起動イメージの取得
-  シリアルコンソールで s キーを押しながらファミコンミニを起動して、U-bootのシェルに入ります。
-  シリアルコンソールで以下のコマンドを実行して、内蔵フラッシュの先頭部分を読み出します。</description>
+      <guid>https://urandom.team/post/my-linux-kernel-on-nesclassic/</guid>
+      <description>はじめに ファミコンミニ自体の権利表記画面や任天堂Webサイトで配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファ</description>
     </item>
     
     <item>
       <title>urandom vol.2電子版公開のお知らせとC91告知</title>
-      <link>//blog.urandom.team/post/c90-digital-and-c91/</link>
+      <link>https://urandom.team/post/c90-digital-and-c91/</link>
       <pubDate>Wed, 02 Nov 2016 22:55:00 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c90-digital-and-c91/</guid>
-      <description>urandom vol.2電子版 大変長らくお待たせしました。urandom vol.2の電子版を公開しました。
-urandom vol.2電子版は 128円 での販売となります。内容は物理書籍版とほぼ同じです（どこが違うか探してみよう！　特に景品はないです）。
-販売ページはこちら（Gumroad）です。決済にはクレジットカードかPayPalが使えます。
-物理書籍版購入者の方へ 購入ページに&amp;quot;Offer code&amp;quot;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
- コードを使用する場合、クレジットカード情報は不要です。正しいコードを入力すると入力欄が非表示になります。 同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。  urandom vol.3 続けて冬のお知らせです。無事に冬コミ（C91）に当選しました。スペースは 土曜日 東R-12b です（Webカタログはこちら）。
-これまでだと「だいたいこういう内容になる予定ですよ」というリストくらいは出せていたのですが、今回は現時点で何も決まっておりません。 が、コンピュータセキュリティ的な本であるところからは変わりないと思います。内容が決まり次第随時告知しますので、今しばらくお待ちください。
-それでは、今年も大晦日にお会いしましょう。</description>
+      <guid>https://urandom.team/post/c90-digital-and-c91/</guid>
+      <description>urandom vol.2電子版 大変長らくお待たせしました。urandom vol.2の電子版を公開しました。 urandom vol.2電子版は 128円 での販売となります。内容は物理書籍版とほぼ同じです（どこが違うか探してみよう！</description>
     </item>
     
     <item>
       <title>Trend Micro CTF 2016 Online qualifier</title>
-      <link>//blog.urandom.team/post/tmctf2016-qual/</link>
+      <link>https://urandom.team/post/tmctf2016-qual/</link>
       <pubDate>Wed, 17 Aug 2016 00:17:26 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/tmctf2016-qual/</guid>
-      <description>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。
-urandomは4問解答し600点、92位でした。
-Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。
-Analysis - Offensive 100  Category: Analysis/Offensive
-Points: 100
-Please enter key. Key is TMCTF flag.
-Download the file Decrypt the downloaded file by the following command.
-openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip
-unzip files1.zip
- この問題は巨大なJavaScriptから正解の鍵を得るというものです。 まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。
-1 2 3 4 5  var ko = &amp;#34;c33367701511b4f6020ec61ded352059&amp;#34;; var ka = &amp;#34;61636f697b57b5b7d389db0edb801fc3&amp;#34;; var kq = &amp;#34;d2172edf24129e06f3913376a12919a4&amp;#34;;   これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</description>
+      <guid>https://urandom.team/post/tmctf2016-qual/</guid>
+      <description>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。 urandomは4問解答し600点、92位でした。 Analysis-Offensive 100をyyu、Analysis-Offensi</description>
     </item>
     
     <item>
       <title>C90新刊告知・サンプル公開</title>
-      <link>//blog.urandom.team/post/c90-sample/</link>
+      <link>https://urandom.team/post/c90-sample/</link>
       <pubDate>Thu, 11 Aug 2016 00:47:15 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c90-sample/</guid>
-      <description>CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。 スペースは3日目 東4ホール ム-43bです。 記事は以下の2本で、42P 300円で頒布します。
- バイナリの調べ方 (by op) Mental Game! (by yyu)  表紙デザインはpolamjagです。 それぞれの記事から2Pずつ抜粋したサンプルを公開します。
-また、この新刊のおまけとしてDEF CON CTF 2016 Final参戦記をコピ本で頒布予定です。 8/5-7にアメリカ ラスベガスで開催されたDEF CON CTF 2016 Finalについて、opがCTFチームbinjaのメンバーとして参加した経験を記したもので、現在執筆中です(こちらはurandomとは関係ありません)。</description>
+      <guid>https://urandom.team/post/c90-sample/</guid>
+      <description>CTFサークルurandomは、コミックマーケット90で新刊「urandom vol.2」を頒布します。 スペースは3日目 東4ホール ム-43bです。 記事は以下の2本で、42P 300円で頒布します。 バイナリ</description>
     </item>
     
     <item>
       <title>C90参加のお知らせ</title>
-      <link>//blog.urandom.team/post/c90-announce/</link>
+      <link>https://urandom.team/post/c90-announce/</link>
       <pubDate>Wed, 20 Jul 2016 00:57:00 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c90-announce/</guid>
-      <description>C90（2016年夏コミ）当選してました。スペースは 3日目 東ム-43b です。C89に引き続き、&amp;ldquo;urandom vol.2&amp;quot;を出します。内容は引き続いてないです。
-urandom vol.2はこんな感じの内容になります。
- バイナリの調べ方 (by op) Mental Game! (by yyu)  この内容で入稿を完了しています。後ほどサンプルをアップロードします。
-  （2016-07-20 修正）  諸般の事情により『.NET難読化ツール事始め』(fetastein)に代わって、『Mental Game!』(yyu)となりました 入稿完了したよ！！！！    </description>
+      <guid>https://urandom.team/post/c90-announce/</guid>
+      <description>C90（2016年夏コミ）当選してました。スペースは 3日目 東ム-43b です。C89に引き続き、&amp;ldquo;urandom vol.2&amp;quot;を出します。内容は引き続いてないです。 urandom vol.2はこん</description>
     </item>
     
     <item>
       <title>Sunshine CTF 2016 Write-up</title>
-      <link>//blog.urandom.team/post/sunshine-ctf-2016/</link>
+      <link>https://urandom.team/post/sunshine-ctf-2016/</link>
       <pubDate>Tue, 15 Mar 2016 01:42:29 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/sunshine-ctf-2016/</guid>
-      <description>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催されたSunshine CTF 2016のwrite-upです。
-なお、今回は以下のメンバー編成で参加しました。
- mayth （土曜日を寝て潰す担当） op （たまに現れていくらかの助言と違法語句を残して去って行く担当）  ESTはクソ。
-Forensics 50: Butterfly Effect butterfly.pngが与えられる。
-ImgSteganoにファイルを読み込ませて&amp;quot;Image &amp;gt; Enhanced LSB&amp;quot;とするとフラグが現れた。
- sun{RE4DY_THE_4CID_M4GNET!}
- Exploitation 50: alligatorsim95  Don&amp;rsquo;t try to automate adding X eggs at a time
-legends circulate in florida of an alligator that had laid millions of eggs. use this simulator to try to achieve the same greatness
- ※プログラムは与えられない。
-指定されたIPアドレス/ポートにncで接続すると、アリゲーターのAAと共に文章が流れてくる。
--&amp;gt; u r.</description>
+      <guid>https://urandom.team/post/sunshine-ctf-2016/</guid>
+      <description>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催されたSunshine CTF 2016のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 mayth （土曜日を寝て潰す担当） op （たまに現れていくらかの助言と違法語句を残し</description>
     </item>
     
     <item>
       <title>urandom vol.1 電子書籍版リリース</title>
-      <link>//blog.urandom.team/post/c89-digital-book/</link>
+      <link>https://urandom.team/post/c89-digital-book/</link>
       <pubDate>Sun, 21 Feb 2016 17:42:38 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c89-digital-book/</guid>
-      <description>大変長らくお待たせしました。urandom vol.1の電子書籍版をリリースしました。電子書籍版は256円での販売です。内容は物理書籍版と同一です。
-**販売ページはこちら**です（Gumroadに移動します）。決済にはクレジットカードかPayPalが使えます。
-物理書籍を購入した方へ 購入ページに&amp;quot;Offer code&amp;quot;という欄がありますので、そちらに物理書籍挟み込みの紙に記載されたコードを入力してください。
- コードを使用する場合、クレジットカード情報は不要です（正しいコードを入力すると入力欄が非表示になります）。 同一コードは10回まで使用可能です。ダウンロードしたデータを紛失した際は同一コードを入力してください。  </description>
+      <guid>https://urandom.team/post/c89-digital-book/</guid>
+      <description>大変長らくお待たせしました。urandom vol.1の電子書籍版をリリースしました。電子書籍版は256円での販売です。内容は物理書籍版と同一です。 **販売ページはこちら**です（Gumroadに移動し</description>
     </item>
     
     <item>
       <title>C89本にIDA Pythonの記事を書いた</title>
-      <link>//blog.urandom.team/post/c89-idapython/</link>
+      <link>https://urandom.team/post/c89-idapython/</link>
       <pubDate>Tue, 29 Dec 2015 20:23:43 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c89-idapython/</guid>
-      <description>先の記事で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。
-その同人誌にIDA Pythonの記事を書きました。タイトルは「Easy Recipes for IDA Python」。本全体で三章構成になっている内の一章です。 内容は、タイトルの通りIDA Pythonのための簡単レシピ的なものになっています。 IDAによる解析作業中に起こりそうな問題ケースを3つ挙げ、それらを解決する比較的簡単なIDA Pythonスクリプトの例とその解説を書いています。
-こんなん。
-
-C89 3日目(15/12/31) 東ホ-05b 500円です。 2016年2月以降に電子書籍化する予定（詳細未定）ですが、物理本の購入者には電子書籍版を無料で提供します。</description>
+      <guid>https://urandom.team/post/c89-idapython/</guid>
+      <description>先の記事で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。 その同人誌にIDA Pythonの記事を書きました。タ</description>
     </item>
     
     <item>
       <title>[C89] デコンパイラを殺すIL</title>
-      <link>//blog.urandom.team/post/c89-decompiler/</link>
+      <link>https://urandom.team/post/c89-decompiler/</link>
       <pubDate>Tue, 29 Dec 2015 16:01:01 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c89-decompiler/</guid>
-      <description>いよいよ明日がコミケ初日ですよ！
-むっちゃドキドキしてきた…。
-コミケ戦士の皆さん、今日くらいは自慰は休んで明日に備えますよね？
-というわけでこんにちは、maythです。opが記事説明上げてたので、コミケ初日の今日に至って私もなんか書いておこうかと思います。
-今回は デコンパイラを殺すIL という記事を書いています。殺すといってもSEGVさせるとかではなく、デコンパイルを失敗させるというお話です。
-元々は『SECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジ』の発表で触れた内容です（発表資料はSECCON 2015の当該記事にあります）。当日は時間が限られており、チート対策としてのデコンパイル妨害については簡単なサンプルを示すだけにとどめました。その辺りを突っ込んで書いています。
-デコンパイル妨害の指南書というよりかは、調査報告といった感じになっています。実際、本記事の流れはtkbctf2のSkill Analyzerを作るにあたって調査した分に、横浜大会で資料を作る際に再調査した分を付け加えつつ、当時の私の思考と実験をトレースしたような構成としました。
-.NET周りのエンジニアの方にチラッと読んでもらいたい感じの記事です。最近はUnityでMonoを使う機会も増えているかと思います。
-3日目（31日 木曜日）、スペースは 東ホ-05b &amp;ldquo;urandom&amp;rdquo; 、頒布価格は500円です。
-それでは、当日スペースにてお待ちしております。
-note: なお、記事に関するツッコミ等は適宜ブログ記事上げてもらうなり、@maytheplicまでTwitterでリプを飛ばすなりしていただければ。</description>
+      <guid>https://urandom.team/post/c89-decompiler/</guid>
+      <description>いよいよ明日がコミケ初日ですよ！ むっちゃドキドキしてきた…。 コミケ戦士の皆さん、今日くらいは自慰は休んで明日に備えますよね？ というわけでこんにちは、maythです。opが記事説明上げてたので、コミケ初</description>
     </item>
     
     <item>
       <title>C89情報 - 予告編</title>
-      <link>//blog.urandom.team/post/c89-pre/</link>
+      <link>https://urandom.team/post/c89-pre/</link>
       <pubDate>Wed, 16 Dec 2015 00:41:36 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c89-pre/</guid>
-      <description>maythです。無事に（？）本が出来つつあります（出来たとは言っていない）。世間ではスターのウォーズのなんかの公開が間近に迫っていますが、我々に迫っているのは締め切りとクソコードです。
-&amp;ldquo;urandom vol.1&amp;quot;は記事3本でお送りします。記事の著者から内容について簡単なひとことを要求したところ1名ドロップしました。とりあえずこんな内容になります。
- Easy Recipes for IDA Python (by op)  IDA Pythonの為の簡単なレシピを解説します。   デコンパイラを殺すIL (by mayth)  .NETアプリのデコンパイルを失敗させるべく、我々調査隊はILの奥地へと飛んだ。   秘密計算入門 (by yyu)   (2015-12-25 追記)
-すっかり告知を忘れていましたが入稿を完了しています。 こんな感じの表紙です。 見事に華がないですね。 当日はスペースに何か目印っぽいものを張っておこうと思ったのですが未だ未完成です。 とりあえずスペース番号がわかりやすい何かを置いておきます、たぶん。
-改めて参加日とスペースの告知ですが、3日目（木曜日） 東ホ-05b です。 執筆者でさえ忘れていてWebカタログの地図で自分のサークルを見失いました。
-
-なお、頒布価格は500円を予定しています。消費税はありませんので、本当に500円だけ握りしめて来て頂ければと思います。
-当日誰が売り子やるのかもさっぱり定まっていませんが、スペースでお待ちしております。それでは。
- (2015-12-27 追記)
-この同人誌は2016年2月以降に電子書籍化する予定（詳細未定）です。物理本の購入者には電子書籍版を無料で提供します。</description>
+      <guid>https://urandom.team/post/c89-pre/</guid>
+      <description>maythです。無事に（？）本が出来つつあります（出来たとは言っていない）。世間ではスターのウォーズのなんかの公開が間近に迫っていますが、我々に迫っているのは締め切りとクソコードです。 &amp;ldquo;urandom vol.1&amp;q</description>
     </item>
     
     <item>
       <title>C89情報</title>
-      <link>//blog.urandom.team/post/c89/</link>
+      <link>https://urandom.team/post/c89/</link>
       <pubDate>Wed, 04 Nov 2015 05:21:39 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c89/</guid>
-      <description>C89当選しました。スペースは 3日目 東ホ-05b です。
-以前の告知通りの本が出ます。
- 一歩差がつくIDAコーデ (by op) デコンパイラを殺すIL (by mayth) 他、予定は未定  未だ目次が決まらないあたりに危機感を覚えつつ鋭意執筆中です。
-詳細が決まり次第こちらの記事をアップデートします。Twitterではだいたい私が告知しますが、普段のノイズが多いのでいい感じにウォッチしてください。
-ちょっと気が早いですが当日皆さんにお会いできるのを楽しみにしています。それでは。</description>
+      <guid>https://urandom.team/post/c89/</guid>
+      <description>C89当選しました。スペースは 3日目 東ホ-05b です。 以前の告知通りの本が出ます。 一歩差がつくIDAコーデ (by op) デコンパイラを殺すIL (by mayth) 他、予定は未定 未だ目次が決まらないあたりに危機感を覚えつつ鋭意執</description>
     </item>
     
     <item>
       <title>C89申し込みました</title>
-      <link>//blog.urandom.team/post/c89-appl/</link>
+      <link>https://urandom.team/post/c89-appl/</link>
       <pubDate>Sat, 29 Aug 2015 01:16:53 +0900</pubDate>
       
-      <guid>//blog.urandom.team/post/c89-appl/</guid>
-      <description>C89に&amp;quot;urandom&amp;quot;で申し込んでいます。
-『コンピュータセキュリティ総合誌』と称したよろず本、&amp;ldquo;urandom vol.1&amp;quot;を頒布予定です。サークルカットにある通り、現時点ではこんな内容です。
- デコンパイラを殺すIL 一歩差がつくIDAコーデ  デコンパイラを殺すILはSECCON 2015 x CEDEC CHALLENGE ゲームクラッキング＆チートチャレンジの発表で触れられていた内容です。
-落ちたら落ちたでそのとき考えます。</description>
+      <guid>https://urandom.team/post/c89-appl/</guid>
+      <description>C89に&amp;quot;urandom&amp;quot;で申し込んでいます。 『コンピュータセキュリティ総合誌』と称したよろず本、&amp;ldquo;urandom vol.1&amp;quot;を頒布予定です。サークルカットに</description>
+    </item>
+    
+    <item>
+      <title>Hello, (forgotten) World Again</title>
+      <link>https://urandom.team/post/hello/</link>
+      <pubDate>Fri, 28 Aug 2015 20:25:57 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/hello/</guid>
+      <description>urandomのWebサイト作ってみました・ω・</description>
     </item>
     
   </channel>

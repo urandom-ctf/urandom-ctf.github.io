@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Write-ups on urandom</title>
+    <link>https://urandom.team/tags/write-ups/</link>
+    <description>Recent content in Write-ups on urandom</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Sun, 24 May 2020 23:27:00 +0900</lastBuildDate><atom:link href="https://urandom.team/tags/write-ups/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SECCON Beginners CTF 2020 Write-up</title>
+      <link>https://urandom.team/post/seccon-beginners-ctf-2020/</link>
+      <pubDate>Sun, 24 May 2020 23:27:00 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/seccon-beginners-ctf-2020/</guid>
+      <description>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&amp;rsquo;s Stack Let&amp;rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー</description>
+    </item>
+    
+    <item>
+      <title>Trend Micro CTF 2016 Online qualifier</title>
+      <link>https://urandom.team/post/tmctf2016-qual/</link>
+      <pubDate>Wed, 17 Aug 2016 00:17:26 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/tmctf2016-qual/</guid>
+      <description>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。 urandomは4問解答し600点、92位でした。 Analysis-Offensive 100をyyu、Analysis-Offensi</description>
+    </item>
+    
+    <item>
+      <title>Sunshine CTF 2016 Write-up</title>
+      <link>https://urandom.team/post/sunshine-ctf-2016/</link>
+      <pubDate>Tue, 15 Mar 2016 01:42:29 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/sunshine-ctf-2016/</guid>
+      <description>2016-03-13 01:00 - 2016-03-14 05:00 (JST)に開催されたSunshine CTF 2016のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 mayth （土曜日を寝て潰す担当） op （たまに現れていくらかの助言と違法語句を残し</description>
+    </item>
+    
+  </channel>
+</rss>

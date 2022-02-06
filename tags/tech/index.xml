@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tech on urandom</title>
+    <link>https://urandom.team/tags/tech/</link>
+    <description>Recent content in tech on urandom</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Sun, 29 Dec 2019 21:54:20 +0900</lastBuildDate><atom:link href="https://urandom.team/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SecureROMのmalloc/free追跡</title>
+      <link>https://urandom.team/post/tracing-securerom-malloc-free/</link>
+      <pubDate>Sun, 29 Dec 2019 21:54:20 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/tracing-securerom-malloc-free/</guid>
+      <description>概要 axi0mX氏のcheckm8公開により、広く一般にSecureROM(iPhone/iPadのブートローダー)の動的解析が可能になった。SecureROMのヒープレイアウトへの理解を深める為にヒ</description>
+    </item>
+    
+    <item>
+      <title>ファミコンミニで自前のLinuxカーネルを動かす手順</title>
+      <link>https://urandom.team/post/my-linux-kernel-on-nesclassic/</link>
+      <pubDate>Mon, 14 Nov 2016 20:01:17 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/my-linux-kernel-on-nesclassic/</guid>
+      <description>はじめに ファミコンミニ自体の権利表記画面や任天堂Webサイトで配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファ</description>
+    </item>
+    
+    <item>
+      <title>C89本にIDA Pythonの記事を書いた</title>
+      <link>https://urandom.team/post/c89-idapython/</link>
+      <pubDate>Tue, 29 Dec 2015 20:23:43 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/c89-idapython/</guid>
+      <description>先の記事で述べている通り、CTFチームurandomとしてコミックマーケット89で同人誌「urandom vol.1」を頒布します（入稿間に合った）。 その同人誌にIDA Pythonの記事を書きました。タ</description>
+    </item>
+    
+    <item>
+      <title>[C89] デコンパイラを殺すIL</title>
+      <link>https://urandom.team/post/c89-decompiler/</link>
+      <pubDate>Tue, 29 Dec 2015 16:01:01 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/c89-decompiler/</guid>
+      <description>いよいよ明日がコミケ初日ですよ！ むっちゃドキドキしてきた…。 コミケ戦士の皆さん、今日くらいは自慰は休んで明日に備えますよね？ というわけでこんにちは、maythです。opが記事説明上げてたので、コミケ初</description>
+    </item>
+    
+  </channel>
+</rss>

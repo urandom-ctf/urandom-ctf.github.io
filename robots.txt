@@ -1,2 +1,3 @@
-User-Agent: *
-Disallow:
+User-agent: *
+
+Sitemap: https://urandom.team/sitemap.xml
