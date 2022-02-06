@@ -1,0 +1,31 @@
+article .post-content {
+    a {
+        text-decoration: underline;
+    }
+}
+
+dl.book-meta {
+    dt {
+        font-style: normal;
+        margin: 0;
+    }
+
+    @include breakpoint(md) {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+
+        dt, dd {
+            margin: 0.3em 0;
+            border-bottom: thin silver solid;
+        }
+
+        dt {
+            width: 25%;
+        }
+        dd {
+            width: 65%;
+            margin-right: 10%;
+        }
+    }
+}

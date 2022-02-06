@@ -1,0 +1,39 @@
+{{ define "main" }}
+<!-- homepage range in all posts -->
+{{ $paginator := .Paginate (where (.Site.RegularPages.ByParam "firstPublish").Reverse "Type" "in" "books") }}
+{{ range $paginator.Pages }}
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </h2>
+    <div class="post-item post-summary markdown-body">
+        <dl class=".book-meta">
+            <dt>初回頒布</dt>
+            <dd>{{ time.Format "02 Jan, 2006" .Params.firstPublish }} ({{ .Params.firstPublishEvent }})</dd>
+            <dt>会場頒布価格</dt>
+            <dd>{{ .Params.eventPrice }}</dd>
+            <dt>電子書籍版</dt>
+            <dd>
+                {{ if .Params.ebook }}
+                <ul>
+                    {{ range .Params.ebook }}
+                    <li><a href="{{ .url }}">{{ .provider }}</a> ({{ .price }})</li>
+                    {{ end }}
+                </ul>
+                {{ else }}
+                N/A
+                {{ end }}
+            </dd>
+        </dl>
+        <ul>
+            {{ range .Params.articles }}
+            <li><span class="book-article-title">{{ .title }}</span> <span class="book-article-author">({{ .author }})</span></li>
+            {{ end }}
+        </ul>
+    </div>
+</div>
+{{ end }}
+
+{{- partial "pagination.html" (dict "context" . "pagi" $paginator) -}}
+
+{{ end }}

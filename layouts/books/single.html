@@ -1,0 +1,58 @@
+{{ define "main" }}
+<article>
+    <!-- post meta -->
+    <h2 class="post-item post-title">
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </h2>
+    <!-- post main content -->
+    <div class="post-content markdown-body">
+        <dl class="book-meta">
+            <dt>初回頒布</dt>
+            <dd>{{ time.Format "02 Jan, 2006" .Params.firstPublish }} ({{ .Params.firstPublishEvent }})</dd>
+            <dt>会場頒布価格</dt>
+            <dd>{{ .Params.eventPrice }}</dd>
+        </dl>
+        <h2>電子書籍版</h2>
+        {{ if .Params.ebook }}
+        <ul>
+            {{ range .Params.ebook }}
+            <li><a href="{{ .url }}">{{ .provider }}</a> ({{ .price }})</li>
+            {{ end }}
+        </ul>
+        {{ else }}
+        N/A
+        {{ end }}
+        <h2>目次</h2>
+        <ul>
+            {{ range .Params.articles }}
+            <li><span class="book-article-title">{{ .title }}</span> <span class="book-article-author">({{ .author }})</span></li>
+            {{ end }}
+        </ul>
+        <h2>頒布イベント</h2>
+        <ul>
+            <li>{{ .Params.firstPublishEvent }}</li>
+            {{ range .Params.events }}
+            <li>{{ . }}</li>
+            {{ end }}
+        </ul>
+
+        {{ .Content }}
+    </div>
+</article>
+<!-- post license -->
+{{ if and (or .Site.Params.showLicense .Params.showLicense) (ne .Params.showLicense false) }}
+<div class="license markdown-body">
+    <blockquote>
+        <p>{{ i18n "postCopyrightFront" }}<a rel="license" href="{{ .Site.Params.licenseLink }}"
+               target="_blank">{{ .Site.Params.license }}</a>{{ i18n "postCopyrightEnd" }}</p>
+    </blockquote>
+</div>
+{{ end }}
+{{ if and (.Site.Params.disqusJSApi) (ne .Params.showComments false) }}
+{{ partial "comment-disqusjs.html" . }}
+{{ else if and (.Site.Params.disqusShortname) (ne .Params.showComments false) }}
+{{ partial "comment-disqus.html" . }}
+{{ else if and (.Site.Params.utterancesRepo) (ne .Params.showComments false) }}
+{{ partial "comment-utterances.html" . }}
+{{ else }}{{ end }}
+{{ end }}
