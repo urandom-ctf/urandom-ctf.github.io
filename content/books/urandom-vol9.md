@@ -6,7 +6,6 @@ firstPublish: 2022-08-13T10:00:00+09:00
 firstPublishEvent: コミックマーケット100
 eventPrice: 500円
 events:
-  - コミックマーケット100
 articles:
   - author: yyu
     title: Quantum Covert Lottery meets Grover's algorithm
