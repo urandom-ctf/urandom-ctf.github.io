@@ -2,20 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://urandom.team/post/c100-announce/</loc>
-    <lastmod>2022-08-07T00:00:28+09:00</lastmod>
-  </url><url>
-    <loc>https://urandom.team/post/</loc>
-    <lastmod>2022-08-07T00:00:28+09:00</lastmod>
-  </url><url>
-    <loc>https://urandom.team/tags/publication/</loc>
-    <lastmod>2022-08-07T00:00:28+09:00</lastmod>
+    <loc>https://urandom.team/books/</loc>
+    <lastmod>2022-12-24T14:05:44+09:00</lastmod>
   </url><url>
     <loc>https://urandom.team/</loc>
-    <lastmod>2022-08-07T00:00:28+09:00</lastmod>
+    <lastmod>2022-12-24T14:05:44+09:00</lastmod>
   </url><url>
-    <loc>https://urandom.team/books/</loc>
-    <lastmod>2022-08-06T23:55:40+09:00</lastmod>
+    <loc>https://urandom.team/books/urandom-vol10/</loc>
+    <lastmod>2022-12-24T14:05:44+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/post/comiket101/</loc>
+    <lastmod>2022-12-24T12:35:55+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/post/</loc>
+    <lastmod>2022-12-24T12:35:55+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/tags/publication/</loc>
+    <lastmod>2022-12-24T12:35:55+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/post/c100-announce/</loc>
+    <lastmod>2022-08-07T00:00:28+09:00</lastmod>
   </url><url>
     <loc>https://urandom.team/books/urandom-vol9/</loc>
     <lastmod>2022-08-06T23:55:40+09:00</lastmod>
