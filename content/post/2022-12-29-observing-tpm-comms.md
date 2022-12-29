@@ -1,13 +1,13 @@
 ---
-title: "TPM通信を観察する"
+title: "TPM通信の観察"
 date: 2022-12-29T17:57:26+09:00
 author: op
 tags:
 slug: "observing-tpm-comms"
-draft: true
+draft: false
 ---
 
-urandomがコミックマーケット101で頒布する[urandom vol.10]({{< ref "2022-12-24-comiket101" >}})から、記事「TPM通信を観察する」を途中まで公開します。
+urandomがコミックマーケット101で頒布する[urandom vol.10]({{< ref "2022-12-24-comiket101" >}})から、記事「TPM通信の観察」を途中まで公開します。
 
 ---
 
