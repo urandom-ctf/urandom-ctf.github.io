@@ -6,7 +6,16 @@
     <description>Recent content in Posts on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sat, 24 Dec 2022 12:35:55 +0900</lastBuildDate><atom:link href="https://urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Dec 2022 17:57:26 +0900</lastBuildDate><atom:link href="https://urandom.team/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TPM通信を観察する</title>
+      <link>https://urandom.team/post/observing-tpm-comms/</link>
+      <pubDate>Thu, 29 Dec 2022 17:57:26 +0900</pubDate>
+      
+      <guid>https://urandom.team/post/observing-tpm-comms/</guid>
+      <description>urandomがコミックマーケット101で頒布するurandom vol.10から、記事「TPM通信を観察する」を途中まで公開します。 はじめに コンピューターに求められるセキュリティ要件は年々厳しくなりつ</description>
+    </item>
+    
     <item>
       <title>C101 参加のお知らせ</title>
       <link>https://urandom.team/post/comiket101/</link>
