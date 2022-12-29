@@ -1,10 +1,14 @@
 ---
-title: "Observing Tpm Comms"
+title: "TPM通信を観察する"
 date: 2022-12-29T17:57:26+09:00
-author: urandom
+author: op
 tags:
 slug: "observing-tpm-comms"
 draft: true
+---
+
+urandomがコミックマーケット101で頒布する[urandom vol.10]({{< ref "2022-12-24-comiket101" >}})から、記事「TPM通信を観察する」を途中まで公開します。
+
 ---
 
 ## はじめに
@@ -18,17 +22,8 @@ Windows 11ではシステム要件[^win11-req]でTPMが必須になるなど、T
 一方で、一般の草の根的なコンピューターセキュリティのコミュニティでは、TPMについての情報があまり豊富ではないように思われる。
 そこで、この記事ではTPMの調査・研究の最初のステップとして、実世界のユースケースでTPMに入出力されている通信を観察した事例を紹介する。
 
-<!--
-  The Trusted Computing Group (TCG) is a not-for-profit organization formed to develop, define and promote open, vendor-neutral, global industry specifications and standards, supportive of a hardware-based root of trust, for interoperable trusted computing platforms.
--->
-
 [^tcg]: Trusted Computingを推進する非営利団体。Intel、AMD、Microsoft、Googleなどが構成員。
 [^win11-req]: <https://www.microsoft.com/ja-jp/windows/windows-11-specifications>
-
-<!--
-    Page 53
-    https://trustedcomputinggroup.org/wp-content/uploads/TCG_TPM2_r1p59_Part1_Architecture_pub.pdf
--->
 
 ## 参考資料
 
@@ -179,22 +174,19 @@ TPM 2.0では全てのコマンド名に共通のプレフィックス`TPM2_`を
 
 例えば次のように記した場合、「電源ボタン押下から3.5秒後に」「通算11番目[^zero-origin]のTPMコマンドとして」「`TPM2_SelfTest`コマンドが送信された」ことを意味する。
 
-<!-- NOTE: 10番目or11番目: 以降のリストのフォーマットとしてはこの数字は0オリジンだが、日本語でこれの意味を解説するときに`0000`を「0番目」と書くかどうか？ -->
-<!-- NOTE: ここでは11番目と表記し、0オリジンに留意する旨の注釈を追加した。 -->
-
-> [**``[T+03.50s][0010] SelfTest``**]{.underline}
+> <u>**``[T+03.50s][0010] SelfTest``**</u>
 >
 > TPMの自己診断を実行する。
 
 同じコマンドが連続して送信された場合はまとめて記載する。次のように記した場合、「電源ボタン押下後から10.2秒後から10.5秒後までに」「通算31番目から34番目までのTPMコマンドとして連続して」「`TPM2_PCR_Extend`コマンドが送信された」ことを意味する。
 
-> [**``[T+10.20-10.50s][0030-0033] PCR_Extend``**]{.underline}
+> <u>**``[T+10.20-10.50s][0030-0033] PCR_Extend``**</u>
 >
 > PCRを更新する。更新対象は`PCR[07][SHA-256]`。
 
 Linuxについては、参考としてCOMポートに出力されたkernel logも一部併記する。次のように記した場合「電源ボタン押下から20.32秒後に」「COMポートに対して`"Please unlock disk sda6_crypt"`のkernel logが出力された」ことを意味する。
 
-> [**``[T+20.32s][XXXX] COM Port``**]{.underline}
+> <u>**``[T+20.32s][XXXX] COM Port``**</u>
 >
 > ```
 > Please unlock disk sda6_crypt
@@ -218,30 +210,30 @@ Secure BootではPCRを含めたTPMの各機構を利用して起動処理の完
 
 ### TPM通信: 起動可能なOSが無い場合
 
-[**``[T+01.51s][0000] Startup``**]{.underline}
+<u>**``[T+01.51s][0000] Startup``**</u>
 
 TPMの起動処理を実行する。
 
-[**``[T+01.55-01.57s][0001-0003] GetCapability``**]{.underline}
+<u>**``[T+01.55-01.57s][0001-0003] GetCapability``**</u>
 
 TPMの情報を取得する。
 取得する情報はファームウェアバージョンと製造者名。
 
-[**``[T+01.58s][0004] SelfTest``**]{.underline}
+<u>**``[T+01.58s][0004] SelfTest``**</u>
 
 TPMの自己診断を実行する。
 
-[**``[T+01.58-02.10s][0005-0006] PCR_Extend``**]{.underline}
+<u>**``[T+01.58-02.10s][0005-0006] PCR_Extend``**</u>
 
 PCRを更新する。
 更新対象は`PCR[00][SHA-256]`。
 
-[**``[T+02.11s][0007] Invalid``**]{.underline}
+<u>**``[T+02.11s][0007] Invalid``**</u>
 
 TPM 2.0の仕様上、不正なバイト列のコマンドを送信する。
 エラーになるが詳細不明。
 
-[**``[T+02.83-02.86s][0008-0011] GetCapability``**]{.underline}
+<u>**``[T+02.83-02.86s][0008-0011] GetCapability``**</u>
 
 TPMの情報を取得する。
 取得する情報は各PCRが対応するハッシュアルゴリズム、製造者名、受理できる最大のコマンドサイズとレスポンスサイズ。
@@ -273,21 +265,24 @@ Sessions [0]
 
 `pcrSelect`はビットマップなので、この返答結果は`PCR[00]`から`PCR[23]`まで全てのPCRがSHA-256にのみ対応していることを意味する。
 
-<!-- tpm2_getcap pcrsの出力と一致。 -->
-
-[**``[T+02.87-02.91s][0012-0017] PCR_Extend``**]{.underline}
+<u>**``[T+02.87-02.91s][0012-0017] PCR_Extend``**</u>
 
 PCRを更新する。
 更新対象は`PCR[07][SHA-256]`。
 
-[**``[T+09.03s][0018] GetRandom``**]{.underline}
+<u>**``[T+09.03s][0018] GetRandom``**</u>
 
 TPMから乱数を取得する。
 長さは32バイト。
 
-[**``[T+09.04s][0019] HierarchyChangeAuth``**]{.underline}
+<u>**``[T+09.04s][0019] HierarchyChangeAuth``**</u>
 
 Authorization secretを設定する。
 設定対象はPlatform hierarchy。
 Authorization secretの値は直前に取得した乱数をそのまま使用する。
 
+---
+
+頒布版ではここまでの内容に加えてLinuxとWindowsを起動した時のTPM通信を観察した結果をそれぞれ掲載しています。頒布場所は __コミックマーケット101 2日目（12/31土曜日）西地区 “し” ブロック 02b__ です。
+
+(( 🦀 ))
