@@ -2,13 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://urandom.team/post/</loc>
-    <lastmod>2022-12-29T17:57:26+09:00</lastmod>
+    <loc>https://urandom.team/post/comiket102/</loc>
+    <lastmod>2023-08-09T10:33:00+09:00</lastmod>
   </url><url>
-    <loc>https://urandom.team/post/observing-tpm-comms/</loc>
-    <lastmod>2022-12-29T17:57:26+09:00</lastmod>
+    <loc>https://urandom.team/post/</loc>
+    <lastmod>2023-08-09T10:33:00+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/tags/publication/</loc>
+    <lastmod>2023-08-09T10:33:00+09:00</lastmod>
   </url><url>
     <loc>https://urandom.team/</loc>
+    <lastmod>2023-08-09T10:33:00+09:00</lastmod>
+  </url><url>
+    <loc>https://urandom.team/post/observing-tpm-comms/</loc>
     <lastmod>2022-12-29T17:57:26+09:00</lastmod>
   </url><url>
     <loc>https://urandom.team/books/</loc>
@@ -18,9 +24,6 @@
     <lastmod>2022-12-24T14:05:44+09:00</lastmod>
   </url><url>
     <loc>https://urandom.team/post/comiket101/</loc>
-    <lastmod>2022-12-24T12:35:55+09:00</lastmod>
-  </url><url>
-    <loc>https://urandom.team/tags/publication/</loc>
     <lastmod>2022-12-24T12:35:55+09:00</lastmod>
   </url><url>
     <loc>https://urandom.team/post/c100-announce/</loc>
