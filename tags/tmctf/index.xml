@@ -6,15 +6,14 @@
     <description>Recent content in TMCTF on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Wed, 17 Aug 2016 00:17:26 +0900</lastBuildDate><atom:link href="https://urandom.team/tags/tmctf/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Aug 2016 00:17:26 +0900</lastBuildDate>
+    <atom:link href="https://urandom.team/tags/tmctf/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Trend Micro CTF 2016 Online qualifier</title>
       <link>https://urandom.team/post/tmctf2016-qual/</link>
       <pubDate>Wed, 17 Aug 2016 00:17:26 +0900</pubDate>
-      
       <guid>https://urandom.team/post/tmctf2016-qual/</guid>
       <description>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。 urandomは4問解答し600点、92位でした。 Analysis-Offensive 100をyyu、Analysis-Offensi</description>
     </item>
-    
   </channel>
 </rss>

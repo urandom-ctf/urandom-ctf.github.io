@@ -6,15 +6,14 @@
     <description>Recent content in E-book on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sun, 21 Feb 2016 17:42:38 +0900</lastBuildDate><atom:link href="https://urandom.team/tags/e-book/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 21 Feb 2016 17:42:38 +0900</lastBuildDate>
+    <atom:link href="https://urandom.team/tags/e-book/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>urandom vol.1 電子書籍版リリース</title>
       <link>https://urandom.team/post/c89-digital-book/</link>
       <pubDate>Sun, 21 Feb 2016 17:42:38 +0900</pubDate>
-      
       <guid>https://urandom.team/post/c89-digital-book/</guid>
       <description>大変長らくお待たせしました。urandom vol.1の電子書籍版をリリースしました。電子書籍版は256円での販売です。内容は物理書籍版と同一です。 **販売ページはこちら**です（Gumroadに移動し</description>
     </item>
-    
   </channel>
 </rss>

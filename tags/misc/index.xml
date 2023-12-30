@@ -6,24 +6,21 @@
     <description>Recent content in Misc on urandom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sun, 29 Dec 2019 21:54:20 +0900</lastBuildDate><atom:link href="https://urandom.team/tags/misc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Dec 2019 21:54:20 +0900</lastBuildDate>
+    <atom:link href="https://urandom.team/tags/misc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SecureROMのmalloc/free追跡</title>
       <link>https://urandom.team/post/tracing-securerom-malloc-free/</link>
       <pubDate>Sun, 29 Dec 2019 21:54:20 +0900</pubDate>
-      
       <guid>https://urandom.team/post/tracing-securerom-malloc-free/</guid>
       <description>概要 axi0mX氏のcheckm8公開により、広く一般にSecureROM(iPhone/iPadのブートローダー)の動的解析が可能になった。SecureROMのヒープレイアウトへの理解を深める為にヒ</description>
     </item>
-    
     <item>
       <title>ファミコンミニで自前のLinuxカーネルを動かす手順</title>
       <link>https://urandom.team/post/my-linux-kernel-on-nesclassic/</link>
       <pubDate>Mon, 14 Nov 2016 20:01:17 +0900</pubDate>
-      
       <guid>https://urandom.team/post/my-linux-kernel-on-nesclassic/</guid>
       <description>はじめに ファミコンミニ自体の権利表記画面や任天堂Webサイトで配布されているOSSソースコードからも分かるように、ファミコンミニの中で動いているのはU-bootで起動されたLinuxです。なので、ファ</description>
     </item>
-    
   </channel>
 </rss>
