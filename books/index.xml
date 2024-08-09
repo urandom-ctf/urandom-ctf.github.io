@@ -4,10 +4,17 @@
     <title>Bibliography on urandom</title>
     <link>https://urandom.team/books/</link>
     <description>Recent content in Bibliography on urandom</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Fri, 29 Dec 2023 23:37:00 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 08 Aug 2024 23:10:17 +0900</lastBuildDate>
     <atom:link href="https://urandom.team/books/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>urandom Selections 1 // 2016-2023</title>
+      <link>https://urandom.team/books/urandom-selections-1/</link>
+      <pubDate>Thu, 08 Aug 2024 23:10:17 +0900</pubDate>
+      <guid>https://urandom.team/books/urandom-selections-1/</guid>
+      <description></description>
+    </item>
     <item>
       <title>urandom vol.12</title>
       <link>https://urandom.team/books/urandom-vol12/</link>

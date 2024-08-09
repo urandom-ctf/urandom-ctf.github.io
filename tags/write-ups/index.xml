@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Write-ups on urandom</title>
+    <title>Write-Ups on urandom</title>
     <link>https://urandom.team/tags/write-ups/</link>
-    <description>Recent content in Write-ups on urandom</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Write-Ups on urandom</description>
+    <generator>Hugo</generator>
     <language>ja-jp</language>
     <lastBuildDate>Sun, 24 May 2020 23:27:00 +0900</lastBuildDate>
     <atom:link href="https://urandom.team/tags/write-ups/index.xml" rel="self" type="application/rss+xml" />

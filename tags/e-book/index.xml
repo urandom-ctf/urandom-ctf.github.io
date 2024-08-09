@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>E-book on urandom</title>
+    <title>E-Book on urandom</title>
     <link>https://urandom.team/tags/e-book/</link>
-    <description>Recent content in E-book on urandom</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in E-Book on urandom</description>
+    <generator>Hugo</generator>
     <language>ja-jp</language>
     <lastBuildDate>Sun, 21 Feb 2016 17:42:38 +0900</lastBuildDate>
     <atom:link href="https://urandom.team/tags/e-book/index.xml" rel="self" type="application/rss+xml" />
