@@ -15,6 +15,9 @@ jobs:
         with:
           submodules: recursive  # to fetch Hugo themes
 
+      - name: Update submodules
+        run: git submodule update --remote --recursive
+
       - uses: dorny/paths-filter@v3
         id: changes
         with:
@@ -23,6 +26,7 @@ jobs:
               - 'static/**'
               - '**/*.md'
               - 'layouts/**'
+              - '!public/**'
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -36,18 +40,33 @@ jobs:
       - uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_DEPLOY_KEY }}
-        if: github.event_name != 'pull_request' && steps.changes.outputs.src == 'true'
 
-      - name: Prepare Git setting, commit & push
+      - name: Prepare Git setting
         run: |
           # `actions/checkout`が設定した`url.https://github.com/.insteadOf`を消しておく。
           # https://github.com/actions/checkout/blob/9a9194f87191a7e9055e3e9b95b8cfb13023bb08/adrs/0153-checkout-v2.md?plain=1#L261
           git submodule foreach --recursive git config --local --unset-all 'url.https://github.com/.insteadOf'
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+      - name: Commit & push
+        run: |
           cd public
-          git config --local user.email "yyu@mental.poker"
-          git config --local user.name "YOSHIMURA Yuu"
           git remote set-url origin git@github.com:urandom-ctf/urandom-ctf.github.io.git
           git add --all
-          git commit -m 'Update website'
+          git commit -m 'Update website by ${{ github.sha }}'
           git push origin master
+        if: github.event_name != 'pull_request' && steps.changes.outputs.src == 'true'
+
+      - name: Update submodule
+        run: |
+          git add public
+          git commit -m "[skip ci] Update submodules by ${{ github.sha }}"
+        if: github.event_name != 'pull_request' && steps.changes.outputs.src == 'true'
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
         if: github.event_name != 'pull_request' && steps.changes.outputs.src == 'true'
