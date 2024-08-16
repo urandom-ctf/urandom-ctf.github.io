@@ -61,7 +61,7 @@ jobs:
       - name: Update submodule
         run: |
           git add public
-          git commit -m "Update submodules by ${{ github.sha }}"
+          git commit -m "[skip ci] Update submodules by ${{ github.sha }}"
         if: github.event_name != 'pull_request' && steps.changes.outputs.src == 'true'
 
       - name: Push changes
