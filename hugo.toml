@@ -1,7 +1,6 @@
 baseURL = "https://urandom.team"
 title = "urandom"
 
-theme = "fuji"
 hasCJKLanguage = true
 enableEmoji = true
 enableRobotsTXT = true
