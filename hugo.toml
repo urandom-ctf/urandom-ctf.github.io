@@ -1,7 +1,6 @@
 baseURL = "https://urandom.team"
 title = "urandom"
 
-theme = "fuji"
 hasCJKLanguage = true
 enableEmoji = true
 enableRobotsTXT = true
@@ -13,9 +12,17 @@ languageCode = "ja-jp"  # For RSS, view https://www.rssboard.org/rss-language-co
 defaultContentLanguage = "en"  # For HTML page, now support: en, zh-hans, zh-hant, ja, nl, pl, it
 
 summaryLength = 100 # Custom summary length, add <!--more--> in post file to custom split point
-paginate = 10
 
 # googleAnalytics = "UA-000000000-0" # Set your Google Analytics UA here
+
+[pagination]
+  pagerSize = 10
+
+[module]
+  # Uncomment the following line and adjust the path to use local theme during development
+  # replacements = "github.com/urandom-ctf/hugo-theme-fuji -> ../../hugo-theme-fuji"
+  [[module.imports]]
+    path = "github.com/urandom-ctf/hugo-theme-fuji"
 
 [outputFormats]
   [outputFormats.SearchIndex]

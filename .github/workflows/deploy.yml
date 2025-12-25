@@ -2,7 +2,7 @@ name: Build and deploy
 
 on:
   push:
-    branches: 
+    branches:
       - main
       - master
   pull_request:
@@ -24,16 +24,16 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-    
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.119.0'
+          hugo-version: '0.153.2'
           extended: true
 
       - name: Build
         run: hugo --minify
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
