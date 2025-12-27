@@ -1,4 +1,3 @@
 ---
 title: "Bibliography"
-layout: list
 ---
