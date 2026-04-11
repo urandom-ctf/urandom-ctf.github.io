@@ -22,6 +22,14 @@
         {{ else }}
         N/A
         {{ end }}
+        {{ if .Params.consignment }}
+        <h2>委託販売</h2>
+        <ul class="consignment">
+            {{ range .Params.consignment }}
+            <li><a href="{{ .url }}">{{ .shop }}</a> ({{ .price }})</li>
+            {{ end }}
+        </ul>
+        {{ end }}
         <h2>目次</h2>
         <ul>
             {{ range .Params.articles }}
