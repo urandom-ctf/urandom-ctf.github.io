@@ -13,5 +13,9 @@ articles:
   - author: yyu
     title: "Re:VIEWで同人誌を作ってみた感想"
 events:
+  - 技術書典20
 ebook:
+  - provider: 技術書典オンラインマーケット
+    url: https://techbookfest.org/product/f1ttXCjqgp1geXytQy3Bnm
+    price: 500円
 ---

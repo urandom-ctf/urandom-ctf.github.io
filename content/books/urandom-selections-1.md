@@ -19,5 +19,13 @@ articles:
   - author: op
     title: "ファミコンミニとLinux"
 events:
+  - 技術書典20
 ebook:
+  - provider: 技術書典オンラインマーケット
+    url: https://techbookfest.org/product/b6KyJr3xxb9rULHPxJmvgE
+    price: 500円
+consignment:
+  - shop: メロンブックス
+    url: https://www.melonbooks.co.jp/detail/detail.php?product_id=2747228
+    price: 1100円
 ---

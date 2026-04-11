@@ -11,5 +11,9 @@ articles:
   - author: yyu
     title: "量子紛失通信"
 events:
+  - 技術書典20
 ebook:
+  - provider: 技術書典オンラインマーケット
+    url: https://techbookfest.org/product/sHdXyq4Ct8WtuFe11GebpC
+    price: 500円
 ---

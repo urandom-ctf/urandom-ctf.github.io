@@ -13,5 +13,9 @@ articles:
   - author: mayth
     title: "令和最新版urandom出版システム"
 events:
+  - 技術書典20
 ebook:
+  - provider: 技術書典オンラインマーケット
+    url: https://techbookfest.org/product/pD1jKfDh8ESZsMPm5ZCyw1
+    price: 500円
 ---
