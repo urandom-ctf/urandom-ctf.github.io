@@ -8,7 +8,7 @@ eventPrice: 500円
 articles:
   - author: yyu
     title: "量子鍵リース"
-  - author: yyu
+  - author: op
     title: "超かぐや姫！に見るセキュリティ"
 events:
 ebook:
