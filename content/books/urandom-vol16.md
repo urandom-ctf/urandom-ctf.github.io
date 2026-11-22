@@ -11,8 +11,8 @@ articles:
   - author: op
     title: "そうはならんやろ - eMudhra社インシデントの一考察"
 events:
-#ebook:
-#  - provider: 技術書典オンラインマーケット
-#    url: 未定
-#    price: 700円
+ebook:
+  - provider: 技術書典オンラインマーケット
+    url: https://techbookfest.org/product/cP9EErd9R5nYmAJbFGmmN3?productVariantID=2NTEiuxL8BV7yGFqb3nfv1
+    price: 700円
 ---
